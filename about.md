@@ -1,24 +1,55 @@
 ---
 layout: page
-title: Jekyll Theme - About - Massively
+title: About me
 description: When building a website it's helpful to see what the focus of your site is. This page is an example of how to show a website's focus.
 sitemap:
     priority: 0.7
     lastmod: 2017-11-02
     changefreq: weekly
 ---
-## About our Site
+## About me and my projects
 
-<span class="image left"><img src="{{ "/images/pic04.jpg" | absolute_url }}" alt="" /></span>
+<span class="image left"><img src="{{ "/images/avatar.jpg" | absolute_url }}" alt="" /></span>
 
-Making steady content and conveying it well takes a great deal of research and, hence, time and exertion. Building a profound established comprehension of your target customer needs is critical as your principle objective ought to be to fulfill their requirements as awesome content. You should need to enhance their lives. Having significant content like this may not be simple by any methods. Be that as it may, in any case, it's a fundamental apparatus in the event that you expect to grow a fruitful and supportable business in the present web focused world.
+Started learning in specialized chemistry class at High school, I've been dreamed of being a doctor, a bachelor or even a chemistry teacher.
+But something happened, I'm here as a *developer*! <br/>
+In 2015, I've got into **Danang University of Science and Technology**, lots of false starts, missteps and mistakes. But the turbulent start always remind me to keep following my path. And that why you pursue something is equally as important as what you pursue. <br/>
+I gained the ability to lift myself from those circumstances by seeking and obtaining, with the caring help of my parents, my friends, my girl, a good education.
 
-Receiving the benefits of content is a certain something. Be that as it may, it's so substantially less demanding once you begin conveying all the more successfully. The profitable content thought isn't just about bragging your item's capacities and general worth or your organization's achievements. You should concentrate less on advertising how awesome your item is and rather concentrate on indicating how valuable it is. This is a client focused approach as it concentrates on their issues and your answer for them. Making yourself fundamental is critical.
+In fact that, I'm not passionately thorough in my writings, including every detail I felt was needed to complete the story. But writing is using your imagination on paper, flows through the keyboard, so, why not? <br/>
 
-### Content is Imortant
+Some technique I've learnt:
+- Object oriented programming
+- Data structure
+- Database
+- Algorithm
+- Computer structure and Micro controller
+- Digital signal processing
+- Operating system principle
+- Compiler
+- Information system
+- Information theory
+- Artificial intelligence
+- Software technique
+- Computer network
+- UI/UX
+- Embeded system
+
+Programing langugages and technologies I've known
+- ASM
+- C/C++
+- Java
+- .Net
+- Shell script
+- Ruby on Rails
+- Python
+- Javascript
+- ReactJS
+
+### Let's talk about my projects
 <div class="box">
   <p>
-  In saying that, a one-measure fits-all approach won't do the trick with regards to content promoting. Rather, an emphasis on making remarkable, high caliber and totally genuine content that is engaging, helpful and fascinating for customers will get you the crown. From content, video and symbolism to infographics, studies, online courses and podcasts, whatever your favored content medium is, guarantee it is shareable and pertinent to your industry.
+
   </p>
 </div>
 
