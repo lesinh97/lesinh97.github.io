@@ -10,7 +10,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 
-<title>Welcome to Massively: The Jekyll Theme!</title>
+<title>Arduino RFID time attendance </title>
 <meta name="description" content="">
 
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/icon/apple-touch-icon.png">
@@ -60,31 +60,46 @@
 				<div id="main">
           <section class="post">
     				<header class="major">
-      				<span class="date">31 Oct 2017</span>
-      				<h1>Welcome to Massively: The Jekyll Theme!</h1>
-      				<p>Huge thanks to HTML5 UP for making this awesome template! Let's see what it can do</p>
+      				<span class="date">12 Dec 2018</span>
+      				<h1>Arduino RFID time attendance </h1>
+      				<p>RFID, RTC module and more!</p>
       			</header>
-      			<div class="image main"><img src="/images/pic02.jpg" alt=""></div>
-      			<p><h2 id="how-to-use-this-theme">How to Use This Theme</h2>
-<p>Just go ahead and read up on <a href="https://jekyllrb.com/">how to install Jekyll</a>. It’s not too hard I promise!</p>
+      			<div class="image main"><img src="/images/time-attendance.jpg" alt=""></div>
+      			<p><h2 id="why">Why?</h2>
+<p>I just wanna make a private doorlock and tracking system in my personal room. And maybe in the following time period, I can extend this project to a huge project that can be implemented in a such large places like a company’s entrance door and so on.</p>
 
-<p>Download this repository <a href="https://github.com/iwiedenm/jekyll-theme-massively">here</a> and save it to any folder you want.</p>
-
-<p>Open a terminal window or a command line and <code class="highlighter-rouge">cd</code> to that location.</p>
-
-<p>Then enter: <code class="highlighter-rouge">bundle exec jekyll serve</code>. You can now access your new Jekyll site from <a href="http://127.0.0.1:4000/">http://127.0.0.1:4000/</a>. Have fun exploring your new site!</p>
-
-<h2 id="features">Features</h2>
-<h3 id="auto-generating-sitemap">Auto-Generating Sitemap</h3>
-<p>The sitemap is auto generated! Just simply change the front matter of each site. It looks like so…</p>
-<div class="highlighter-rouge"><pre class="highlight"><code>sitemap:
-    priority: 0.7
-    lastmod: 2017-11-02
-    changefreq: weekly
+<h2 id="what-we-need">What we need</h2>
+<div class="highlighter-rouge"><pre class="highlight"><code>Uno R3 or whatever
+RFID RC522 module
+DS3231 RTC module
+MicroSD card module
+Jump wires
+12V DC Solenoid Doorlock
+N-Mosfet
+A big big brain
 </code></pre>
 </div>
-<h3 id="formspring-integration">Formspring integration</h3>
-<p>The contact form below each page on the footer actually collects information! Just change your email address in the <code class="highlighter-rouge">_config.yml</code> file!</p>
+
+<h3 id="which-problems-will-we-faces">Which problems will we faces?</h3>
+<p>Something will happen in the very first time you run this circuit. That RFID module cannot read and write anything, either microSd card module.
+The reason is about a China-exported circuit, microSD module. In my point of view that this apdater is so selfish, it will take all the MISO line in your SPI bus. Whatever, you must tell this brainless circuit to settled down.</p>
+
+<p>Gentlely put 270~330 Ohm resistor in the MISO line came from this apdater, everything will work fine.
+Here the solution</p>
+
+<p><span style="display:block;text-align:center"><img src="/images/time-attendance-1.jpg" alt="wow" /></span></p>
+<h3 id="breadboard">Breadboard</h3>
+
+<p><span style="display:block;text-align:center"><img src="/images/rfid-rc522_bb.jpg" alt="wow" height="70%" width="70%" /></span></p>
+
+<h3 id="code">Code</h3>
+
+<p>Follow my <a href="https://www.google.com">repository</a></p>
+
+<p>Google my work <a href="https://github.com/lesinh97/Arduino-Sketch">at</a></p>
+
+<p>Have fun! ^_^</p>
+
 </p>
       		</section>
 					<!-- Footer -->

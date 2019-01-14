@@ -5,5 +5,5 @@ description: Every website starts with a great homepage. The homepage tells your
 sitemap:
     priority: 1.0
     lastmod: 2017-11-02
-    changefreq: weekly
+    changefreq: daily
 ---

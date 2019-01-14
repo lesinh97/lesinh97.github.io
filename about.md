@@ -1,10 +1,10 @@
 ---
 layout: page
 title: About me
-description: When building a website it's helpful to see what the focus of your site is. This page is an example of how to show a website's focus.
+description: My online CV
 sitemap:
     priority: 0.7
-    lastmod: 2017-11-02
+    lastmod: 2019-14-01
     changefreq: weekly
 ---
 ## About me and my projects
@@ -45,34 +45,6 @@ Programing langugages and technologies I've known
 - Python
 - Javascript
 - ReactJS
-
-## Let's talk about my projects
- <div id="projects" class="background-alt">
-        <div class="container">
-            <div class="row">
-                <div class="project shadow-large">
-                    <div class="project-image">
-                        <span class="image left"><img src="{{ "/images/project.jpg" | absolute_url }}" alt="" /></span>
-                    </div>
-                    <!-- End .project-image -->
-                    <div class="project-info">
-                        <h3>Project Name Here</h3>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur in iaculis ex. Etiam volutpat laoreet urna. Morbi ut tortor nec nulla commodo malesuada sit amet vel lacus. Fusce eget efficitur libero. Morbi dapibus porta quam laoreet placerat.
-                        </p>
-                        <a href="#">View Project</a>
-                    </div>
-                    <!-- End .project-info -->
-                </div>
-                <!-- End .project -->
-              </div>
-            </div>
-
-<div class="box">
-  <p>
-
-  </p>
-</div>
 
 <span class="image left"><img src="{{ "/images/pic05.jpg" | absolute_url }}" alt="" /></span>
 
