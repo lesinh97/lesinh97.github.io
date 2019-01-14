@@ -4,7 +4,7 @@ title: About me
 description: My online CV
 sitemap:
     priority: 0.7
-    lastmod: 2019-13-01
+    lastmod: 2018-12-12
     changefreq: weekly
 ---
 ## About me and my projects
