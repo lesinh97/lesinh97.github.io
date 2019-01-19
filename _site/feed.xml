@@ -1,4 +1,25 @@
-<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xml" href="/feed.xslt.xml"?><feed xmlns="http://www.w3.org/2005/Atom"><generator uri="http://jekyllrb.com" version="3.2.1">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2019-01-14T17:39:33+07:00</updated><id>/</id><title type="html">Le d.Sinh</title><subtitle>Jekyll version of the Massively theme by HTML5UP</subtitle><entry><title type="html">Arduino RFID time attendance</title><link href="/blog/RFID-Attendance/" rel="alternate" type="text/html" title="Arduino RFID time attendance " /><published>2018-12-12T00:00:00+07:00</published><updated>2018-12-12T00:00:00+07:00</updated><id>/blog/RFID-Attendance</id><content type="html" xml:base="/blog/RFID-Attendance/">&lt;h2 id=&quot;why&quot;&gt;Why?&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xml" href="/feed.xslt.xml"?><feed xmlns="http://www.w3.org/2005/Atom"><generator uri="http://jekyllrb.com" version="3.2.1">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2019-01-19T23:36:59+07:00</updated><id>/</id><title type="html">Le d.Sinh</title><subtitle>Jekyll version of the Massively theme by HTML5UP</subtitle><entry><title type="html">iptables-based custom Firewall</title><link href="/blog/iptables-firewall/" rel="alternate" type="text/html" title="iptables-based custom Firewall" /><published>2018-12-20T00:00:00+07:00</published><updated>2018-12-20T00:00:00+07:00</updated><id>/blog/iptables-firewall</id><content type="html" xml:base="/blog/iptables-firewall/">&lt;h2 id=&quot;what-is-firewall&quot;&gt;What is Firewall?&lt;/h2&gt;
+&lt;p&gt;&lt;em&gt;References from Cisco Network.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;A firewall is a network security device that monitors incoming and outgoing network traffic and decides whether to allow or block specific traffic based on a defined set of security rules.&lt;/p&gt;
+
+&lt;p&gt;Firewalls have been a first line of defense in network security for over 25 years. They establish a barrier between secured and controlled internal networks that can be trusted and untrusted outside networks, such as the Internet.&lt;/p&gt;
+
+&lt;p&gt;A firewall can be hardware, software, or both.&lt;/p&gt;
+
+&lt;h2 id=&quot;some-attack-technique&quot;&gt;Some attack technique…&lt;/h2&gt;
+
+&lt;p&gt;The facts that these lines of code are very simple and its just what I’ve learnt in university.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;IP spoofing.&lt;/li&gt;
+  &lt;li&gt;Steath scan (TCP/SYN)&lt;/li&gt;
+  &lt;li&gt;Ping flood (ICPM flood)&lt;/li&gt;
+  &lt;li&gt;HTTP DDoS&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;repository&quot;&gt;Repository&lt;/h2&gt;
+
+&lt;p&gt;Follow my &lt;a href=&quot;https://github.com/lesinh97/Firewall-Sem7&quot;&gt;repository&lt;/a&gt;. Feel free to create a pull request at anytime! ^_^&lt;/p&gt;</content><summary type="html">Line of rules to rule the Internet world.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="/images/Firewall-and-Router-Management.png" /></entry><entry><title type="html">Arduino RFID time attendance</title><link href="/blog/RFID-Attendance/" rel="alternate" type="text/html" title="Arduino RFID time attendance " /><published>2018-12-12T00:00:00+07:00</published><updated>2018-12-12T00:00:00+07:00</updated><id>/blog/RFID-Attendance</id><content type="html" xml:base="/blog/RFID-Attendance/">&lt;h2 id=&quot;why&quot;&gt;Why?&lt;/h2&gt;
 &lt;p&gt;I just wanna make a private doorlock and tracking system in my personal room. And maybe in the following time period, I can extend this project to a huge project that can be implemented in a such large places like a company’s entrance door and so on.&lt;/p&gt;
 
 &lt;h2 id=&quot;what-we-need&quot;&gt;What we need&lt;/h2&gt;

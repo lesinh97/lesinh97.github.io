@@ -10,8 +10,8 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 
-<title>Blogs</title>
-<meta name="description" content="Every website starts with a great homepage. The homepage tells your viewers what your site is all about and gives your viewers a place to come back to.">
+<title>iptables-based custom Firewall</title>
+<meta name="description" content="">
 
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/icon/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/icon/favicon-32x32.png">
@@ -26,7 +26,6 @@
 <link rel="stylesheet" href="/assets/css/main.css" />
 <noscript><link rel="stylesheet" href="/assets/css/noscript.css" /></noscript>
 
-
 	</head>
 	<body class="is-loading">
 
@@ -34,10 +33,9 @@
 			<div id="wrapper" class="fade-in">
 
 				<!-- Header -->
-				<header id="header">
-					<a href="/" class="logo">Le d.Sinh</a>
-				</header>
-
+        <header id="header">
+          <a href="/" class="logo">Le d.Sinh</a>
+        </header>
 
 				<!-- Nav -->
 					<nav id="nav">
@@ -60,59 +58,43 @@
 
 				<!-- Main -->
 				<div id="main">
+          <section class="post">
+    				<header class="major">
+      				<span class="date">20 Dec 2018</span>
+      				<h1>iptables-based custom Firewall</h1>
+      				<p>Line of rules to rule the Internet world.</p>
+      			</header>
+      			<div class="image main"><img src="/images/Firewall-and-Router-Management.png" alt=""></div>
+      			<p><h2 id="what-is-firewall">What is Firewall?</h2>
+<p><em>References from Cisco Network.</em></p>
 
-          <article class="post featured">
-            <header class="major">
-              <h2><a href="#">Importance of Blogs</a></h2>
-              <p>Blogs are really pretty awesome things. For one, they are a means to continually provide fresh,
-                dynamic content to your users. Also, they help your site get indexed and build authority as they are essential for SEO!
-							</p>
-            </header>
-						<p>
-							Content fulfills the general population seeing your website and it likewise fulfills web indexes! Having solid content
-							influences your advertising to work a hell of a great deal simpler. Along these lines, the greatest bit of the promoting riddle is there. It's vital to thoroughly consider this technique before starting another crusade. This makes the whole content and advertising process more streamlined and will in the end enable your message to achieve your clients in a more effective manner. You ought not think little of the significance of giving yourself room. Having squirm room takes into consideration steady changes to your methodology en route.
-						<p>
-						</p>
-							At that point, rather than pushing something superfluous to your users, you can give them something that will stick.
-							You'll give them something they can identify with and be slanted to share with their companions and associates. Perhaps they'll even be slanted to work with you later on!
-							Having an advancement technique that is excessively unbending isn't astute on the grounds that there is no space for solid spontaneous creation. Having the capacity to change your advertising procedure will prompt more deals and arrangements.
-						</p>
+<p>A firewall is a network security device that monitors incoming and outgoing network traffic and decides whether to allow or block specific traffic based on a defined set of security rules.</p>
 
-          </article>
-					<!-- Post -->
-					<section class="posts">
-						
-						
-							<article>
-								<header>
-									<span class="date">20 Dec 2018</span>
-									<h2><a href="/blog/iptables-firewall/">iptables-based custom Firewall</a></h2>
-								</header>
-								<a href="/blog/iptables-firewall/" class="image fit"><img src="/images/Firewall-and-Router-Management.png" alt="" /></a>
-								<p>Line of rules to rule the Internet world.</p>
-								<ul class="actions">
-									<li><a href="/blog/iptables-firewall/" class="button">Full Story</a></li>
-								</ul>
-							</article>
-							
-						
-						
-							<article>
-								<header>
-									<span class="date">12 Dec 2018</span>
-									<h2><a href="/blog/RFID-Attendance/">Arduino RFID time attendance </a></h2>
-								</header>
-								<a href="/blog/RFID-Attendance/" class="image fit"><img src="/images/time-attendance.jpg" alt="" /></a>
-								<p>RFID, RTC module and more!</p>
-								<ul class="actions">
-									<li><a href="/blog/RFID-Attendance/" class="button">Full Story</a></li>
-								</ul>
-							</article>
-							
-						
+<p>Firewalls have been a first line of defense in network security for over 25 years. They establish a barrier between secured and controlled internal networks that can be trusted and untrusted outside networks, such as the Internet.</p>
 
-					</section>
+<p>A firewall can be hardware, software, or both.</p>
 
+<h2 id="some-attack-technique">Some attack technique…</h2>
+
+<p>The facts that these lines of code are very simple and its just what I’ve learnt in university.</p>
+<ul>
+  <li>IP spoofing.</li>
+  <li>Steath scan (TCP/SYN)</li>
+  <li>Ping flood (ICPM flood)</li>
+  <li>HTTP DDoS</li>
+</ul>
+
+<h2 id="repository">Repository</h2>
+
+<p>Follow my <a href="https://github.com/lesinh97/Firewall-Sem7">repository</a>. Feel free to create a pull request at anytime! ^_^</p>
+</p>
+      		</section>
+					<!-- Footer -->
+						<footer>
+              <ul class="actions">
+                <li><a href="/blog/" class="button">Our Blog</a></li>
+              </ul>
+						</footer>
 					</div>
 
 				<!-- Footer -->
@@ -168,8 +150,8 @@
 
 			</div>
 
-			<!-- Scripts -->
-			<!-- DYN -->
+      <!-- Scripts -->
+  		<!-- DYN -->
 <script src="/assets/js/jquery.min.js"></script>
 <script src="/assets/js/jquery.scrollex.min.js"></script>
 <script src="/assets/js/jquery.scrolly.min.js"></script>

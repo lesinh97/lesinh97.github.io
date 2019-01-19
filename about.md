@@ -23,26 +23,20 @@ Some technique I've learnt:
 - Data structure
 - Database
 - Algorithm
-- Computer structure and Micro controller
-- Digital signal processing
 - Operating system principle
 - Compiler
 - Information system
 - Information theory
-- Artificial intelligence
-- Software technique
 - Computer network
 - UI/UX
 - Embeded system
 
-Programing langugages and technologies I've known
-- ASM
+Programing langugages and technologies I've known:
 - C/C++
 - Java
 - .Net
 - Shell script
 - Ruby on Rails
-- Python
 - Javascript
 - ReactJS
 
