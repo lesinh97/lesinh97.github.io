@@ -79,10 +79,148 @@
 <p>The facts that these lines of code are very simple and its just what I’ve learnt in university.</p>
 <ul>
   <li>IP spoofing.</li>
-  <li>Steath scan (TCP/SYN)</li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="nv">$iptables</span> -t mangle -A PREROUTING -s 224.0.0.0/3 -j DROP 
+<span class="nv">$iptables</span> -t mangle -A PREROUTING -s 169.254.0.0/16 -j DROP 
+<span class="nv">$iptables</span> -t mangle -A PREROUTING -s 172.16.0.0/12 -j DROP 
+<span class="nv">$iptables</span> -t mangle -A PREROUTING -s 192.0.2.0/24 -j DROP 
+<span class="nv">$iptables</span> -t mangle -A PREROUTING -s 192.168.0.0/16 -j DROP 
+<span class="nv">$iptables</span> -t mangle -A PREROUTING -s 10.0.0.0/8 -j DROP 
+<span class="nv">$iptables</span> -t mangle -A PREROUTING -s 0.0.0.0/8 -j DROP 
+<span class="nv">$iptables</span> -t mangle -A PREROUTING -s 240.0.0.0/5 -j DROP 
+<span class="nv">$iptables</span> -t mangle -A PREROUTING -s 127.0.0.0/8 ! -i lo -j DROP
+</code></pre>
+</div>
+
+<p>We both have known about these useless address, so?</p>
+<ul>
+  <li>Steath scan (TCP/SYN).</li>
+</ul>
+
+<p>The never-closed 3 way hand-shake should be stop by scan the lonely packet in our pipeline</p>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="nv">$iptables</span> -A INPUT -p tcp --tcp-flags SYN,ACK SYN,ACK -m state --state NEW -j STEALTH_SCAN
+
+<span class="nv">$iptables</span> -A INPUT -p tcp --tcp-flags SYN,FIN SYN,FIN         -j STEALTH_SCAN
+<span class="nv">$iptables</span> -A INPUT -p tcp --tcp-flags SYN,RST SYN,RST         -j STEALTH_SCAN
+<span class="nv">$iptables</span> -A INPUT -p tcp --tcp-flags ALL SYN,RST,ACK,FIN,URG -j STEALTH_SCAN
+
+<span class="nv">$iptables</span> -A INPUT -p tcp --tcp-flags FIN,RST FIN,RST -j STEALTH_SCAN
+<span class="nv">$iptables</span> -A INPUT -p tcp --tcp-flags ACK,FIN FIN     -j STEALTH_SCAN
+<span class="nv">$iptables</span> -A INPUT -p tcp --tcp-flags ACK,PSH PSH     -j STEALTH_SCAN
+<span class="nv">$iptables</span> -A INPUT -p tcp --tcp-flags ACK,URG URG     -j STEALTH_SCAN
+</code></pre>
+</div>
+
+<ul>
   <li>Ping flood (ICPM flood)</li>
+</ul>
+
+<p>As you’ve known, ICMP has many types, but we will focus on 0 3 4 8 11.</p>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="nv">OK_ICMP</span><span class="o">=</span>&amp;quot;0 3 4 8 11&amp;quot;
+<span class="k">for </span>item <span class="k">in</span> <span class="nv">$OK_ICMP</span>; <span class="k">do</span>
+<span class="nv">$iptables</span> -A INPUT -i <span class="nv">$IF</span> -s <span class="nv">$NET</span> -p icmp --icmp-type <span class="nv">$item</span> -j ACCEPT
+<span class="nv">$iptables</span> -A OUTPUT -o <span class="nv">$IF</span> -s <span class="nv">$IP</span> -p icmp --icmp-type <span class="nv">$item</span> -j ACCEPT
+</code></pre>
+</div>
+<p>But wait! The counter-ICMP flood solution is all around the Internet. So I just wanna tell you about the Half-Counter, the method that maybe useful or become an ugly depend on the condition.</p>
+
+<p>The main point is, remember about what makes a flood? A ping packet! So that the size of the packet has it limit! Read carefully these codes below and use your brain :))</p>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="nv">$iptables</span> -A INPUT -i <span class="nv">$IF</span> -s <span class="nv">$NET</span> -p icmp --icmp-type <span class="nv">$item</span> -m length 42:43 -m limit --limit 1/s --limit-burst 1 -j ACCEPT
+<span class="nv">$iptables</span> -A OUTPUT -o <span class="nv">$IF</span> -s <span class="nv">$IP</span> -p icmp --icmp-type <span class="nv">$item</span> -m length 42:43 -m limit --limit 1/s --limit-burst 1 -j ACCEPT
+</code></pre>
+</div>
+<p><strong>Wow, magic~~!</strong></p>
+
+<ul>
   <li>HTTP DDoS</li>
 </ul>
+
+<p>The very first attack that must be countered when design any Firewall. So the point is, you have to know about the “<strong>Use it or lose it</strong>” theory. In my opinion, <em>network administrator</em> must define what this Server is used for? So, give user a number of limited ticket to gain everything in your server with the defined-time. So, the solution is here. <strong>Magiccc :)))</strong></p>
+
+<p>Here the <strong>s1mple</strong> way to understand ticket</p>
+
+<p><img src="/images/http_ticket.png" alt="Thing that have unlimted power" /></p>
+
+<h2 id="thing-to-remember">Thing to remember</h2>
+
+<p>In my opinion, to create a good firewall, you firstly need to have knowledge about these attacks above. Beside, you have to keep in my the iptables cheat sheets.</p>
+
+<h3 id="iptables-common-arguments">iptables common arguments</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Prefixs</th>
+      <th>Features</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>-A,–append</td>
+      <td>Add one or more new rules to the specified chain</td>
+    </tr>
+    <tr>
+      <td>-D,–delete</td>
+      <td>Delete one or more rules from specified chain</td>
+    </tr>
+    <tr>
+      <td>-P, –policy</td>
+      <td>Set policy of designated chain to specified target</td>
+    </tr>
+    <tr>
+      <td>-N, –new-chain</td>
+      <td>Create a new user-defined chain</td>
+    </tr>
+    <tr>
+      <td>-X, –delete-chain</td>
+      <td>Delete specified user-defined chain</td>
+    </tr>
+    <tr>
+      <td>-F</td>
+      <td>Table initialization</td>
+    </tr>
+    <tr>
+      <td>-p, –protocol</td>
+      <td>Specify protocol protocol (tcp, udp, icmp, all)</td>
+    </tr>
+    <tr>
+      <td>-s,  - source IP address [/ mask]</td>
+      <td>Source address. Describe IP address or host name</td>
+    </tr>
+    <tr>
+      <td>-d, - destination IP address [/ mask]</td>
+      <td>Address of the destination. Describe IP address or host name</td>
+    </tr>
+    <tr>
+      <td>-i , - in - interface</td>
+      <td>Specifies the interface on which the device packet comes in</td>
+    </tr>
+    <tr>
+      <td>-o, - out - interface</td>
+      <td>Specify the interface on which the device packet appears</td>
+    </tr>
+    <tr>
+      <td>-j, –jump</td>
+      <td>Specify action when matching target condition</td>
+    </tr>
+    <tr>
+      <td>-t, –table</td>
+      <td>Specify table table</td>
+    </tr>
+    <tr>
+      <td>-m state - state state</td>
+      <td>Specify condition of packet as condition</td>
+    </tr>
+    <tr>
+      <td>!</td>
+      <td>Invert the condition (except for ~)</td>
+    </tr>
+  </tbody>
+</table>
 
 <h2 id="repository">Repository</h2>
 

@@ -18,15 +18,13 @@ I gained the ability to lift myself from those circumstances by seeking and obta
 
 In fact that, I'm not passionately thorough in my writings, including every detail I felt was needed to complete the story. But writing is using your imagination on paper, flows through the keyboard, so, why not? <br/>
 
+<span class="image right"><img src="{{ "/images/avatar-1.JPG" | absolute_url }}" alt="" /></span>
 Some technique I've learnt:
 - Object oriented programming
 - Data structure
 - Database
 - Algorithm
 - Operating system principle
-- Compiler
-- Information system
-- Information theory
 - Computer network
 - UI/UX
 - Embeded system
