@@ -1,16 +1,15 @@
 # Site
-name: "Memoirs"
-title: "Memoirs"
+name: "Le D.Sinh"
+title: "Home"
 description: "I will take you on the fabulous world of exploration. Travel, culture, lifestyle. Eat, Pray, Love!"
 logo: 'assets/images/logo.png'
 favicon: 'assets/images/logo.png'
-baseurl: 
-google_analytics: 'UA-xxxxxxxx-1'
+baseurl: 'rouge'
 disqus: 'demowebsite'
 mailchimp-list: 'https://wowthemes.us11.list-manage.com/subscribe/post?u=8aeb20a530e124561927d3bd8&amp;id=8c3d2d214b'
 include: ["_pages"]
 permalink: /:title/
-email: wowthemesnet@gmail.com
+email: dinhsinh.le@outlook.com
 
 # Authors
 authors:
@@ -79,3 +78,5 @@ sass:
   style: compressed
 
 exclude: [changelog.md, LICENSE.txt, README.md, Gemfile, Gemfile.lock]
+
+theme: jekyll-theme-cayman
