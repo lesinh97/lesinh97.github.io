@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: article
 title:  "Arduino RFID time attendance "
 date:   "2018-12-12"
 excerpt: "RFID, RTC module and more!"

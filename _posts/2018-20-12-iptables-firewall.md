@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: article
 title:  "iptables-based custom Firewall"
 date:   "2018-12-20"
 excerpt: "Line of rules to rule the Internet world."

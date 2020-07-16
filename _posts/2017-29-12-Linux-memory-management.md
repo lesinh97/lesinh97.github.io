@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: article
 title:  "Linux memory management principles"
 date:   "2017-12-29"
 excerpt: "malloc, calloc, copy-on-write...."
