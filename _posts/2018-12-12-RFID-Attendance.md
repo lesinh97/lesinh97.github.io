@@ -4,6 +4,9 @@ title:  "Arduino RFID time attendance "
 date:   "2018-12-12"
 excerpt: "RFID, RTC module and more!"
 image: "/images/time-attendance.jpg"
+author: le sinh
+show_author_profile: true
+mathjax: true
 ---
 
 ## Why?

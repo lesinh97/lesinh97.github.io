@@ -4,6 +4,8 @@ title:  "iptables-based custom Firewall"
 date:   "2018-12-20"
 excerpt: "Line of rules to rule the Internet world."
 image: "/images/Firewall-and-Router-Management.png"
+author: le sinh
+mathjax: true
 ---
 
 ## What is Firewall?
