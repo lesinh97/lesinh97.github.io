@@ -6,7 +6,7 @@ excerpt: "RFID, RTC module and more!"
 image: "/images/time-attendance.jpg"
 author: le sinh
 show_author_profile: true
-mathjax: true
+key: rfid
 ---
 
 ## Why?

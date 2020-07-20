@@ -6,6 +6,8 @@ excerpt: "Line of rules to rule the Internet world."
 image: "/images/Firewall-and-Router-Management.png"
 author: le sinh
 mathjax: true
+pageview: true
+key: firewall
 ---
 
 ## What is Firewall?
