@@ -18,9 +18,13 @@ default:
   page:
     mode: normal
     type: webpage
+    header:
+      theme: dark
+      gradient: 'linear-gradient(135deg, rgba(24, 177, 237 , .4), rgba(5,20,20,.9))'
     article_header:
+      type: overlay
       align: left
-      theme: light
+      theme: dark
     articles:
       show_cover: true
       show_excerpt: false

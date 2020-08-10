@@ -7,6 +7,8 @@ image: "/images/Firewall-and-Router-Management.png"
 author: le sinh
 mathjax: true
 pageview: true
+permalink: article/custom-firewall
+lang: jp
 key: firewall
 ---
 

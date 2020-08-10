@@ -4,6 +4,7 @@ title:  "Linux memory management principles"
 date:   "2017-12-29"
 excerpt: "malloc, calloc, copy-on-write...."
 image: "/images/linux-mem.jpg"
+permalink: article/linux-memory
 show_author_profile: true
 ---
 

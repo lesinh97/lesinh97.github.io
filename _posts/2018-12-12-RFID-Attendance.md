@@ -1,9 +1,19 @@
 ---
 layout: article
+mode: immersive
+header: 
+    theme: dark
+article_header:
+  theme: dark
+  type: overlay
+  background_color: '#203028'
+  background_image:
+    src: /assets/images/rfid-time/time-attendance.jpg
+    gradient: 'linear-gradient(135deg, rgba(24, 177, 237 , .4), rgba(5,20,20,.9))'
 title:  "Arduino RFID time attendance "
 date:   "2018-12-12"
 excerpt: "RFID, RTC module and more!"
-image: "/images/time-attendance.jpg"
+permalink: article/rfid-attendance
 author: le sinh
 show_author_profile: true
 key: rfid
@@ -30,10 +40,9 @@ The reason is about a China-exported circuit, microSD module. In my point of vie
 Gentlely put 270~330 Ohm resistor in the MISO line came from this apdater, everything will work fine.
 Here the solution
 
-<span style="display:block;text-align:center">![wow](/images/time-attendance-1.jpg)
 ### Breadboard
 
-<span style="display:block;text-align:center">![wow](/images/rfid-rc522_bb.jpg){:height="70%" width="70%"}
+<span style="display:block;text-align:center">![wow](/assets/images/rfid-time/rfid-rc522_bb.jpg){:height="70%" width="70%"}
 
 ### Code
 
