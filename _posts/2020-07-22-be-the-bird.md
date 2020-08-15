@@ -23,7 +23,7 @@ key: 20202207
 ## 2003
 
 <p style='text-align: justify;'>
-Nhớ ngày nào được mẹ cho hay rằng mai con sẽ mặc bộ đồng phục đã được chuẩn bị kĩ lưỡng từ tận tháng trước mà đến trường. Nó hào hứng lắm, nó đã hiểu vì sao mẹ lại mắng khi nó vùng vằng lúc đi may quần áo tận sau một tháng trời. Nhưng mà, nó đã được biết, trường cấp 1 là cái gì đầu. Ở cái nơi mà những ngày hè oi ả ve kêu đến sôi cả giọt nắng đang trôi trên đỉnh đầu, tuổi thơ của một đứa trẻ chỉ có thể phác hoạ rằng trường cấp 1 là nơi để cho lá bàng thong thả rơi, tiếng lá chạm đất, tiếng chim chuyền cành náo nhiệt cả ban trưa. Hay trường còn là nơi cô lao công cứ chiều chiều lại xào xạc chổi đót dọn sân trong tiếng chào ríu rít của mấy anh chị lúc tan học. Khác với những tiếng khóc đến lạc cả giọng mà nó hay nghe từ mấy đứa em lớp mầm bên cạnh, trường cấp 1 là một cái gì đõ tĩnh mịch, nơi dưới cái nắng hè oi ả, không khí như loãng ra, nhường chỗ cho tiếng ngòi bút máy lăn ì ạch trên trang giấy trắng, rồi "cộp" một tiếng gõ thước vào bảng đen đầy uy nghi bắt đầu cho nhưng lời ê a con chữ như muốn kéo dài cả không gian ra. Nhà nó cách trường 200 mét, bên cạnh khu vui chơi cho con nít, đúng hơn chỉ là một bãi đất trống, nhưng không được vuông vức, không chất sẵn những đoạn ống cống dài ngoằng như nó thường thấy khi đọc truyện tranh. Nơi ấy, chiều nào cũng rôm rả tiếng cười đùa, tiếng gọi nhau, nhưng tuyệt nhiên, tiếng cười của nó chưa bao giờ thuộc về nơi này.
+Nhớ ngày được mẹ cho hay rằng mai sẽ mặc bộ đồng phục đã được chuẩn bị kĩ lưỡng từ tận tháng trước mà đến trường. Nó hào hứng lắm, nó đã hiểu tận sau một tháng trời vì sao mẹ lại mắng lúc nó vùng vằng không chịu đi may quần áo. Nhưng mà, nó đã được biết, trường cấp 1 là cái gì đầu. Ở cái nơi mà những ngày hè oi ả ve kêu đến sôi cả giọt nắng đang trôi trên đỉnh đầu, tuổi thơ của một đứa trẻ chỉ có thể phác hoạ rằng trường cấp 1 là nơi để cho lá bàng thong thả rơi, nơi có thể nghe tiếng lá chạm đất, tiếng chim chuyền cành náo nhiệt cả ban trưa. Đôi lúc, trường cấp 1 còn là nơi cô lao công cứ chiều chiều lại xào xạc chổi đót dọn sân trong tiếng chào ríu rít của mấy anh chị lúc tan học. Khác với những tiếng khóc đến lạc cả giọng mà nó hay nghe từ mấy đứa em lớp mầm bên cạnh, trường cấp 1 là một cái gì đó tĩnh mịch, dưới cái nắng hè dội xuống mái tôn, không khí như loãng ra, nhường chỗ cho tiếng ngòi bút máy lăn ì ạch trên trang giấy trắng, rồi đôi lúc lại "cộp" một tiếng gõ thước vào bảng đen bắt đầu cho nhưng lời ê a con chữ như muốn kéo dài cả không gian ra. Nhà nó cách trường 200 mét, bên cạnh khu vui chơi cho con nít, đúng hơn chỉ là một bãi đất trống, không được vuông vức, không chất sẵn những đoạn ống cống dài ngoằng như nó thường thấy khi đọc truyện tranh. Nơi ấy, chiều nào cũng rôm rả tiếng cười đùa, tiếng gọi nhau, nhưng tuyệt nhiên, tiếng cười của nó chưa bao giờ thuộc về nơi này.
 </p>
 
 Hẳn ai cũng đã từng có một tuổi thơ, chí ít là đẹp hơn nó!
@@ -104,16 +104,16 @@ Có lẽ nó sẽ không hiểu những gì đang diễn ra xung quanh lúc bấ
 **Nội mất!**
 
 <p style='text-align: justify;'>
-Gia đình xáo trộn cả trong lẫn ngoài, kinh tế gia đình chưa hồi phục từ việc chuyển đổi mô hình kinh doanh làm cho những cuộc cãi vả của bố mẹ ngày một liên miên.
+Gia đình xáo trộn cả trong lẫn ngoài, kinh tế gia đình chưa kịp hồi phục từ việc chuyển đổi mô hình kinh doanh làm cho những cuộc cãi vả của bố mẹ ngày một liên miên.
 Nó chọn cách thu mình, với gia đình, với bạn bè, nhà không có phòng riêng, khi ba mẹ ở phòng khách thì nó vào phòng ngủ, buổi sáng nó ra vườn chơi, buổi trưa nhất quyết không ngủ, chắc khoảng không gian chung là căn bếp, nơi mà có thể cảm nhận rõ từng luồng không khí di chuyển, đập vào mặt, nặng trĩu.
 </p>
 
 <p style='text-align: justify;'>
-Lên cấp hai, học lớp chọn, nó làm bố mẹ yên tâm. Có thể tự học, tự đến trường, tự đi học thêm. Bố mẹ đôi lúc vẫn chở, nhưng không nhất thiết, nó cũng cảm thấy có một khoảng không gian riêng.
+Lên cấp hai, học lớp chọn, nó làm bố mẹ yên tâm. Có thể tự học, tự đến trường, tự đi học thêm. Bố mẹ đôi lúc vẫn đón đưa, nhưng không nhất thiết, nó cũng cảm thấy có một khoảng không gian riêng.
 </p>
 
 <p style='text-align: justify;'>
-Nó thích đi nhà sách, không phải vì thích sách, mà nơi đó được tự do ra vào, được nhìn đủ đầu truyện đầy màu sắc và nghe một vài bản nhạc trên ZoneFM mà cô thu ngân hay mở. Nhưng nó chẳng hiểu gì cả!
+Nó thích đi nhà sách, không phải vì thích sách, mà nó thích nghe những bản nhạc trên XoneFM được cô chủ ưu tiên mở. Nó cũng có muộn cuốn sổ nhỏ, ghi ghi chép chép những lời bài hát nó nghe được. Tất nhiên cuốn sổ sẽ không trọn vẹn, nhưng 
 </p>
 
 <p style='text-align: justify;'>
@@ -125,7 +125,7 @@ Lần thứ hai, không tình cờ, nó chọn tập tiếp theo trong cái danh
 </p>
 
 <p style='text-align: justify;'>
-Và rồi nó phải đối mặt với đám đông, một nỗi sợ vô hình lại ập đến, tâm hồn một đứa bé cấp 2 lúc bấy giờ không thể diễn tả được hết, nó tưởng tượng ra những cảnh người ta ôm miệng cười, những cái chỉ trỏ từ đám đông, nó thấy rõ tất cả trong suy nghĩ, lờ mờ những khuôn mặt nhưng lại tỏ tường về cử chỉ. Nó sợ, nó tìm cách trốn chạy, từ chối tham gia cuộc thi mà không giải thích lí do. Nhiều lúc nó cũng thấy thầy nó vô lí lạ thường, bao nhiêu bạn nữ, giọng hay, chữ đẹp, sao lại phải là nó, hay nó chỉ là một màu sắc khác cho cuộc thi mà bao lâu nay người ta thường hào hứng nghĩ về.
+Và rồi nó phải đối mặt với đám đông, một nỗi sợ vô hình lại ập đến, tâm hồn một đứa bé cấp 2 lúc bấy giờ không thể diễn tả được hết, nó tưởng tượng ra những cảnh người ta ôm miệng cười, những cái chỉ trỏ từ đám đông, nó hình dung tất cả trong suy nghĩ, tuy lờ mờ những khuôn mặt nhưng lại tỏ tường về cử chỉ. Nó sợ, nó tìm cách trốn chạy, từ chối tham gia cuộc thi mà không giải thích lí do. Nhiều lúc nó cũng thấy thầy nó vô lí lạ thường, bao nhiêu bạn nữ, giọng hay, chữ đẹp, sao lại phải là nó, hay nó chỉ là một màu sắc khác cho cuộc thi mà bao lâu nay người ta thường hào hứng nghĩ về.
 </p>
 
 <p style='text-align: justify;'>
@@ -137,11 +137,12 @@ Cuộc thi thành công, nó càng vun vén được sự tự tin rằng, chẳ
 </p>
 
 <p style='text-align: justify;'>
-Thời cấp 2 để lại cho nó nhiều nỗi niềm, nó bắt đầu biết yêu, biết được cái sự nôn nao mỗi buổi sáng chỉ để ngắm nhìn nụ cười kia. Nhưng chả bao giờ nó bày tỏ, chả bao giờ nó thử nói chuyện với cô gái ấy rằng, nó mong muốn như thế nào. Tâm trí của nó luôn luôn có chỗ cho thất bại, tự nhiên nó thấy nhói, thấy xót xa cho nó ở một cái tương lai xa vời khi cô gái ấy có được nửa kia của mình. Cảm giác ấy như một sự yếu đuối của một người không biết bơi khi đứng giữa lòng đại dương, rằng ta chỉ cần chạm vào nước thôi, nó sẽ cuốn ta trôi đi mãi mãi.
+Thời cấp 2 để lại cho nó nhiều nỗi niềm, nó bắt đầu biết yêu, biết được cái sự nôn nao mỗi buổi sáng chỉ để ngắm nhìn nụ cười kia. Nhưng chả bao giờ nó bày tỏ, chả bao giờ nó thử nói chuyện với cô gái ấy rằng, nó mong muốn như thế nào. Tâm trí của nó luôn luôn có chỗ cho thất bại, tự nhiên thấy nhói, thấy xót xa cho bản thân ở một cái tương lai xa vời khi cô gái ấy có được nửa kia của mình. Cảm giác ấy như một sự yếu đuối của một người không biết bơi khi đứng giữa lòng đại dương, rằng ta chỉ cần chạm vào nước thôi, nó sẽ cuốn ta trôi đi mãi mãi.
 </p>
 
 ## 2012
 
 <p style='text-align: justify;'>
 Lên cấp 3, nó hiểu chuyện hơn, tự cảm thấy trưởng thành hơn...
+
 </p>
