@@ -8,8 +8,7 @@ header:
       en-AU   : *EN
       jp      : &JP       記録
       # @end locale config
-    url: /archive.html
-
+    url: /archive
   - titles:
       # @start locale config
       en      : &EN       About
@@ -19,7 +18,7 @@ header:
       en-AU   : *EN
       jp      : &JP       シンについて       
       # @end locale config
-    url: /about.html
+    url: /about
   - titles:
       # @start locale config
       en      : &EN       Author
@@ -29,4 +28,4 @@ header:
       en-AU   : *EN
       jp      : &JP       作者
       # @end locale config
-    url: /author.html
+    url: /author

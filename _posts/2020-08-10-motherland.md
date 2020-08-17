@@ -62,3 +62,4 @@ Nhớ những sớm mai, tôi đạp chiếc xe đạp cóc cách đến tiệm 
 <p style='text-align: justify;'>
 Hội An nổi lên trong lòng người dân Việt Nam cũng như bạn bè quốc tế là một điểm đến du lịch lí tưởng. Ngành du lịch như được một nguồn sống mới sau đợi dịch SARS năm 2004. Tôi chứng kiến được sự thay mình của phố Hội. Thay bằng những du khách lẻ thăm quan theo sở thích, tầng tầng lớp lớp những tour du lịch được mở ra, người ta phải đi thành đoàn, nhồi nhét trên những chiếc xe buýt 45 chỗ dài đằng đẵng. 
 </p>
+
