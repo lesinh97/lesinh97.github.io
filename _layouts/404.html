@@ -1,13 +1,77 @@
----
-layout: page
-title: 404
-show_title: false
----
-<div class="layout--404">
-  <div class="sign">
-    <h1>404</h1>
-    <p>Page not found :(</p>
-  </div>
-</div>
-
-{{ content }}
+ ---
+ layout: none
+ show_title: false
+ title: 404
+ ---
+ <!DOCTYPE html>
+ <html>
+ <head>
+   <title>The page you were looking for doesn't exist (404)</title>
+   <meta name="viewport" content="width=device-width,initial-scale=1">
+   <style>
+   body {
+     background-color: #26292E;
+     color: #2E2F30;
+     font-family: sans-serif;
+     margin: 0;
+   }
+   a {
+     color: #fff;
+   }
+ 
+   a:hover {
+     color: #e74c3c;
+   }
+ 
+   .dialog {
+     float:right;
+     text-align: left;
+     width: 60%;
+     margin: 5% auto 0;
+   }
+ 
+   h1 { 
+     font-size: 4em;
+     color: #fff;
+     line-height: 1em;
+   }
+ 
+   p {
+     font-size: 1.4em;
+     color: #fff;
+     padding-right: 5%;
+   }
+   .image-inpage {
+     position: absolute;
+     float: left;
+     top: 0;
+     width:60%;
+   }
+   @media only screen and (max-width: 767px) {
+     .dialog {
+     float:right;
+     text-align: center;
+     width: 60%;
+     margin-top: 60%
+   }
+   }  
+   </style>
+ </head>
+ 
+ <body>
+   <!-- This file lives in public/404.html -->
+   <img src="assets/images/404/light-bulb.png" width="43%" height="50%" style="float:left">
+   <div>
+     <div class="dialog">
+       <h1>Hey, who turned off the lights?</h1>
+       <p>We were unable to find the page you were looking for.</p>
+       <button onclick="goBack()">Go Back</button>
+     </div>
+   </div> 
+ </body>
+ </html>
+ <script>
+  function goBack() {
+    window.history.back();
+  }
+  </script>
