@@ -11,16 +11,6 @@ header:
     url: /archive
   - titles:
       # @start locale config
-      en      : &EN       About
-      en-GB   : *EN
-      en-US   : *EN
-      en-CA   : *EN
-      en-AU   : *EN
-      jp      : &JP       シンについて       
-      # @end locale config
-    url: /about
-  - titles:
-      # @start locale config
       en      : &EN       Author
       en-GB   : *EN
       en-US   : *EN
