@@ -7,9 +7,12 @@ module.exports = {
   siteMetadata: {
     siteTitle: `Shinology`,
     siteHeadline: `Shinology by Shin`,
+    siteDescription: `My thought, my sharing, my expression`,
+    siteImage: `/banner.png`,
     author: `@Shin`,
-    // See all options: https://github.com/LekoArts/gatsby-themes/blob/master/themes/gatsby-theme-cara/gatsby-config.js
     siteTitleAlt: `Shinology by Shin`,
+    siteUrl: `https://shin.technology`,
+    siteLanguage: `en`,
   },
   plugins: [
     {
@@ -35,14 +38,14 @@ module.exports = {
         display: `standalone`,
         icons: [
           {
-            src: `/android-chrome-192x192.png`,
+            src: `/android-chrome-192x192.jpeg`,
             sizes: `192x192`,
-            type: `image/png`,
+            type: `image/jpeg`,
           },
           {
-            src: `/android-chrome-512x512.png`,
+            src: `/android-chrome-512x512.jpeg`,
             sizes: `512x512`,
-            type: `image/png`,
+            type: `image/jpeg`,
           },
         ],
       },

@@ -47,7 +47,7 @@ const NotFound = () => (
           <Inner>
             <Themed.h1>404 - Page not found</Themed.h1>
             <Themed.p>
-              Go back to <Link to="/">homepage</Link>.
+              Back to my <Link to="/">homepage</Link>.
             </Themed.p>
           </Inner>
         </Content>

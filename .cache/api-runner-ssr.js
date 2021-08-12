@@ -13,7 +13,7 @@ var plugins = [{
     },{
       name: 'gatsby-plugin-manifest',
       plugin: require('/mnt/e/Programing/web_develop/lesinh97.github.io/node_modules/gatsby-plugin-manifest/gatsby-ssr'),
-      options: {"plugins":[],"name":"Shinology by Shin","short_name":"Shinology","description":"Sharing is learning.","start_url":"/","background_color":"#141821","theme_color":"#f6ad55","display":"standalone","icons":[{"src":"/android-chrome-192x192.png","sizes":"192x192","type":"image/png"},{"src":"/android-chrome-512x512.png","sizes":"512x512","type":"image/png"}],"legacy":true,"theme_color_in_head":true,"cache_busting_mode":"query","crossOrigin":"anonymous","include_favicon":true,"cacheDigest":null},
+      options: {"plugins":[],"name":"Shinology by Shin","short_name":"Shinology","description":"Sharing is learning.","start_url":"/","background_color":"#141821","theme_color":"#f6ad55","display":"standalone","icons":[{"src":"/android-chrome-192x192.jpeg","sizes":"192x192","type":"image/jpeg"},{"src":"/android-chrome-512x512.jpeg","sizes":"512x512","type":"image/jpeg"}],"legacy":true,"theme_color_in_head":true,"cache_busting_mode":"query","crossOrigin":"anonymous","include_favicon":true,"cacheDigest":null},
     },{
       name: 'gatsby-plugin-offline',
       plugin: require('/mnt/e/Programing/web_develop/lesinh97.github.io/node_modules/gatsby-plugin-offline/gatsby-ssr'),
