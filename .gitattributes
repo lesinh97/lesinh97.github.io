@@ -1,0 +1,5 @@
+* text=auto
+
+# The domain file is copied verbatim into the deployed site. A CRLF checkout
+# on Windows would carry through to _site/CNAME, so pin it to LF.
+CNAME text eol=lf
