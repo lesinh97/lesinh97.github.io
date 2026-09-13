@@ -138,6 +138,20 @@ Lives at `lesinh97/lesinh97.github.io` on the custom domain **shin.technology**.
   A workflow runs from the branch it was pushed to, so the default branch being `master`
   does not stop it.
 
+## The old service worker
+
+`src/sw.js` is a self-destroying service worker copied to the site root, and it is load
+bearing. The 2021 Gatsby site used `gatsby-plugin-offline`, which registered a Workbox
+worker at `/sw.js` with scope `/`. That worker is still installed in every browser that
+visited before the switch, and it serves the old cached shell: a normal reload showed the
+2021 site, a hard reload showed the real one.
+
+It cannot expire by itself. If `/sw.js` 404s, the browser's update check fails and it keeps
+the worker it already has, forever. So the path must keep returning 200 with a worker that
+removes itself. There is a matching cleanup script at the end of `base.njk`.
+
+Do not delete either until you are sure no browser still holds the old registration.
+
 ## Likely next jobs
 
 - Flavour pages, or a similarity finder over the `fam` vectors.
