@@ -20,7 +20,17 @@ tasting journal and a blog behind it. The whisky notes are written in Obsidian.
   and set `navCurrent` to the nav URL that should read as current.
 - `src/bottles/*.md` is the whisky data. Front matter is the schema, body prose is the
   "Behind it" text. `src/bottles/bottles.json` sets the layout and permalink.
-- `src/posts/*.md` is the blog. `src/posts/posts.json` sets the layout and permalink.
+- `src/posts/*.md` is the blog. `src/posts/posts.11tydata.js` sets the layout and builds the
+  permalink. `draft: true` in a post's front matter is the single switch that both keeps it
+  out of the collection and stops a page being written; `DRAFTS=1 npm start` previews drafts
+  locally. Do not add a separate `permalink: false`, and note a templated permalink can only
+  produce the *string* "false", which Eleventy treats as a real output path.
+- Posts may set `image:`, used as a hero on the post and a thumbnail on the index.
+- The 2017-2018 posts and the 2020 Vietnamese drafts were imported from the Jekyll site on
+  the `master` branch (`_posts/` and `draft_article/`). Their images live in
+  `src/assets/posts/`. Two imports needed judgement, recorded in an HTML comment at the top
+  of each: `flowers.md` had front matter copy-pasted from `be-the-bird`, and
+  `be-the-bird-fragment.md` had no front matter at all.
 - Both collections are built by glob in `eleventy.config.js`, not by a `tags` key. Eleventy
   reserves `tags`, so tasting words live under `flavours` and post topics under `topics`.
   Do not rename either back.

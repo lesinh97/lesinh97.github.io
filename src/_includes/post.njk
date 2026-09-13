@@ -15,6 +15,8 @@ extraCss: ["/assets/blog.css"]
     </div>
   </header>
 
+  {% if image %}<div class="posthero"><img src="{{ image }}" alt=""></div>{% endif %}
+
   <div class="post">
     <div class="prose">{{ content | safe }}</div>
 

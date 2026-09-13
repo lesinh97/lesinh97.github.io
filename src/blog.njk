@@ -2,7 +2,7 @@
 layout: base.njk
 navCurrent: /blog/
 pageTitle: Blog
-pageDescription: Notes on what I am reading, building and drinking.
+pageDescription: My thought, my sharing, my expression.
 extraCss: ["/assets/blog.css"]
 permalink: /blog/index.html
 ---
@@ -10,8 +10,7 @@ permalink: /blog/index.html
   <div class="shell">
     <div class="kicker">Writing</div>
     <h1>Blog</h1>
-    <p>Notes on what I am reading, building and drinking. Short, irregular,
-      and written mostly for me.</p>
+    <p>My thought, my sharing, my expression.</p>
   </div>
 </header>
 
@@ -20,7 +19,9 @@ permalink: /blog/index.html
   {% if posts | length %}
   <div class="postlist">
     {% for p in posts %}
-    <a class="postrow" href="{{ p.url }}">
+    <a class="postrow{% if p.data.image %} haspic{% endif %}" href="{{ p.url }}">
+      {% if p.data.image %}<span class="thumb"><img src="{{ p.data.image }}" alt="" loading="lazy"></span>{% endif %}
+      <span class="rowbody">
       <div class="meta">
         <span>{{ p.data.date | readableDate }}</span>
         {% if p.data.topics %}<span>{{ p.data.topics | join(", ") }}</span>{% endif %}
@@ -28,6 +29,7 @@ permalink: /blog/index.html
       <h2>{{ p.data.title }}</h2>
       {% if p.data.summary %}<p>{{ p.data.summary }}</p>{% endif %}
       <span class="more">Read it <i class="ph ph-arrow-right"></i></span>
+      </span>
     </a>
     {% endfor %}
   </div>

@@ -12,9 +12,13 @@ module.exports = function (eleventyConfig) {
   );
 
   // Same reason posts use `topics` rather than `tags`. Newest first.
+  // `draft: true` in the front matter keeps a post out of the build. Run
+  // DRAFTS=1 npm start to see them locally without publishing them.
+  const showDrafts = process.env.DRAFTS === "1";
   eleventyConfig.addCollection("posts", (api) =>
     api
       .getFilteredByGlob("src/posts/*.md")
+      .filter((p) => showDrafts || !p.data.draft)
       .sort((a, b) => String(b.data.date).localeCompare(String(a.data.date)))
   );
 
