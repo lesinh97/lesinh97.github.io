@@ -223,3 +223,15 @@ html { scrollbar-width: thin; scrollbar-color: var(--color-neutral-700) var(--co
   .topnav, .sitefoot { display: none !important; }
   body { background: #fff !important; color: #000 !important; }
 }
+
+/* Tables in prose. They scroll inside their own box rather than widening
+   the page, which matters for the wide cheat-sheet table in the iptables post. */
+.prose .tablewrap, .prose table { display: block; max-width: 100%; overflow-x: auto; }
+.prose table { border-collapse: collapse; font-size: 13.5px; margin: 0 0 20px;
+               white-space: nowrap; }
+.prose th, .prose td { padding: 8px 14px; text-align: left; vertical-align: top;
+                       border-bottom: 1px solid var(--color-divider); }
+.prose th { font-weight: 500; color: var(--color-heading); font-size: 11px;
+            letter-spacing: 0.1em; text-transform: uppercase; }
+.prose td { color: var(--color-neutral-300); }
+.prose tbody tr:last-child td { border-bottom: 0; }

@@ -72,6 +72,17 @@ Body prose here.
 `topics`, not `tags`. `tags` is reserved by Eleventy for collections. Quote the `date`, or
 YAML turns it into a timestamp in whatever timezone the build machine happens to use.
 
+Optional `image:` gives the post a hero picture and a thumbnail on the index.
+
+Set `draft: true` to keep a post out of the build. To see drafts locally without publishing
+them:
+
+```bash
+DRAFTS=1 npm start
+```
+
+Delete the `draft: true` line to publish.
+
 ## Add a bottle
 
 Create `src/bottles/<slug>.md`:
