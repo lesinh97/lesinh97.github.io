@@ -4,6 +4,9 @@ module.exports = function (eleventyConfig) {
   // this has to land at the site root, not under assets. Drop it and
   // shin.technology stops resolving on the next deploy.
   eleventyConfig.addPassthroughCopy({ "src/CNAME": "CNAME" });
+  // Must sit at the site root: it has to answer on the exact path the old
+  // Gatsby service worker was registered at, or it cannot replace it.
+  eleventyConfig.addPassthroughCopy({ "src/sw.js": "sw.js" });
 
   // Collected by glob, not by a `tags` key: the notes use `flavours` for their
   // tasting words so Eleventy's tag system stays out of the way.
