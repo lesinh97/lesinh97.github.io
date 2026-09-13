@@ -17,6 +17,7 @@ fam:
   malt: 3
   peat: 0
 flavours: ["Pear", "Vanilla", "Beeswax", "White pepper"]
+keynote: ""
 nose: "Orchard fruit and beeswax, a slow lift of icing sugar behind it."
 palate: "Soft and rounded: pear, vanilla cream, a thread of white pepper."
 finish: "Long, drying, malty; the fruit fades before the oak does."

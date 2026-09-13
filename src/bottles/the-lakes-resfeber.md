@@ -17,6 +17,7 @@ fam:
   malt: 3
   peat: 1
 flavours: ["Lemon curd", "Oak", "Barley sugar", "Black pepper"]
+keynote: ""
 nose: "Fresh oak shavings, lemon curd, a light sooty note."
 palate: "Young and lively: barley sugar, pepper, green wood."
 finish: "Medium, spicy, slightly smoky."

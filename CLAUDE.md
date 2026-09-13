@@ -107,7 +107,7 @@ the whole page wider than the viewport. Every auto-fit grid here uses
 ## Print
 
 `@media print` hides `.screen` and shows `#sheet`, a grid of mm-sized cards. Three shapes:
-shelf card 95x62mm, hang tag 46x96mm, classic tag 56x110mm. Sizes are in mm on purpose. The
+shelf card 95x62mm, hang tag 46x102mm, classic tag 56x110mm. Sizes are in mm on purpose. The
 shelf card is deliberately a little over a business card (85x55mm) to carry the keynote.
 
 The cards mirror the bottle page: a radial `wash` behind the header, the score in a filled
@@ -117,9 +117,17 @@ bottle photo; they are tags, and the photo is a screen-only thing.
 Card ink is navy and lives in the `INK` table in `app.js`. It is print pigment, not a screen
 token, so it does **not** follow the colour mode and is the one place raw hexes are correct.
 
-A note's `keynote`, the owner's one-liner, prints on its card; without it the card falls back
-to the note's own prose. Card text is clamped by `clamp()` to fit the fixed millimetre shape, per card type.
-Change a clamp and you must re-check overflow.
+A note's `keynote` is the only prose that prints. The markdown body is **not** a fallback:
+truncating it mid-sentence read as broken, so a bottle with no keynote simply shows no line.
+
+`clamp()` caps the keynote at **180 characters** on every shape. That number was measured,
+not guessed: with a keynote on all thirteen bottles, 187 characters still fits every shape
+and 196 overflows the shelf card, the tightest of the three for text because its name and
+score share a row. Change the clamp and you must re-measure.
+
+The date row is `signedRow()`: tasted date left, the katakana signature right. The signature
+needs Noto Sans JP, loaded in `base.njk`; without it the browser falls back to a brush-style
+system face that does not match the cards.
 
 The cards set their own colours from the `INK` table in `app.js` and default to `light`, so
 they stay black on white paper no matter how dark the screen theme gets. If you change a card,

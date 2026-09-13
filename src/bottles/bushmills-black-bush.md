@@ -17,6 +17,7 @@ fam:
   malt: 2
   peat: 0
 flavours: ["Sultana", "Toffee", "Fruitcake"]
+keynote: ""
 nose: "Sherried and easy: sultana, toffee, a touch of grain sweetness."
 palate: "Smooth, thin-bodied, fruitcake and vanilla."
 finish: "Short-medium, sweet."

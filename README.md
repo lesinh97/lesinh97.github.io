@@ -120,8 +120,9 @@ Field notes:
 
 - `tasted` must be quoted, otherwise YAML turns it into a timestamp.
 - `flavours`, not `tags`, for the same reason posts use `topics`.
-- `keynote` is your one-liner for the bottle, printed on its card. Leave it out and the card
-  falls back to the note's own prose. Long text is trimmed to fit.
+- `keynote` is your one-liner for the bottle, and the only prose that prints on its card.
+  **Up to about 180 characters**; longer text is trimmed with an ellipsis. The markdown body
+  below the front matter is for the web page only, so a bottle with no keynote prints no line.
 - `fam` values are 0 to 5 and drive both the bar chart and the row sparkline.
 - `price` is a plain integer in VND. Leave it out for a dash.
 - `photo` is a site-relative path. Drop the image in `src/assets/bottles/`. Omit for a placeholder.
