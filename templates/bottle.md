@@ -17,6 +17,7 @@ fam:
   malt: 0
   peat: 0
 flavours: []
+cardwords: ""
 nose: ""
 palate: ""
 finish: ""

@@ -9,12 +9,14 @@
     ["peat", "Smoke & peat"]
   ];
   var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  var BAR = ["#2a3348", "#3f3d6d", "#524e93", "#6b62bb", "#8b7fe8", "#b5abfc"];
-  var PBAR = ["#4a4685", "#5a5499", "#6862b8", "#7a70cf", "#8b7fe8", "#a99ff5"];
+  var BAR = ["var(--bar-0)", "var(--bar-1)", "var(--bar-2)", "var(--bar-3)", "var(--bar-4)", "var(--bar-5)"];
+  var PBAR = ["var(--pbar-0)", "var(--pbar-1)", "var(--pbar-2)", "var(--pbar-3)", "var(--pbar-4)", "var(--pbar-5)"];
   var SORTS = [["recent", "Most recent"], ["score", "Highest score"], ["price", "Most spent"]];
+  /* Card ink. These are print colours, not screen tokens: the light set has to
+     hold up as real pigment on white paper, so the teal is a deep one. */
   var INK = {
-    light: { bg: "#ffffff", fg: "#292b31", muted: "#5f6373", ink: "#5d5294", onInk: "#ffffff", edge: "#9296ab", rule: "#c9ccdc", soft: "#f2f0fc", track: "#e4e7f5" },
-    dark: { bg: "#1b1d2c", fg: "#e9e9ed", muted: "#9397ab", ink: "#b5abfc", onInk: "#1b1d2c", edge: "#565a70", rule: "#3c3f52", soft: "#262838", track: "#33364a" }
+    light: { bg: "#ffffff", fg: "#14201f", muted: "#556967", ink: "#0d6e68", onInk: "#ffffff", edge: "#8aa5a2", rule: "#c3d8d5", soft: "#e9f6f4", track: "#dcebe9" },
+    dark: { bg: "#0f2124", fg: "#e4f2f0", muted: "#8ca8a5", ink: "#4fd1c5", onInk: "#0f2124", edge: "#47615e", rule: "#2c4542", soft: "#16302f", track: "#234240" }
   };
 
   var raw = JSON.parse(document.getElementById("bottle-data").textContent || "[]");
@@ -31,6 +33,17 @@
     shape: "card", ink: "light", showPrint: false,
     picked: list.map(function (b) { return b.id; })
   };
+
+  /* Cards are fixed millimetre shapes, so card text is clamped rather than
+     allowed to overflow. Cuts on a word boundary and adds an ellipsis. */
+  function clamp(text, max) {
+    var t = String(text == null ? "" : text).replace(/\s+/g, " ").trim();
+    if (t.length <= max) return t;
+    var cut = t.slice(0, max);
+    var sp = cut.lastIndexOf(" ");
+    if (sp > max * 0.6) cut = cut.slice(0, sp);
+    return cut.replace(/[,;:.–-]+$/, "") + "…";
+  }
 
   function esc(s) {
     return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
@@ -167,9 +180,9 @@
       '<div style="display:flex;gap:16px;align-items:flex-start;justify-content:space-between">' +
       '<div class="pshot">' + shot + "</div>" +
       '<div style="flex:none;text-align:right">' +
-      '<div style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--color-accent-300)">' +
+      '<div style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--color-accent)">' +
       esc([sel.origin, sel.type].filter(Boolean).join(" \u00b7 ")) + "</div>" +
-      '<div style="font-family:var(--font-heading);font-size:38px;line-height:1;color:var(--color-accent-300);margin-top:12px">' +
+      '<div style="font-family:var(--font-heading);font-size:38px;line-height:1;color:var(--color-accent);margin-top:12px">' +
       score(sel.score) + "</div>" +
       '<div style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--color-neutral-500);margin-top:4px">of 10</div>' +
       "</div></div>" +
@@ -192,8 +205,8 @@
 
   function cardData(w) {
     var c = INK[S.ink];
-    var lightBars = ["#e4e7f5", "#d6d1f4", "#b9b0ea", "#9c90dc", "#7b6dc4", "#5d5294"];
-    var darkBars = ["#33364a", "#4a4275", "#655aa3", "#8579c9", "#a79cf0", "#b5abfc"];
+    var lightBars = ["#dcebe9", "#bcdedb", "#8ecac5", "#57b0a9", "#2a8f88", "#0d6e68"];
+    var darkBars = ["#234240", "#2f5f5b", "#3d8079", "#4ea79d", "#4fd1c5", "#7ce7dd"];
     return {
       c: c,
       name: w.name,
@@ -202,6 +215,9 @@
       line: [w.age, w.abv, w.cask].filter(Boolean).join("  \u00b7  "),
       stack: [[w.age, w.abv].filter(Boolean).join("  \u00b7  "), w.cask].filter(Boolean).join("\n"),
       dateLine: "Tasted " + dLong(w.date),
+      // `cardwords` in the note wins. Without it the card borrows the note's
+      // own "Behind it" prose, so a card always has something to say.
+      words: (w.words || w.story || "").trim(),
       score: score(w.score),
       unit: "out of ten",
       taglineShort: w.tags.slice(0, 3).join("  \u00b7  "),
@@ -240,9 +256,18 @@
     }).join("");
   }
 
+  /* The owner's own words, from `cardwords` in the note or its prose. Nothing
+     renders at all when a note has neither, so the card just closes up. */
+  function wordsHtml(d, max, fs, mt) {
+    if (!d.words) return "";
+    return '<div style="flex:none;margin-top:' + mt + ";padding-left:2mm;border-left:.5mm solid " + d.c.ink +
+      ";font-size:" + fs + ";line-height:1.4;text-align:left;color:" + d.c.fg + '">' +
+      esc(clamp(d.words, max)) + "</div>";
+  }
+
   function shelfCard(d) {
-    return '<div style="width:85mm;height:55mm;overflow:hidden;break-inside:avoid;position:relative;display:flex;' +
-      "flex-direction:column;justify-content:space-between;padding:4.4mm 5mm 0 6.4mm;background:" + d.c.bg +
+    return '<div style="width:95mm;height:62mm;overflow:hidden;break-inside:avoid;position:relative;display:flex;' +
+      "flex-direction:column;justify-content:space-between;padding:4.8mm 5.4mm 0 7mm;background:" + d.c.bg +
       ";border:.25mm solid " + d.c.edge + ";outline:.4mm solid " + d.c.bg + ";color:" + d.c.fg +
       ';font-family:var(--font-body)">' +
       '<div style="position:absolute;top:0;bottom:0;left:0;width:1.4mm;background:' + d.c.ink + '"></div>' +
@@ -250,13 +275,13 @@
       '<div style="flex:1;min-width:0">' +
       '<div style="font-size:4.6pt;font-weight:500;letter-spacing:.18em;text-transform:uppercase;line-height:1;color:' +
       d.c.ink + '">' + esc(d.kicker) + "</div>" +
-      '<div style="font-family:var(--font-heading);font-weight:500;font-size:11pt;line-height:1.1;letter-spacing:-.014em;margin-top:1.8mm">' +
+      '<div style="font-family:var(--font-heading);font-weight:500;font-size:13pt;line-height:1.08;letter-spacing:-.016em;margin-top:1.9mm">' +
       esc(d.name) + "</div>" +
       '<div style="font-size:5.2pt;letter-spacing:.06em;line-height:1.35;margin-top:1.4mm;color:' + d.c.muted + '">' +
       esc(d.line) + "</div></div>" +
-      '<div style="flex:none;width:15.5mm;padding:1.6mm 0 1.7mm;text-align:center;border-radius:1mm;background:' +
+      '<div style="flex:none;width:17.5mm;padding:1.9mm 0 2mm;text-align:center;border-radius:1.4mm;background:' +
       d.c.ink + ";color:" + d.c.onInk + '">' +
-      '<div style="font-family:var(--font-heading);font-size:14pt;line-height:.95;font-variant-numeric:tabular-nums">' +
+      '<div style="font-family:var(--font-heading);font-size:16pt;line-height:.95;font-variant-numeric:tabular-nums">' +
       d.score + "</div>" +
       '<div style="font-size:3.8pt;letter-spacing:.14em;text-indent:.14em;text-transform:uppercase;margin-top:1.1mm;opacity:.85">' +
       d.unit + "</div></div></div>" +
@@ -272,16 +297,17 @@
           '<span style="display:block;height:100%;border-radius:.5mm;background:' + b.fill + ";width:" + b.pct + '%"></span>' +
           "</span></div>";
       }).join("") + "</div>" +
-      '<div style="flex:none;display:flex;justify-content:space-between;align-items:baseline;gap:3mm;width:85mm;' +
-      "margin:1.8mm 0 0 -6.4mm;padding:1.8mm 5mm 1.6mm 6.4mm;background:" + d.c.soft +
+      wordsHtml(d, 96, "5pt", "0.9mm") +
+      '<div style="flex:none;display:flex;justify-content:space-between;align-items:baseline;gap:3mm;width:95mm;' +
+      "margin:1.8mm 0 0 -7mm;padding:1.8mm 5.4mm 1.6mm 7mm;background:" + d.c.soft +
       ";border-top:.25mm solid " + d.c.rule + ";font-size:4pt;letter-spacing:.16em;text-transform:uppercase;color:" +
       d.c.muted + '">' +
       "<span>" + esc(d.dateLine) + '</span><span style="color:' + d.c.ink + '">' + esc(d.taglineShort) + "</span></div></div>";
   }
 
   function hangTag(d) {
-    return '<div style="width:40mm;height:88mm;overflow:hidden;break-inside:avoid;position:relative;display:flex;' +
-      "flex-direction:column;align-items:center;justify-content:space-between;padding:9.6mm 4.4mm 0;background:" + d.c.bg +
+    return '<div style="width:46mm;height:96mm;overflow:hidden;break-inside:avoid;position:relative;display:flex;' +
+      "flex-direction:column;align-items:center;justify-content:space-between;padding:10mm 4.8mm 0;background:" + d.c.bg +
       ";border:.25mm solid " + d.c.edge + ";color:" + d.c.fg + ';font-family:var(--font-body);text-align:center">' +
       '<span style="position:absolute;top:0;left:0;right:0;height:1.4mm;background:' + d.c.ink + '"></span>' +
       '<span style="position:absolute;top:5mm;left:50%;width:2.6mm;height:2.6mm;margin-left:-1.3mm;border-radius:50%;border:.3mm solid ' +
@@ -289,19 +315,20 @@
       '<span style="position:relative;flex:none;display:flex;flex-direction:column;align-items:center">' +
       '<span style="font-size:4.4pt;font-weight:500;letter-spacing:.2em;text-indent:.2em;text-transform:uppercase;line-height:1;color:' +
       d.c.ink + '">' + esc(d.origin) + "</span>" +
-      '<span style="font-family:var(--font-heading);font-size:8.5pt;font-weight:500;line-height:1.14;letter-spacing:-.01em;margin-top:2.4mm;text-wrap:balance">' +
+      '<span style="font-family:var(--font-heading);font-size:10pt;font-weight:500;line-height:1.12;letter-spacing:-.012em;margin-top:2.4mm;text-wrap:balance">' +
       esc(d.name) + "</span>" +
       '<span style="width:7mm;height:.5mm;background:' + d.c.ink + ';margin:2.4mm 0"></span>' +
       '<span style="white-space:pre-line;font-size:4.6pt;letter-spacing:.14em;text-transform:uppercase;line-height:1.5;color:' +
       d.c.muted + '">' + esc(d.stack) + "</span></span>" +
       '<span style="position:relative;flex:none;display:flex;flex-direction:column;align-items:center;justify-content:center;' +
-      "width:20mm;height:20mm;border-radius:50%;background:" + d.c.ink + ";color:" + d.c.onInk + '">' +
-      '<span style="font-family:var(--font-heading);font-size:15pt;line-height:1;font-variant-numeric:tabular-nums">' + d.score + "</span>" +
+      "width:23mm;height:23mm;border-radius:50%;background:" + d.c.ink + ";color:" + d.c.onInk + '">' +
+      '<span style="font-family:var(--font-heading);font-size:17pt;line-height:1;font-variant-numeric:tabular-nums">' + d.score + "</span>" +
       '<span style="font-size:3.6pt;letter-spacing:.18em;text-indent:.18em;text-transform:uppercase;margin-top:1.2mm;opacity:.85">' +
       d.unit + "</span></span>" +
-      '<span style="position:relative;flex:none;display:flex;flex-direction:column;gap:1.1mm;width:28mm">' +
+      '<span style="position:relative;flex:none;display:flex;flex-direction:column;gap:1.1mm;width:33mm">' +
       barsHtml(d, "8.5mm", "3.8pt") + "</span>" +
-      '<span style="position:relative;flex:none;width:40mm;margin:0 -4.4mm;padding:2.4mm 3.6mm 2.2mm;background:' +
+      wordsHtml(d, 72, "4.6pt", "1.4mm") +
+      '<span style="position:relative;flex:none;width:46mm;margin:0 -4.8mm;padding:2.4mm 4mm 2.2mm;background:' +
       d.c.soft + ";border-top:.25mm solid " + d.c.rule + '">' +
       '<span style="display:block;font-size:4.8pt;line-height:1.5;letter-spacing:.02em;color:' + d.c.fg + '">' +
       esc(d.taglineShort) + "</span>" +
@@ -324,24 +351,25 @@
         esc(n.label) + "</span>" +
         '<span style="display:block;font-size:5pt;line-height:1.4;margin-top:.6mm">' + esc(n.text) + "</span></span>";
     }).join("");
-    return '<div style="width:50mm;height:100mm;overflow:hidden;break-inside:avoid;position:relative;display:flex;' +
-      "flex-direction:column;align-items:center;justify-content:space-between;padding:6.4mm 5mm 0;background:" + d.c.bg +
+    return '<div style="width:56mm;height:110mm;overflow:hidden;break-inside:avoid;position:relative;display:flex;' +
+      "flex-direction:column;align-items:center;justify-content:space-between;padding:6.8mm 5.4mm 0;background:" + d.c.bg +
       ";border:.25mm solid " + d.c.edge + ";color:" + d.c.fg + ';font-family:var(--font-body);text-align:center">' +
       '<span style="position:absolute;top:0;left:0;right:0;height:1.6mm;background:' + d.c.ink + '"></span>' +
       '<span style="flex:none;display:flex;flex-direction:column;align-items:center;width:100%">' +
       '<span style="font-size:4.6pt;font-weight:500;letter-spacing:.2em;text-indent:.2em;text-transform:uppercase;line-height:1;color:' +
       d.c.ink + '">' + esc(d.kicker) + "</span>" +
-      '<span style="font-family:var(--font-heading);font-size:10pt;font-weight:500;line-height:1.14;letter-spacing:-.01em;margin-top:2.6mm;text-wrap:balance">' +
+      '<span style="font-family:var(--font-heading);font-size:12pt;font-weight:500;line-height:1.12;letter-spacing:-.014em;margin-top:2.6mm;text-wrap:balance">' +
       esc(d.name) + "</span>" +
-      '<span style="display:flex;flex-direction:column;align-items:center;justify-content:center;width:16mm;height:16mm;margin-top:3mm;border-radius:50%;background:' +
+      '<span style="display:flex;flex-direction:column;align-items:center;justify-content:center;width:19mm;height:19mm;margin-top:3mm;border-radius:50%;background:' +
       d.c.ink + ";color:" + d.c.onInk + '">' +
-      '<span style="font-family:var(--font-heading);font-size:13pt;line-height:1;font-variant-numeric:tabular-nums">' + d.score + "</span>" +
+      '<span style="font-family:var(--font-heading);font-size:15pt;line-height:1;font-variant-numeric:tabular-nums">' + d.score + "</span>" +
       '<span style="font-size:3.6pt;letter-spacing:.18em;text-indent:.18em;text-transform:uppercase;margin-top:1.2mm;opacity:.85">' +
       d.unit + "</span></span></span>" +
       '<span style="flex:none;display:flex;flex-direction:column;gap:1.3mm;width:100%">' + specs + "</span>" +
       '<span style="flex:none;display:grid;grid-template-columns:repeat(2,1fr);gap:1.1mm 3mm;width:100%">' + barsHtml(d, "7.5mm", "3.6pt") + "</span>" +
       '<span style="flex:none;display:flex;flex-direction:column;gap:1.2mm;width:100%">' + notes + "</span>" +
-      '<span style="flex:none;width:50mm;margin:0 -5mm;padding:2.4mm 4mm 2.2mm;background:' + d.c.soft +
+      wordsHtml(d, 124, "4.8pt", "1.4mm") +
+      '<span style="flex:none;width:56mm;margin:0 -5.4mm;padding:2.4mm 4.4mm 2.2mm;background:' + d.c.soft +
       ";border-top:.25mm solid " + d.c.rule +
       ";font-size:4pt;letter-spacing:.16em;text-indent:.16em;text-transform:uppercase;color:" + d.c.muted + '">' +
       esc(d.dateLine) + "</span></div>";
@@ -349,7 +377,7 @@
 
   function sheetHtml() {
     var draw = S.shape === "card" ? shelfCard : S.shape === "tag2" ? hangTag : classicTag;
-    var cols = S.shape === "card" ? "repeat(auto-fill, 85mm)" : S.shape === "tag2" ? "repeat(auto-fill, 40mm)" : "repeat(auto-fill, 50mm)";
+    var cols = S.shape === "card" ? "repeat(auto-fill, 95mm)" : S.shape === "tag2" ? "repeat(auto-fill, 46mm)" : "repeat(auto-fill, 56mm)";
     var el = document.getElementById("sheet");
     el.style.gridTemplateColumns = cols;
     el.style.gap = "4mm";

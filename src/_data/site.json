@@ -1,7 +1,7 @@
 {
   "title": "Shinology",
   "tagline": "I taste whisky, write it down, and build small things.",
-  "description": "Shinology: whisky notes, writing, and small things I build.",
+  "description": "My thought, my sharing, my expression",
   "author": "Shin",
   "email": "dinhsinh.le@outlook.com",
   "whisky": {
@@ -31,5 +31,6 @@
       "label": "Email",
       "url": "mailto:dinhsinh.le@outlook.com"
     }
-  ]
+  ],
+  "headline": "Shinology by Shin"
 }

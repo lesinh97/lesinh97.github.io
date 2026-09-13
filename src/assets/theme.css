@@ -1,41 +1,124 @@
-/* Site theme: Nocturne tuned to the Cara palette, plus the shared shell.
-   This file is the ONE place the tokens are set. It used to be a `html:root`
-   block copy-pasted into two templates; every page now links this instead. */
+/* Site theme: Nocturne retuned to the palette the old Gatsby Cara site used,
+   lifted verbatim from its theme-ui variables. Two colour modes, dark first.
+   This is the ONE place the tokens are set; no page defines its own block. */
 
-html:root {
-  /* Cara's ground: a deep navy, not a neutral black. */
-  --color-bg: #141821;
-  --color-surface: #1b2130;
-  --color-surface-2: #212939;
-  --color-text: #dfe5f3;
-  --color-accent: #8b7fe8;
-  --color-divider: color-mix(in srgb, #dfe5f3 14%, transparent);
+:root {
+  /* Cara's icon palette. Same in both modes, and the reason the homepage
+     reads as playful rather than grey: the floating shapes each take one. */
+  --ic-red: #e53e3e;
+  --ic-blue: #3182ce;
+  --ic-orange: #ed8936;
+  --ic-yellow: #ecc94b;
+  --ic-pink: #ed64a6;
+  --ic-purple: #805ad5;
+  --ic-green: #48bb78;
 
-  /* Neutral ramp, re-pitched to the navy ground. 100 is lightest. */
-  --color-neutral-100: #f2f5fd; --color-neutral-200: #dfe5f3; --color-neutral-300: #c3cbe0;
-  --color-neutral-400: #a3accb; --color-neutral-500: #8590b3; --color-neutral-600: #69749a;
-  --color-neutral-700: #4b5673; --color-neutral-800: #323b52; --color-neutral-900: #212939;
-
-  --shadow-sm: 0 0 0 1px rgba(223, 229, 243, 0.09);
-  --shadow-md: 0 0 0 1px rgba(223, 229, 243, 0.10), 0 8px 24px rgba(5, 8, 14, 0.55);
-  --shadow-lg: 0 0 0 1px rgba(223, 229, 243, 0.12), 0 18px 48px rgba(5, 8, 14, 0.68);
+  --shell-max: 1280px;
   --radius-md: 10px; --radius-lg: 16px;
 
-  /* Cara's four signature section gradients, in her order. */
+  /* Cara's four section gradients. */
   --grad-1: linear-gradient(to right, #d4145a 0%, #fbb03b 100%);
   --grad-2: linear-gradient(to right, #662d8c 0%, #ed1e79 100%);
   --grad-3: linear-gradient(to right, #009245 0%, #fcee21 100%);
   --grad-4: linear-gradient(to right, #d585ff 0%, #00ffee 100%);
-
-  --shell-max: 1280px;
 }
+
+/* ---------- dark, the default, as the old site shipped ---------- */
+
+:root, :root[data-theme="dark"] {
+  --color-bg: #141821;
+  --color-surface: #1c212e;
+  --color-surface-2: #232936;
+  --color-text: #e2e8f0;
+  --color-heading: #ffffff;
+  --color-accent: #f6ad55;
+  --color-accent-strong: #ed8936;
+  --color-divider: #2d3748;
+
+  /* 100 is the most contrast against the ground, 900 the least. */
+  --color-neutral-100: #f7fafc; --color-neutral-200: #edf2f7; --color-neutral-300: #e2e8f0;
+  --color-neutral-400: #cbd5e0; --color-neutral-500: #a0aec0; --color-neutral-600: #718096;
+  --color-neutral-700: #4a5568; --color-neutral-800: #2d3748; --color-neutral-900: #1a202c;
+
+  --shape-ink: #ffffff;
+  --shadow-sm: 0 0 0 1px rgba(226, 232, 240, 0.10);
+  --shadow-md: 0 0 0 1px rgba(226, 232, 240, 0.10), 0 8px 24px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 0 0 1px rgba(226, 232, 240, 0.13), 0 18px 48px rgba(0, 0, 0, 0.58);
+  --grad-strength: 1;
+  --wash-strength: 0.85;
+
+  /* Flavour bars, dim to bright. Screen only; the print cards carry their
+     own ink. Referenced as var(--bar-N) from inline styles, so they follow
+     the colour mode without app.js having to re-render. */
+  --bar-0: #2d3748; --bar-1: #7c4a22; --bar-2: #a8632a;
+  --bar-3: #d07f34; --bar-4: #ed8936; --bar-5: #f6ad55;
+  --pbar-0: #8a4d1e; --pbar-1: #a8632a; --pbar-2: #c47630;
+  --pbar-3: #ed8936; --pbar-4: #f6ad55; --pbar-5: #fbd38d;
+}
+
+/* ---------- light ---------- */
+
+:root[data-theme="light"] {
+  --color-bg: #f7fafc;
+  --color-surface: #ffffff;
+  --color-surface-2: #edf2f7;
+  --color-text: #2d3748;
+  --color-heading: #000000;
+  --color-accent: #c05621;
+  --color-accent-strong: #9c4221;
+  --color-divider: #e2e8f0;
+
+  /* The ramp flips so every role keeps its meaning: 100 still means the most
+     contrast against the ground, 900 still means a barely-there surface. */
+  --color-neutral-100: #1a202c; --color-neutral-200: #2d3748; --color-neutral-300: #4a5568;
+  --color-neutral-400: #718096; --color-neutral-500: #718096; --color-neutral-600: #a0aec0;
+  --color-neutral-700: #cbd5e0; --color-neutral-800: #e2e8f0; --color-neutral-900: #edf2f7;
+
+  --shape-ink: #2d3748;
+  --shadow-sm: 0 1px 2px rgba(45, 55, 72, 0.08), 0 0 0 1px rgba(45, 55, 72, 0.06);
+  --shadow-md: 0 2px 6px rgba(45, 55, 72, 0.10), 0 1px 2px rgba(45, 55, 72, 0.06);
+  --shadow-lg: 0 10px 30px rgba(45, 55, 72, 0.14), 0 2px 6px rgba(45, 55, 72, 0.08);
+  --grad-strength: 0.75;
+  --wash-strength: 0.5;
+
+  --bar-0: #edf2f7; --bar-1: #fbd38d; --bar-2: #f6ad55;
+  --bar-3: #ed8936; --bar-4: #dd6b20; --bar-5: #c05621;
+  --pbar-0: #f6ad55; --pbar-1: #ed8936; --pbar-2: #dd6b20;
+  --pbar-3: #c05621; --pbar-4: #9c4221; --pbar-5: #7b341e;
+}
+
+/* First visit with no stored choice follows the operating system. */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    --color-bg: #f7fafc; --color-surface: #ffffff; --color-surface-2: #edf2f7;
+    --color-text: #2d3748; --color-heading: #000000;
+    --color-accent: #c05621; --color-accent-strong: #9c4221; --color-divider: #e2e8f0;
+    --color-neutral-100: #1a202c; --color-neutral-200: #2d3748; --color-neutral-300: #4a5568;
+    --color-neutral-400: #718096; --color-neutral-500: #718096; --color-neutral-600: #a0aec0;
+    --color-neutral-700: #cbd5e0; --color-neutral-800: #e2e8f0; --color-neutral-900: #edf2f7;
+    --shape-ink: #2d3748;
+    --shadow-sm: 0 1px 2px rgba(45, 55, 72, 0.08), 0 0 0 1px rgba(45, 55, 72, 0.06);
+    --shadow-md: 0 2px 6px rgba(45, 55, 72, 0.10), 0 1px 2px rgba(45, 55, 72, 0.06);
+    --shadow-lg: 0 10px 30px rgba(45, 55, 72, 0.14), 0 2px 6px rgba(45, 55, 72, 0.08);
+    --grad-strength: 0.75; --wash-strength: 0.5;
+    --bar-0: #edf2f7; --bar-1: #fbd38d; --bar-2: #f6ad55;
+    --bar-3: #ed8936; --bar-4: #dd6b20; --bar-5: #c05621;
+    --pbar-0: #f6ad55; --pbar-1: #ed8936; --pbar-2: #dd6b20;
+    --pbar-3: #c05621; --pbar-4: #9c4221; --pbar-5: #7b341e;
+  }
+}
+
+html { color-scheme: dark; }
+:root[data-theme="light"] { color-scheme: light; }
+@media (prefers-color-scheme: light) { :root:not([data-theme]) { color-scheme: light; } }
 
 body { margin: 0; background: var(--color-bg); color: var(--color-text); font-family: var(--font-body);
        -webkit-font-smoothing: antialiased; }
+h1, h2, h3, h4 { color: var(--color-heading); font-weight: 500; }
 a { color: var(--color-accent); }
-a:hover { color: color-mix(in srgb, var(--color-accent) 70%, #fff); }
+a:hover { color: var(--color-accent-strong); }
 
-/* Scroll chrome, so the dark ground does not get a light browser scrollbar. */
+/* Scroll chrome follows the mode. */
 html { scrollbar-width: thin; scrollbar-color: var(--color-neutral-700) var(--color-bg); }
 ::-webkit-scrollbar { width: 10px; height: 10px; }
 ::-webkit-scrollbar-track { background: var(--color-bg); }
@@ -49,13 +132,38 @@ html { scrollbar-width: thin; scrollbar-color: var(--color-neutral-700) var(--co
 .topnav { position: sticky; top: 0; z-index: 40; backdrop-filter: blur(10px);
           background: color-mix(in srgb, var(--color-bg) 82%, transparent);
           border-bottom: 1px solid var(--color-divider); }
-.topnav .shell { display: flex; align-items: center; gap: 26px; height: 58px; }
-.navbrand { font-family: var(--font-heading); font-weight: 500; font-size: 15px; letter-spacing: 0.18em;
-            text-transform: uppercase; color: var(--color-text); text-decoration: none; margin-right: auto; }
+.topnav .shell { display: flex; align-items: center; gap: 22px; height: 58px; }
+.navbrand { display: inline-flex; align-items: center; gap: 9px; margin-right: auto;
+            font-family: var(--font-heading); font-weight: 500; font-size: 15px; letter-spacing: 0.18em;
+            text-transform: uppercase; color: var(--color-heading); text-decoration: none; }
 .navbrand:hover { color: var(--color-accent); }
-.navlink { font-size: 13.5px; letter-spacing: 0.04em; color: var(--color-neutral-400); text-decoration: none; }
+.navmark { height: 15px; width: auto; flex: none; }
+/* The mark is black line art on transparent, so it inverts for the dark ground. */
+:root:not([data-theme="light"]) .navmark { filter: invert(1); }
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) .navmark { filter: none; } }
+:root[data-theme="dark"] .navmark { filter: invert(1); }
+.navlink { font-size: 13.5px; letter-spacing: 0.04em; color: var(--color-neutral-500); text-decoration: none; }
 .navlink:hover { color: var(--color-text); }
 .navlink[aria-current="page"] { color: var(--color-accent); }
+
+/* ---------- colour mode toggle ---------- */
+
+.modetoggle { flex: none; width: 34px; height: 34px; display: inline-flex; align-items: center;
+              justify-content: center; padding: 0; cursor: pointer; border-radius: 999px;
+              background: transparent; border: 1px solid var(--color-divider);
+              color: var(--color-neutral-500); font-size: 15px; line-height: 1;
+              transition: color .15s ease, border-color .15s ease, background .15s ease; }
+.modetoggle:hover { color: var(--color-accent); border-color: var(--color-accent);
+                    background: color-mix(in srgb, var(--color-accent) 12%, transparent); }
+.modetoggle:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+.modetoggle .i-sun { display: none; }
+.modetoggle .i-moon { display: block; }
+:root[data-theme="light"] .modetoggle .i-sun { display: block; }
+:root[data-theme="light"] .modetoggle .i-moon { display: none; }
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) .modetoggle .i-sun { display: block; }
+  :root:not([data-theme]) .modetoggle .i-moon { display: none; }
+}
 
 /* ---------- shared footer ---------- */
 
@@ -65,13 +173,13 @@ html { scrollbar-width: thin; scrollbar-color: var(--color-neutral-700) var(--co
 .sitefoot a { color: var(--color-neutral-400); text-decoration: none; }
 .sitefoot a:hover { color: var(--color-accent); }
 
-/* ---------- prose, used by blog posts and bottle notes ---------- */
+/* ---------- prose ---------- */
 
 .prose { font-size: 15.5px; line-height: 1.75; color: var(--color-neutral-300); }
 .prose > :first-child { margin-top: 0; }
 .prose p { margin: 0 0 18px; text-wrap: pretty; }
-.prose h2 { font-size: 22px; font-weight: 500; margin: 38px 0 12px; color: var(--color-text); }
-.prose h3 { font-size: 17px; font-weight: 500; margin: 28px 0 10px; color: var(--color-text); }
+.prose h2 { font-size: 22px; margin: 38px 0 12px; }
+.prose h3 { font-size: 17px; margin: 28px 0 10px; }
 .prose ul, .prose ol { margin: 0 0 18px; padding-left: 22px; }
 .prose li { margin-bottom: 7px; }
 .prose blockquote { margin: 22px 0; padding: 2px 0 2px 18px; border-left: 2px solid var(--color-accent);
@@ -86,12 +194,30 @@ html { scrollbar-width: thin; scrollbar-color: var(--color-neutral-700) var(--co
             background: linear-gradient(to right, transparent, var(--color-divider) 24px,
                         var(--color-divider) calc(100% - 24px), transparent); }
 
-/* Rules fade at their ends. */
 .rule, .softrule { border: 0; height: 1px;
   background: linear-gradient(to right, transparent, var(--color-divider) 24px,
               var(--color-divider) calc(100% - 24px), transparent); }
 
 .kicker { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-accent); }
+
+/* ---------- small screens ---------- */
+
+@media (max-width: 560px) {
+  .shell { padding: 0 18px; }
+  .topnav .shell { gap: 13px; height: 54px; }
+  .navbrand { font-size: 13px; letter-spacing: 0.12em; }
+  .navmark { height: 13px; }
+  .navlink { font-size: 12.5px; }
+  .modetoggle { width: 30px; height: 30px; font-size: 14px; }
+}
+@media (max-width: 380px) {
+  .shell { padding: 0 14px; }
+  .topnav .shell { gap: 10px; }
+  .navbrand { font-size: 11.5px; letter-spacing: 0.06em; }
+  .navbrand span { display: none; }
+  .navmark { height: 15px; }
+  .navlink { font-size: 11.5px; }
+}
 
 @media print {
   .topnav, .sitefoot { display: none !important; }

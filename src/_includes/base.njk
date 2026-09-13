@@ -5,9 +5,28 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 {# Bottles carry `name`, posts carry `title`, plain pages set `pageTitle`. #}
 {% set ptitle = pageTitle or name or title %}
-<title>{% if ptitle %}{{ ptitle }} · {{ site.title }}{% else %}{{ site.title }}{% endif %}</title>
+<title>{% if ptitle %}{{ ptitle }} · {{ site.title }}{% else %}{{ site.headline or site.title }}{% endif %}</title>
 <meta name="description" content="{{ pageDescription or summary or site.description }}">
-<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<meta property="og:title" content="{{ ptitle or site.headline or site.title }}">
+<meta property="og:description" content="{{ pageDescription or summary or site.description }}">
+<meta property="og:image" content="/assets/brand/banner.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/assets/brand/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/assets/brand/apple-touch-icon.png">
+{# Set the mode before the first paint, so a light-mode visitor never sees a
+   dark flash. Kept inline and tiny on purpose. #}
+<script>
+  (function () {
+    try {
+      var m = localStorage.getItem("shinology-theme");
+      if (m !== "light" && m !== "dark") {
+        m = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      }
+      document.documentElement.setAttribute("data-theme", m);
+    } catch (e) {}
+  })();
+</script>
 <link rel="stylesheet" href="/assets/nocturne.css">
 <link rel="stylesheet" href="/assets/theme.css">
 {% for href in extraCss %}<link rel="stylesheet" href="{{ href }}">
@@ -20,10 +39,16 @@
 {% if not hideNav %}
 <header class="topnav">
   <div class="shell">
-    <a class="navbrand" href="/">{{ site.title }}</a>
+    <a class="navbrand" href="/">
+      <img class="navmark" src="/assets/brand/mark.png" alt="" aria-hidden="true">
+      <span>{{ site.title }}</span>
+    </a>
     {% for n in site.nav %}
     <a class="navlink" href="{{ n.url }}"{% if n.url == navCurrent %} aria-current="page"{% endif %}>{{ n.label }}</a>
     {% endfor %}
+    <button class="modetoggle" type="button" aria-pressed="false" aria-label="Switch colour mode" title="Switch colour mode">
+      <i class="ph ph-moon i-moon" aria-hidden="true"></i><i class="ph ph-sun i-sun" aria-hidden="true"></i>
+    </button>
   </div>
 </header>
 {% endif %}
@@ -33,12 +58,13 @@
 {% if not hideFooter %}
 <footer class="sitefoot">
   <div class="shell">
-    <span style="margin-right: auto">{{ site.title }}</span>
+    <span style="margin-right: auto">{{ site.headline or site.title }}</span>
     {% for s in site.social %}<a href="{{ s.url }}">{{ s.label }}</a>{% endfor %}
   </div>
 </footer>
 {% endif %}
 
+<script src="/assets/theme-toggle.js"></script>
 {% for src in extraJs %}<script src="{{ src }}"></script>
 {% endfor %}
 </body>
