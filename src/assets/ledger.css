@@ -111,11 +111,15 @@
 
 .sheet { display: none; }
 @media print {
-  @page { margin: 16mm 12mm; }
+  /* Small margin: most printers cannot go under about 5mm, and every extra
+     millimetre is a card that does not fit on the sheet. */
+  @page { margin: 8mm; }
+  html, body { background: #fff !important; }
   .screen { display: none !important; }
   .sheet { display: grid !important; }
-  .page { background: none !important; padding: 0 !important; }
-  body { background: #fff !important; }
+  .page { background: none !important; padding: 0 !important; min-height: 0 !important; }
+  /* Cards pack from the top left rather than floating in the middle. */
+  #sheet { justify-content: start !important; align-content: start !important; }
   * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
 

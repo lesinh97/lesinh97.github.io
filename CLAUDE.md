@@ -126,6 +126,16 @@ they stay black on white paper no matter how dark the screen theme gets. If you 
 check it in print preview at both Letter and A4, and confirm every card still satisfies
 `scrollHeight == clientHeight`.
 
+`color-scheme: dark` on the root gives it a real UA background, which stops `body`'s white
+propagating to the page canvas. The sheet then prints inside a black frame the size of the
+paper. The print block forces `html { color-scheme: light; background: #fff }` for that
+reason: do not remove it.
+
+The page margin is 8mm, about as tight as consumer printers manage, and the sheet packs
+from the top left rather than centring, so a sheet holds as many cards as it can. Each card
+carries a 0.3mm `cut` hairline and there is a 4mm alley between them, which is the room you
+need to get scissors down both sides.
+
 Card width is deliberately *not* a clean `scrollWidth == clientWidth`: the footer strips use
 negative margins to bleed to the card edge. Height is the test that matters.
 
