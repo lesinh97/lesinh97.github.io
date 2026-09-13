@@ -7,6 +7,23 @@ module.exports = function (eleventyConfig) {
     api.getFilteredByGlob("src/bottles/*.md")
   );
 
+  // Same reason posts use `topics` rather than `tags`. Newest first.
+  eleventyConfig.addCollection("posts", (api) =>
+    api
+      .getFilteredByGlob("src/posts/*.md")
+      .sort((a, b) => String(b.data.date).localeCompare(String(a.data.date)))
+  );
+
+  // Dates are quoted strings in the front matter, so they stay plain strings
+  // rather than becoming timestamps in whatever the build machine's zone is.
+  const MONTHS = ["January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"];
+  eleventyConfig.addFilter("readableDate", (value) => {
+    const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(value || ""));
+    if (!m) return value || "";
+    return `${Number(m[3])} ${MONTHS[Number(m[2]) - 1]} ${m[1]}`;
+  });
+
   return {
     dir: { input: "src", output: "_site", includes: "_includes", data: "_data" },
     markdownTemplateEngine: "njk",

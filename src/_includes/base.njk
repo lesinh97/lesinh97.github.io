@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{# Bottles carry `name`, posts carry `title`, plain pages set `pageTitle`. #}
+{% set ptitle = pageTitle or name or title %}
+<title>{% if ptitle %}{{ ptitle }} · {{ site.title }}{% else %}{{ site.title }}{% endif %}</title>
+<meta name="description" content="{{ pageDescription or summary or site.description }}">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/nocturne.css">
+<link rel="stylesheet" href="/assets/theme.css">
+{% for href in extraCss %}<link rel="stylesheet" href="{{ href }}">
+{% endfor %}
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+{% if pageCss %}<style>{{ pageCss | safe }}</style>{% endif %}
+</head>
+<body>
+
+{% if not hideNav %}
+<header class="topnav">
+  <div class="shell">
+    <a class="navbrand" href="/">{{ site.title }}</a>
+    {% for n in site.nav %}
+    <a class="navlink" href="{{ n.url }}"{% if n.url == navCurrent %} aria-current="page"{% endif %}>{{ n.label }}</a>
+    {% endfor %}
+  </div>
+</header>
+{% endif %}
+
+{{ content | safe }}
+
+{% if not hideFooter %}
+<footer class="sitefoot">
+  <div class="shell">
+    <span style="margin-right: auto">{{ site.title }}</span>
+    {% for s in site.social %}<a href="{{ s.url }}">{{ s.label }}</a>{% endfor %}
+  </div>
+</footer>
+{% endif %}
+
+{% for src in extraJs %}<script src="{{ src }}"></script>
+{% endfor %}
+</body>
+</html>

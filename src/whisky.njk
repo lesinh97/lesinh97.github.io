@@ -1,0 +1,50 @@
+---
+layout: base.njk
+navCurrent: /whisky/
+pageTitle: Whisky
+extraCss: ["/assets/ledger.css"]
+extraJs: ["/assets/app.js"]
+permalink: /whisky/index.html
+---
+<div class="page">
+  <div class="screen wrap">
+    <div class="toolbar">
+      <div style="display: flex; align-items: baseline; gap: 10px; margin-right: auto">
+        <span class="kick">{{ site.whisky.title }}</span>
+      </div>
+      <div style="position: relative; width: 240px; max-width: 40vw">
+        <i class="ph ph-magnifying-glass" style="position: absolute; left: 9px; top: 9px; font-size: 15px; color: var(--color-neutral-500)"></i>
+        <input id="q" class="input" placeholder="Search bottles or notes" style="padding-left: 34px; border-radius: 999px; background: var(--color-neutral-900); border-color: transparent">
+      </div>
+      <button class="btn btn-secondary" data-act="openPrint" style="white-space: nowrap; flex: none"><i class="ph ph-printer"></i>Print cards</button>
+    </div>
+    <div class="rule"></div>
+    <div id="body"></div>
+  </div>
+  <div id="sheet" class="sheet"></div>
+  <div id="modal"></div>
+</div>
+
+{# Add a field to the bottle notes and you must add it to this loop too. #}
+<script id="bottle-data" type="application/json">
+[{% for b in collections.bottles %}{
+"path": {{ b.page.fileSlug | dump | safe }},
+"url": {{ b.url | dump | safe }},
+"name": {{ b.data.name | dump | safe }},
+"origin": {{ (b.data.origin or "Unlisted") | dump | safe }},
+"type": {{ (b.data.type or "") | dump | safe }},
+"age": {{ (b.data.age or "") | dump | safe }},
+"abv": {{ (b.data.abv or "") | dump | safe }},
+"cask": {{ (b.data.cask or "") | dump | safe }},
+"date": {{ (b.data.tasted or "") | dump | safe }},
+"price": {{ (b.data.price or 0) | dump | safe }},
+"score": {{ (b.data.score or 0) | dump | safe }},
+"photo": {{ (b.data.photo or "") | dump | safe }},
+"fam": {{ (b.data.fam or {}) | dump | safe }},
+"tags": {{ (b.data.flavours or []) | dump | safe }},
+"nose": {{ (b.data.nose or "") | dump | safe }},
+"palate": {{ (b.data.palate or "") | dump | safe }},
+"finish": {{ (b.data.finish or "") | dump | safe }},
+"story": {{ (b.templateContent | striptags | trim) | dump | safe }}
+}{% if not loop.last %},{% endif %}{% endfor %}]
+</script>

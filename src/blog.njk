@@ -1,0 +1,37 @@
+---
+layout: base.njk
+navCurrent: /blog/
+pageTitle: Blog
+pageDescription: Notes on what I am reading, building and drinking.
+extraCss: ["/assets/blog.css"]
+permalink: /blog/index.html
+---
+<header class="pagehead">
+  <div class="shell">
+    <div class="kicker">Writing</div>
+    <h1>Blog</h1>
+    <p>Notes on what I am reading, building and drinking. Short, irregular,
+      and written mostly for me.</p>
+  </div>
+</header>
+
+<div class="shell">
+  {% set posts = collections.posts %}
+  {% if posts | length %}
+  <div class="postlist">
+    {% for p in posts %}
+    <a class="postrow" href="{{ p.url }}">
+      <div class="meta">
+        <span>{{ p.data.date | readableDate }}</span>
+        {% if p.data.topics %}<span>{{ p.data.topics | join(", ") }}</span>{% endif %}
+      </div>
+      <h2>{{ p.data.title }}</h2>
+      {% if p.data.summary %}<p>{{ p.data.summary }}</p>{% endif %}
+      <span class="more">Read it <i class="ph ph-arrow-right"></i></span>
+    </a>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty">No posts yet. Drop a markdown file in <code>src/posts/</code>.</div>
+  {% endif %}
+</div>

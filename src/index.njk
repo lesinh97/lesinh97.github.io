@@ -1,196 +1,132 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{{ site.title }}</title>
-<link rel="stylesheet" href="/assets/nocturne.css">
-<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
-<style>
-  /* Nocturne, remapped to a light surface: the same palette with the ramps
-     inverted, so every token-driven component flips with it. */
-  html:root {
-    --color-bg: #f4f4f9;
-    --color-surface: #ffffff;
-    --color-text: #1d1f27;
-    --color-accent: #6a5cb0;
-    --color-divider: #dde0eb;
-    --color-neutral-100: #292b31; --color-neutral-200: #3f424d; --color-neutral-300: #4c5060;
-    --color-neutral-400: #5f6373; --color-neutral-500: #5a5e6e; --color-neutral-600: #6b6f80;
-    --color-neutral-700: #cfd3e5; --color-neutral-800: #e4e7f5; --color-neutral-900: #f0f2f8;
-    --color-accent-100: #2b2741; --color-accent-200: #423a6a; --color-accent-300: #5d5294;
-    --color-accent-400: #796cbf; --color-accent-500: #968ae0; --color-accent-600: #b5abfc;
-    --color-accent-700: #d2cefd; --color-accent-800: #e7e5fe; --color-accent-900: #f5f4ff;
-    --radius-md: 10px; --radius-lg: 16px;
-    --shadow-sm: 0 1px 2px rgba(29, 31, 39, 0.08), 0 0 0 1px rgba(29, 31, 39, 0.05);
-    --shadow-md: 0 2px 6px rgba(29, 31, 39, 0.09), 0 1px 2px rgba(29, 31, 39, 0.06);
-    --shadow-lg: 0 10px 30px rgba(29, 31, 39, 0.13), 0 2px 6px rgba(29, 31, 39, 0.07);
-  }
-  body { background: var(--color-bg); margin: 0; }
-  a { color: var(--color-accent-300); }
-  a:hover { color: var(--color-accent-200); }
-  .page { min-height: 100vh; padding-bottom: 64px; color: var(--color-text); font-family: var(--font-body);
-          background: radial-gradient(130% 70% at 10% -12%, #eceaf8 0%, transparent 62%), var(--color-bg); }
-  .wrap { max-width: 1280px; margin: 0 auto; padding: 0 28px; }
-  .topbar { display: flex; align-items: center; gap: 16px; margin-top: 18px; padding: 10px 16px 10px 20px;
-            background: var(--color-surface); border-radius: 999px; box-shadow: var(--shadow-sm); }
-  .brand { font-family: var(--font-heading); font-weight: 500; font-size: 17px; letter-spacing: 0.16em; text-transform: uppercase; }
-  .kick { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-neutral-500); }
-  .rule { height: 26px; }
-  .hero { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 32px; margin-bottom: 30px; }
-  .hero h1 { font-size: 44px; margin: 0 0 8px; letter-spacing: -0.02em; }
-  .hero p { margin: 0; max-width: 46ch; font-size: 14px; color: var(--color-neutral-400); }
-  .stats { display: flex; gap: 34px; padding-bottom: 4px; }
-  .stat-n { font-family: var(--font-heading); font-size: 30px; line-height: 1; }
-  .stat-l { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-neutral-500); margin-top: 6px; }
-  .cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 30px; align-items: start; }
-  .col { min-width: 0; }
-  .lbl { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-neutral-500); }
-  .shelf { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 12px; margin: 9px 0 14px; }
-  .tile { width: 92px; flex: none; }
-  .tile .shot { height: 116px; overflow: hidden; border-radius: var(--radius-sm); background: var(--color-neutral-900);
-                display: flex; align-items: center; justify-content: center; box-shadow: inset 0 0 0 1px var(--color-divider); }
-  .tile .shot img { width: 100%; height: 100%; object-fit: cover; }
-  .tile .shot .ph { font-size: 20px; color: var(--color-neutral-700); }
-  .tile button { display: block; width: 100%; margin-top: 6px; padding: 0; text-align: left; cursor: pointer;
-                 background: transparent; border: 0; font-family: var(--font-heading); font-size: 11.5px; line-height: 1.3;
-                 color: var(--color-neutral-400); }
-  .tile.on .shot { box-shadow: inset 0 0 0 1px var(--color-accent); }
-  .tile.on button { color: var(--color-accent-200); }
-  .chiprow { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 4px; }
-  .chip { cursor: pointer; white-space: nowrap; font-family: var(--font-heading); font-size: 11.5px; letter-spacing: 0.06em; text-transform: uppercase;
-          padding: 6px 13px; border-radius: 999px; background: transparent; color: var(--color-neutral-400);
-          border: 1px solid var(--color-divider); }
-  .chip:hover { border-color: var(--color-accent); }
-  .chip.on { background: color-mix(in srgb, var(--color-accent) 16%, transparent); color: var(--color-accent-200); border-color: var(--color-accent); }
-  .chip.plain { font-family: var(--font-body); text-transform: none; letter-spacing: 0; }
-  .lhead { display: flex; gap: 12px; align-items: center; padding: 14px 4px 8px; font-size: 10px;
-           letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-neutral-500); }
-  .list { max-height: min(70vh, 760px); overflow-y: auto; padding-right: 6px; }
-  /* The default scrollbar is a dark chrome on this light ground. Both scroll
-     regions take their track and thumb from the neutral ramp instead. */
-  .list, .shelf { scrollbar-width: thin; scrollbar-color: var(--color-neutral-700) var(--color-neutral-900); }
-  .list::-webkit-scrollbar, .shelf::-webkit-scrollbar { width: 8px; height: 8px; }
-  .list::-webkit-scrollbar-track, .shelf::-webkit-scrollbar-track {
-    background: var(--color-neutral-900); border-radius: 999px; }
-  .list::-webkit-scrollbar-thumb, .shelf::-webkit-scrollbar-thumb {
-    background: var(--color-neutral-700); border-radius: 999px;
-    border: 2px solid var(--color-neutral-900); background-clip: padding-box; }
-  .list::-webkit-scrollbar-thumb:hover, .shelf::-webkit-scrollbar-thumb:hover {
-    background: color-mix(in srgb, var(--color-neutral-600) 40%, var(--color-neutral-700));
-    background-clip: padding-box; }
-  .list::-webkit-scrollbar-corner, .shelf::-webkit-scrollbar-corner { background: transparent; }
-  .ghead { position: sticky; top: 0; z-index: 2; display: flex; align-items: baseline; gap: 10px; padding: 9px 4px 7px;
-           background: var(--color-bg); border-bottom: 1px solid var(--color-divider); }
-  .ghead b { font-family: var(--font-heading); font-weight: 500; font-size: 11px; letter-spacing: 0.14em;
-             text-transform: uppercase; color: var(--color-accent-300); }
-  .ghead span { font-size: 11px; color: var(--color-neutral-500); }
-  .row { display: flex; gap: 12px; align-items: center; padding: 10px 4px; cursor: pointer; border-radius: 6px;
-         border-bottom: 1px solid color-mix(in srgb, var(--color-text) 7%, transparent); }
-  .row:hover { background: color-mix(in srgb, var(--color-text) 5%, transparent); }
-  .row.on { background: color-mix(in srgb, var(--color-accent) 9%, transparent); box-shadow: inset 2px 0 0 0 var(--color-accent); }
-  .init { width: 30px; height: 38px; flex: none; display: flex; align-items: center; justify-content: center; border-radius: 3px;
-          font-family: var(--font-heading); font-size: 11px; letter-spacing: 0.04em;
-          background: var(--color-neutral-900); color: var(--color-neutral-400); }
-  .row.on .init { background: color-mix(in srgb, var(--color-accent) 24%, transparent); color: var(--color-accent-200); }
-  .rname { display: block; font-family: var(--font-heading); font-size: 15px; line-height: 1.25; }
-  .row.on .rname { color: var(--color-accent-200); }
-  .rsub { display: block; font-size: 11.5px; color: var(--color-neutral-500); margin-top: 2px; }
-  .spark { width: 72px; flex: none; display: flex; gap: 3px; align-items: flex-end; height: 22px; }
-  .spark i { flex: 1; border-radius: 1px; }
-  .rgo { width: 26px; height: 26px; flex: none; display: flex; align-items: center; justify-content: center;
-         border-radius: 999px; text-decoration: none; font-size: 14px; color: var(--color-neutral-600);
-         opacity: 0; transition: opacity .12s linear; }
-  .row:hover .rgo, .row.on .rgo, .rgo:focus-visible { opacity: 1; }
-  .rgo:hover { color: var(--color-accent-300); background: color-mix(in srgb, var(--color-accent) 12%, transparent); }
-  .rgo:focus-visible { outline: 1px solid var(--color-accent); outline-offset: 1px; }
-  @media (hover: none) { .rgo { opacity: 1; } }
-  .rscore { width: 36px; flex: none; text-align: right; font-family: var(--font-heading); font-size: 15px;
-            font-variant-numeric: tabular-nums; color: var(--color-neutral-300); }
-  .row.on .rscore { color: var(--color-accent-300); }
-  .foot { display: flex; justify-content: space-between; padding: 12px 4px 0; font-size: 11px; color: var(--color-neutral-500); }
-  .panel { position: sticky; top: 22px; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-md);
-           background: var(--color-surface); }
-  .phead { padding: 24px 24px 20px;
-           background: radial-gradient(90% 120% at 100% 0%, color-mix(in srgb, var(--color-accent) 16%, transparent) 0%, transparent 70%); }
-  .phead h2 { font-size: 26px; margin: 16px 0 0; letter-spacing: -0.015em; text-wrap: balance; }
-  .pshot { width: 68px; height: 96px; flex: none; overflow: hidden; border-radius: var(--radius-sm);
-           background: var(--color-neutral-900); box-shadow: var(--shadow-sm); display: flex; align-items: center; justify-content: center; }
-  .pshot img { width: 100%; height: 100%; object-fit: cover; }
-  .pshot .ph { font-size: 22px; color: var(--color-neutral-700); }
-  .facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(88px, 1fr)); gap: 1px; background: var(--color-divider); }
-  .fact { background: var(--color-surface); padding: 12px 14px; }
-  .fact b { display: block; font-family: var(--font-heading); font-weight: 500; font-size: 14px; margin-top: 4px;
-            font-variant-numeric: tabular-nums; white-space: nowrap; }
-  .fact span { font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-neutral-500); }
-  .pbody { padding: 22px 24px 26px; }
-  .fbar { display: flex; align-items: center; gap: 12px; }
-  .fbar > span:first-child { width: 132px; flex: none; font-size: 12px; color: var(--color-neutral-300); }
-  .track { flex: 1; height: 5px; border-radius: 3px; background: var(--color-neutral-900); overflow: hidden; }
-  .track i { display: block; height: 100%; border-radius: 3px; transition: width .45s cubic-bezier(.2,.7,.2,1); }
-  .fval { width: 22px; flex: none; text-align: right; font-size: 11px; font-variant-numeric: tabular-nums; color: var(--color-neutral-500); }
-  .softrule { height: 1px; margin: 24px 0 22px;
-              background: linear-gradient(to right, transparent, var(--color-divider) 24px, var(--color-divider) calc(100% - 24px), transparent); }
-  .note { display: flex; gap: 14px; }
-  .note > span { width: 52px; flex: none; padding-top: 2px; font-size: 10px; letter-spacing: 0.12em;
-                 text-transform: uppercase; color: var(--color-accent-300); }
-  .note p { margin: 0; flex: 1; font-size: 13.5px; line-height: 1.6; color: var(--color-neutral-200); text-wrap: pretty; }
-  .note.dim > span { color: var(--color-neutral-500); }
-  .note.dim p { font-size: 12.5px; color: var(--color-neutral-400); }
-  .sheet { display: none; }
-  @media print {
-    @page { margin: 16mm 12mm; }
-    .screen { display: none !important; }
-    .sheet { display: grid !important; }
-    .page { min-height: 0 !important; background: none !important; padding: 0 !important; }
-    body { background: #fff !important; }
-    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  }
-</style>
-</head>
-<body>
-<div class="page">
-  <div class="screen wrap">
-    <div class="topbar">
-      <div style="display: flex; align-items: baseline; gap: 10px; margin-right: auto">
-        <span class="brand">{{ site.title }}</span>
-        <span class="kick">Tasting journal</span>
-      </div>
-      <div style="position: relative; width: 240px; max-width: 40vw">
-        <i class="ph ph-magnifying-glass" style="position: absolute; left: 9px; top: 9px; font-size: 15px; color: var(--color-neutral-500)"></i>
-        <input id="q" class="input" placeholder="Search bottles or notes" style="padding-left: 34px; border-radius: 999px; background: var(--color-neutral-900); border-color: transparent">
-      </div>
-      <button class="btn btn-secondary" data-act="openPrint" style="white-space: nowrap; flex: none"><i class="ph ph-printer"></i>Print cards</button>
-    </div>
-    <div class="rule"></div>
-    <div id="body"></div>
-  </div>
-  <div id="sheet" class="sheet"></div>
-  <div id="modal"></div>
-</div>
+---
+layout: base.njk
+navCurrent: /
+extraCss: ["/assets/cara.css"]
+extraJs: ["/assets/parallax.js"]
+permalink: /index.html
+---
+{# Cara's four movements: intro, the things, about, contact. Each section is a
+   .px-page; the .px-layer inside it drifts against the scroll at data-speed. #}
 
-<script id="bottle-data" type="application/json">
-[{% for b in collections.bottles %}{
-"path": {{ b.page.fileSlug | dump | safe }},
-"url": {{ b.url | dump | safe }},
-"name": {{ b.data.name | dump | safe }},
-"origin": {{ (b.data.origin or "Unlisted") | dump | safe }},
-"type": {{ (b.data.type or "") | dump | safe }},
-"age": {{ (b.data.age or "") | dump | safe }},
-"abv": {{ (b.data.abv or "") | dump | safe }},
-"cask": {{ (b.data.cask or "") | dump | safe }},
-"date": {{ (b.data.tasted or "") | dump | safe }},
-"price": {{ (b.data.price or 0) | dump | safe }},
-"score": {{ (b.data.score or 0) | dump | safe }},
-"photo": {{ (b.data.photo or "") | dump | safe }},
-"fam": {{ (b.data.fam or {}) | dump | safe }},
-"tags": {{ (b.data.flavours or []) | dump | safe }},
-"nose": {{ (b.data.nose or "") | dump | safe }},
-"palate": {{ (b.data.palate or "") | dump | safe }},
-"finish": {{ (b.data.finish or "") | dump | safe }},
-"story": {{ (b.templateContent | striptags | trim) | dump | safe }}
-}{% if not loop.last %},{% endif %}{% endfor %}]
-</script>
-<script src="/assets/app.js"></script>
-</body>
-</html>
+<main class="px">
+
+  {# ---------- intro ---------- #}
+  <section class="px-page" id="intro">
+    <div class="px-divider wash g1"><span></span></div>
+    <div class="px-layer" data-speed="0.22">
+      <span class="shape line a-updownwide" style="top: 16%; left: 8%; width: 64px; height: 64px; opacity: .5">
+        <svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="20"/></svg></span>
+      <span class="shape fill a-updown" style="bottom: 9%; left: 34%; width: 26px; height: 26px; opacity: .35">
+        <svg viewBox="0 0 44 44"><polygon points="22,4 40,38 4,38"/></svg></span>
+      <span class="shape line a-spin" style="top: 24%; right: 16%; width: 96px; height: 96px; opacity: .35">
+        <svg viewBox="0 0 44 44"><rect x="6" y="6" width="32" height="32"/></svg></span>
+    </div>
+    <div class="px-layer" data-speed="0.45">
+      <span class="shape fill a-updown" style="top: 74%; right: 24%; width: 18px; height: 18px; opacity: .45">
+        <svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="20"/></svg></span>
+      <span class="shape line a-updownwide" style="top: 8%; right: 38%; width: 42px; height: 42px; opacity: .3">
+        <svg viewBox="0 0 44 44"><polygon points="22,3 41,13 41,31 22,41 3,31 3,13"/></svg></span>
+    </div>
+
+    <div class="px-inner shell">
+      <div class="hello">Hello</div>
+      <h1 class="introline">I am {{ site.author }}.</h1>
+      <p class="introsub">
+        I keep a <a href="/whisky/">whisky tasting journal</a>, write the odd
+        <a href="/blog/">post</a>, and build small things that do one job well.
+      </p>
+      <a class="scrollcue" href="#things">Have a look <i class="ph ph-arrow-down"></i></a>
+    </div>
+  </section>
+
+  {# ---------- the things ---------- #}
+  <section class="px-page" id="things">
+    <div class="px-divider soft g2"><span></span></div>
+    <div class="px-layer" data-speed="0.3">
+      <span class="shape line a-updownwide" style="top: 12%; right: 8%; width: 78px; height: 78px; opacity: .35">
+        <svg viewBox="0 0 44 44"><polygon points="22,4 40,38 4,38"/></svg></span>
+      <span class="shape fill a-updown" style="bottom: 14%; left: 6%; width: 22px; height: 22px; opacity: .4">
+        <svg viewBox="0 0 44 44"><rect x="4" y="4" width="36" height="36" rx="6"/></svg></span>
+    </div>
+
+    <div class="px-inner shell">
+      <h2 class="px-h">The things</h2>
+      <p class="px-lede">Two of them are worth your time. The rest is in progress.</p>
+
+      <div class="cards">
+        <a class="pcard g2" href="/whisky/">
+          <span class="kicker">{{ collections.bottles | length }} bottles</span>
+          <b>{{ site.whisky.title }}</b>
+          <p>Every dram I have sat down with, scored and written up. Search it, filter it,
+            print a shelf card for the bottle in your hand.</p>
+          <span class="go">Open the ledger <i class="ph ph-arrow-right"></i></span>
+        </a>
+
+        <a class="pcard g1" href="/blog/">
+          <span class="kicker">{{ collections.posts | length }} post{% if collections.posts | length != 1 %}s{% endif %}</span>
+          <b>Writing</b>
+          <p>Notes on what I am reading, building and drinking. Short, irregular,
+            and written mostly for me.</p>
+          <span class="go">Read the blog <i class="ph ph-arrow-right"></i></span>
+        </a>
+
+        <a class="pcard g4" href="#about">
+          <span class="kicker">Who</span>
+          <b>About me</b>
+          <p>The short version, one scroll down.</p>
+          <span class="go">Keep going <i class="ph ph-arrow-down"></i></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  {# ---------- about ---------- #}
+  <section class="px-page" id="about">
+    <div class="px-divider soft g3"><span></span></div>
+    <div class="px-layer" data-speed="0.26">
+      <span class="shape line a-spin-slow" style="top: 9%; right: 7%; width: 110px; height: 110px; opacity: .28">
+        <svg viewBox="0 0 44 44"><polygon points="22,3 41,13 41,31 22,41 3,31 3,13"/></svg></span>
+      <span class="shape fill a-updownwide" style="bottom: 14%; left: 9%; width: 20px; height: 20px; opacity: .4">
+        <svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="20"/></svg></span>
+    </div>
+
+    <div class="px-inner shell">
+      <h2 class="px-h">About</h2>
+      <div class="about">
+        <div class="avatar">{{ site.author | first }}</div>
+        <div class="aboutbody">
+          <p>I am {{ site.author }}. By day I work on software. By evening I pour something
+            peaty, write down what I taste, and argue with myself about whether it was worth
+            the money.</p>
+          <p>This site is deliberately small: flat markdown files, a static site generator,
+            no database and no framework. If a thing can be a file, it is a file.</p>
+          <p>The whisky ledger is the part I actually maintain. Everything else here comes
+            and goes.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {# ---------- contact ---------- #}
+  <section class="px-page" id="contact">
+    <div class="px-divider soft g4"><span></span></div>
+    <div class="px-layer" data-speed="0.2">
+      <span class="shape line a-updownwide" style="top: 22%; right: 10%; width: 70px; height: 70px; opacity: .3">
+        <svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="20"/></svg></span>
+      <span class="shape fill a-updown" style="bottom: 11%; left: 16%; width: 24px; height: 24px; opacity: .35">
+        <svg viewBox="0 0 44 44"><polygon points="22,4 40,38 4,38"/></svg></span>
+    </div>
+
+    <div class="px-inner shell">
+      <h2 class="px-h">Say hello</h2>
+      <p class="px-lede">Whisky recommendations especially welcome.</p>
+      <a class="bigmail" href="mailto:{{ site.email }}">{{ site.email }}</a>
+      <div class="links">
+        {% for s in site.social %}<a href="{{ s.url }}">{{ s.label }}</a>{% endfor %}
+        <a href="/whisky/">Whisky</a>
+        <a href="/blog/">Blog</a>
+      </div>
+    </div>
+  </section>
+
+</main>

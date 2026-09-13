@@ -1,4 +1,20 @@
 {
-  "title": "Dram Ledger",
-  "description": "A whisky tasting journal"
+  "title": "Shin",
+  "tagline": "I taste whisky, write it down, and build small things.",
+  "description": "Personal site: whisky notes, writing, and small things I build.",
+  "author": "Shin",
+  "email": "dinhsinh.le@gmail.com",
+  "whisky": {
+    "title": "Dram Ledger",
+    "description": "A whisky tasting journal"
+  },
+  "nav": [
+    { "label": "Home", "url": "/" },
+    { "label": "Whisky", "url": "/whisky/" },
+    { "label": "Blog", "url": "/blog/" }
+  ],
+  "social": [
+    { "label": "GitHub", "url": "https://github.com/" },
+    { "label": "Email", "url": "mailto:dinhsinh.le@gmail.com" }
+  ]
 }
