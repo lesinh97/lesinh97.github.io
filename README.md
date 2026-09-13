@@ -107,7 +107,7 @@ fam:
   malt: 3
   peat: 0
 flavours: ["Mincemeat", "Cinnamon", "Marmalade", "Ginger"]
-cardwords: "The one I pour when someone says they do not like sherry casks."
+keynote: "The one I pour when someone says they do not like sherry casks."
 nose: "Mincemeat and cinnamon toast, a little orange marmalade."
 palate: "Sweet sherry and baking spice, honeyed malt underneath."
 finish: "Medium-long, ginger warmth."
@@ -120,8 +120,8 @@ Field notes:
 
 - `tasted` must be quoted, otherwise YAML turns it into a timestamp.
 - `flavours`, not `tags`, for the same reason posts use `topics`.
-- `cardwords` is one or two sentences printed on the bottle's card. Leave it out and the
-  card falls back to the note's own prose. Long text is trimmed to fit the card.
+- `keynote` is your one-liner for the bottle, printed on its card. Leave it out and the card
+  falls back to the note's own prose. Long text is trimmed to fit.
 - `fam` values are 0 to 5 and drive both the bar chart and the row sparkline.
 - `price` is a plain integer in VND. Leave it out for a dash.
 - `photo` is a site-relative path. Drop the image in `src/assets/bottles/`. Omit for a placeholder.

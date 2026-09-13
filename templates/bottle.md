@@ -17,7 +17,7 @@ fam:
   malt: 0
   peat: 0
 flavours: []
-cardwords: ""
+keynote: ""
 nose: ""
 palate: ""
 finish: ""

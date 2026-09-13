@@ -61,16 +61,16 @@ hex except the Cara gradients and the two JS bar ramps, which are noted where th
 
 ## Colour modes
 
-Two modes, dark first, both lifted verbatim from the old Gatsby site's theme-ui variables
-so the site still looks like itself. `src/assets/theme-toggle.js` owns the switch; an inline
+Two modes, dark first. Navy throughout. The old Gatsby site's warm accent and multicoloured
+shapes are deliberately **not** carried over: they put an orange cast over the whole page. `src/assets/theme-toggle.js` owns the switch; an inline
 script in `base.njk` sets `data-theme` before first paint so light-mode visitors get no dark
 flash. With no stored choice the page follows `prefers-color-scheme`.
 
 | | dark | light |
 | --- | --- | --- |
-| ground | `#141821` | `#f7fafc` |
-| text | `#e2e8f0` | `#2d3748` |
-| accent | `#f6ad55` | `#c05621` |
+| ground | `#0f1626` | `#f6f8fc` |
+| text | `#dde5f2` | `#1f2a3d` |
+| accent | `#7fb2e5` | `#2b5f9e` |
 
 The neutral ramp **flips** between modes so each step keeps its meaning: 100 is always the
 most contrast against the ground, 900 always a barely-there surface. Anything that needs a
@@ -87,8 +87,10 @@ styles so they follow the mode with no re-render. Do not put raw hexes back in `
   look muddy. Use `.b1` / `.b2` / `.b3` bands at full strength; only `.wide` may pass behind
   copy, and it stays faint. Band skew is 6deg: a full-width band sweeps vertically by
   `width * tan(angle)`, so a steeper angle drags it across the text column.
-- The floating shapes take Cara's icon palette (`--ic-red` through `--ic-green`). They are
-  meant to be multicoloured; making them all one neutral is what reads as drab.
+- Everything stays in one cool family. The shapes use `--ic-mist` through `--ic-deep`, which
+  vary by depth and temperature rather than hue, and the four section gradients are all navy.
+  No warm hue anywhere: the check suite fails the build if any painted colour has blue as its
+  weakest channel.
 - One interactive accent, `--color-accent`, as a line, a small fill, or a tonal tint.
 - Buttons are outlined, not filled. Left-aligned, asymmetric layout.
 - Rules fade to transparent at their ends. See `.rule` / `.softrule` in theme.css.
@@ -105,13 +107,14 @@ the whole page wider than the viewport. Every auto-fit grid here uses
 ## Print
 
 `@media print` hides `.screen` and shows `#sheet`, a grid of mm-sized cards. Three shapes:
-shelf card 95x62mm, hang tag 46x96mm, classic tag 56x110mm. Sizes are in mm on purpose.
+shelf card 95x62mm, hang tag 46x96mm, classic tag 56x110mm. Sizes are in mm on purpose. The
+shelf card is deliberately a little over a business card (85x55mm) to carry the keynote.
 
-Card ink is teal and lives in the `INK` table in `app.js`. It is print pigment, not a screen
+Card ink is navy and lives in the `INK` table in `app.js`. It is print pigment, not a screen
 token, so it does **not** follow the colour mode and is the one place raw hexes are correct.
 
-A note's `cardwords` prints on its card; without it the card falls back to the note's own
-prose. Card text is clamped by `clamp()` to fit the fixed millimetre shape, per card type.
+A note's `keynote`, the owner's one-liner, prints on its card; without it the card falls back
+to the note's own prose. Card text is clamped by `clamp()` to fit the fixed millimetre shape, per card type.
 Change a clamp and you must re-check overflow.
 
 The cards set their own colours from the `INK` table in `app.js` and default to `light`, so

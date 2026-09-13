@@ -38,13 +38,13 @@
 /* ---------- floating shapes ---------- */
 
 .shape { position: absolute; display: block; color: var(--shape-ink); }
-.shape.c-red { color: var(--ic-red); }
-.shape.c-blue { color: var(--ic-blue); }
-.shape.c-orange { color: var(--ic-orange); }
-.shape.c-yellow { color: var(--ic-yellow); }
-.shape.c-pink { color: var(--ic-pink); }
-.shape.c-purple { color: var(--ic-purple); }
-.shape.c-green { color: var(--ic-green); }
+.shape.c-mist { color: var(--ic-mist); }
+.shape.c-ice { color: var(--ic-ice); }
+.shape.c-steel { color: var(--ic-steel); }
+.shape.c-azure { color: var(--ic-azure); }
+.shape.c-sapphire { color: var(--ic-sapphire); }
+.shape.c-slate { color: var(--ic-slate); }
+.shape.c-deep { color: var(--ic-deep); }
 .shape svg { display: block; width: 100%; height: 100%; }
 .shape.fill svg { fill: currentColor; stroke: none; }
 .shape.line svg { fill: none; stroke: currentColor; stroke-width: 2.5; }
