@@ -110,6 +110,10 @@ the whole page wider than the viewport. Every auto-fit grid here uses
 shelf card 95x62mm, hang tag 46x96mm, classic tag 56x110mm. Sizes are in mm on purpose. The
 shelf card is deliberately a little over a business card (85x55mm) to carry the keynote.
 
+The cards mirror the bottle page: a radial `wash` behind the header, the score in a filled
+`scoreBlock`, and the tasting notes on their own tinted `notesPanel`. No card carries the
+bottle photo; they are tags, and the photo is a screen-only thing.
+
 Card ink is navy and lives in the `INK` table in `app.js`. It is print pigment, not a screen
 token, so it does **not** follow the colour mode and is the one place raw hexes are correct.
 
