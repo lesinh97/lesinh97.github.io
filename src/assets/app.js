@@ -10,7 +10,10 @@
   ];
   /* Signed in katakana, two characters, echoing the mark in the nav. */
   var SIG = "\u30b7\u30f3";
-  var SIG_FONT = '"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif';
+  /* Single quotes on purpose: this goes inside a style="..." attribute, so
+     double quotes here close the attribute early and silently drop the
+     font-family and every declaration after it. */
+  var SIG_FONT = "'Noto Sans JP','Hiragino Kaku Gothic ProN','Yu Gothic',sans-serif";
 
   var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   var BAR = ["var(--bar-0)", "var(--bar-1)", "var(--bar-2)", "var(--bar-3)", "var(--bar-4)", "var(--bar-5)"];
@@ -22,6 +25,14 @@
     light: { bg: "#ffffff", fg: "#111b2b", muted: "#4e6280", ink: "#1a365d", onInk: "#ffffff", edge: "#93a8c4", rule: "#c6d5e6", soft: "#eef3fa", track: "#dde7f3", wash: "rgba(26,54,93,.18)", cut: "#8fa1b8" },
     dark: { bg: "#0e1726", fg: "#e4ecf8", muted: "#8ba1c0", ink: "#8fc0ec", onInk: "#0e1726", edge: "#3f5472", rule: "#26374f", soft: "#152439", track: "#1f3049", wash: "rgba(143,192,236,.26)", cut: "#6b7f99" }
   };
+
+  /* The cards live in #sheet, which is display:none until print. Browsers do
+     not download webfonts for hidden text, so the signature would fall back
+     to a brush-style system face on the printed page. Ask for the two glyphs
+     up front. */
+  if (document.fonts && document.fonts.load) {
+    document.fonts.load('500 12px "Noto Sans JP"', SIG).catch(function () {});
+  }
 
   var raw = JSON.parse(document.getElementById("bottle-data").textContent || "[]");
   var list = raw.map(function (b) {
@@ -347,14 +358,14 @@
 
       wordsHtml(d, 180, "5pt", "1.5mm") +
 
-      '<div style="position:relative;flex:none;display:flex;justify-content:space-between;align-items:baseline;gap:3mm;width:95mm;' +
-      "margin:1.5mm 0 0 -7mm;padding:1.7mm 5.4mm 1.5mm 7mm;background:" + d.c.soft +
-      ";border-top:.25mm solid " + d.c.rule + ";font-size:4pt;letter-spacing:.16em;text-transform:uppercase;color:" +
+      '<div style="position:relative;flex:none;display:flex;justify-content:space-between;align-items:baseline;gap:3mm;' +
+      "margin:1.5mm -5.4mm 0 -7mm;padding:1.7mm 5.4mm 1.5mm 7mm;background:" + d.c.soft +
+      ";border-top:.25mm solid " + d.c.rule + ";font-size:4.6pt;letter-spacing:.14em;text-transform:uppercase;color:" +
       d.c.muted + '">' +
       '<span style="flex:1;min-width:0">' + esc(d.dateLine) + "</span>" +
       '<span style="flex:none">' + esc(d.taglineShort) + "</span>" +
       '<span style="flex:none;font-family:' + SIG_FONT +
-      ';font-size:6pt;font-weight:500;letter-spacing:.22em;text-indent:.22em;line-height:1;color:' +
+      ';font-size:5.2pt;font-weight:500;letter-spacing:.2em;text-indent:.2em;line-height:1;color:' +
       d.c.ink + '">' + esc(d.sig) + "</span></div></div>";
   }
 
@@ -386,53 +397,14 @@
 
       wordsHtml(d, 180, "4pt", "1.3mm") +
 
-      '<span style="position:relative;flex:none;width:46mm;margin:1.5mm -4.8mm 0;padding:2mm 4mm 1.9mm;background:' +
+      '<span style="position:relative;flex:none;align-self:stretch;margin:1.5mm -4.8mm 0;padding:2mm 4mm 1.9mm;background:' +
       d.c.soft + ";border-top:.25mm solid " + d.c.rule + '">' +
-      signedRow(d, "3.8pt", "5.5pt") + "</span></div>";
-  }
-
-  function classicTag(d) {
-    var specs = d.specs.map(function (sp) {
-      return '<span style="display:flex;align-items:baseline;gap:1.6mm;width:100%">' +
-        '<span style="flex:none;font-size:4.2pt;letter-spacing:.16em;text-transform:uppercase;color:' + d.c.muted + '">' +
-        esc(sp.k) + "</span>" +
-        '<span style="flex:1;height:.2mm;background:' + d.c.rule + ';align-self:center"></span>' +
-        '<span style="flex:none;max-width:30mm;text-align:right;font-size:5.2pt;line-height:1.3;letter-spacing:.02em">' +
-        esc(sp.v) + "</span></span>";
-    }).join("");
-    return '<div style="width:56mm;height:110mm;overflow:hidden;break-inside:avoid;position:relative;display:flex;' +
-      "flex-direction:column;align-items:center;justify-content:space-between;padding:6.4mm 5.4mm 0;background:" + d.c.bg +
-      ";border:.3mm solid " + d.c.cut + ";color:" + d.c.fg + ';font-family:var(--font-body);text-align:center">' +
-      '<span style="position:absolute;inset:0;background:' + wash(d, "110% 28%") + '"></span>' +
-      '<span style="position:absolute;top:0;left:0;right:0;height:1.6mm;background:' + d.c.ink + '"></span>' +
-
-      '<span style="position:relative;flex:none;display:flex;flex-direction:column;align-items:center;width:100%">' +
-      '<span style="font-size:4.6pt;font-weight:500;letter-spacing:.2em;text-indent:.2em;text-transform:uppercase;line-height:1;color:' +
-      d.c.ink + '">' + esc(d.kicker) + "</span>" +
-      '<span style="font-family:var(--font-heading);font-size:11.5pt;font-weight:500;line-height:1.12;letter-spacing:-.014em;margin-top:2.2mm;text-wrap:balance">' +
-      esc(d.name) + "</span>" +
-      '<span style="display:block;width:100%;margin-top:2.4mm">' +
-      scoreBlock(d, "20mm", "1.9mm 0 2mm", "14pt", "3.4pt", "1.6mm", true) +
-      "</span></span>" +
-
-      '<span style="position:relative;flex:none;display:flex;flex-direction:column;gap:1.2mm;width:100%;margin-top:2mm">' + specs + "</span>" +
-
-      '<span style="position:relative;flex:none;display:grid;grid-template-columns:repeat(2,1fr);gap:1mm 3mm;width:100%;margin-top:1.6mm">' +
-      barsHtml(d, "7.5mm", "3.6pt") + "</span>" +
-
-      '<span style="position:relative;flex:none;display:block;width:100%;text-align:left;margin-top:1.6mm">' +
-      notesPanel(d, "7.5mm", "3.6pt", "4.4pt", "1.8mm 2mm") + "</span>" +
-
-      wordsHtml(d, 180, "4.6pt", "1.4mm") +
-
-      '<span style="position:relative;flex:none;width:56mm;margin:1.5mm -5.4mm 0;padding:2.2mm 4.4mm 2mm;background:' + d.c.soft +
-      ";border-top:.25mm solid " + d.c.rule +
-      '">' + signedRow(d, "4pt", "6.5pt") + "</span></div>";
+      signedRow(d, "4.4pt", "5pt") + "</span></div>";
   }
 
   function sheetHtml() {
-    var draw = S.shape === "card" ? shelfCard : S.shape === "tag2" ? hangTag : classicTag;
-    var cols = S.shape === "card" ? "repeat(auto-fill, 95mm)" : S.shape === "tag2" ? "repeat(auto-fill, 46mm)" : "repeat(auto-fill, 56mm)";
+    var draw = S.shape === "tag2" ? hangTag : shelfCard;
+    var cols = S.shape === "tag2" ? "repeat(auto-fill, 46mm)" : "repeat(auto-fill, 95mm)";
     var el = document.getElementById("sheet");
     el.style.gridTemplateColumns = cols;
     // A 4mm alley between cards leaves room for scissors on both cuts.
@@ -447,7 +419,7 @@
 
   function modalHtml() {
     if (!S.showPrint) return "";
-    var shapes = [["card", "Shelf card"], ["tag2", "Hang tag"], ["tag", "Hang tag, classic"]].map(function (k) {
+    var shapes = [["card", "Shelf card"], ["tag2", "Hang tag"]].map(function (k) {
       return '<button class="chip' + (S.shape === k[0] ? " on" : "") + '" data-act="shape" data-v="' + k[0] + '">' + k[1] + "</button>";
     }).join("");
     var inks = [["light", "Light paper"], ["dark", "Dark card"]].map(function (k) {
