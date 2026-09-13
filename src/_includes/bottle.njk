@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ name }} — {{ site.title }}</title>
+<link rel="stylesheet" href="/assets/nocturne.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<style>
+  /* Nocturne, remapped to a light surface. */
+  html:root {
+    --color-bg: #f4f4f9;
+    --color-surface: #ffffff;
+    --color-text: #1d1f27;
+    --color-accent: #6a5cb0;
+    --color-divider: #dde0eb;
+    --color-neutral-100: #292b31; --color-neutral-200: #3f424d; --color-neutral-300: #4c5060;
+    --color-neutral-400: #5f6373; --color-neutral-500: #5a5e6e; --color-neutral-600: #6b6f80;
+    --color-neutral-700: #cfd3e5; --color-neutral-800: #e4e7f5; --color-neutral-900: #f0f2f8;
+    --color-accent-100: #2b2741; --color-accent-200: #423a6a; --color-accent-300: #5d5294;
+    --color-accent-400: #796cbf; --color-accent-500: #968ae0; --color-accent-600: #b5abfc;
+    --color-accent-700: #d2cefd; --color-accent-800: #e7e5fe; --color-accent-900: #f5f4ff;
+    --radius-md: 10px; --radius-lg: 16px;
+    --shadow-sm: 0 1px 2px rgba(29, 31, 39, 0.08), 0 0 0 1px rgba(29, 31, 39, 0.05);
+    --shadow-md: 0 2px 6px rgba(29, 31, 39, 0.09), 0 1px 2px rgba(29, 31, 39, 0.06);
+  }
+  body { margin: 0; background: radial-gradient(130% 70% at 10% -12%, #eceaf8 0%, transparent 62%), var(--color-bg);
+         color: var(--color-text); font-family: var(--font-body); }
+  a { color: var(--color-accent-300); }
+  a:hover { color: var(--color-accent-200); }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 24px 72px; }
+  .bar { display: flex; align-items: center; gap: 14px; margin-top: 18px; padding: 10px 16px 10px 20px;
+         background: var(--color-surface); border-radius: 999px; box-shadow: var(--shadow-sm); }
+  .brand { font-family: var(--font-heading); font-weight: 500; font-size: 15px; letter-spacing: 0.16em;
+           text-transform: uppercase; color: var(--color-text); text-decoration: none; }
+  .sheet { margin-top: 26px; background: var(--color-surface); border-radius: var(--radius-lg);
+           box-shadow: var(--shadow-md); overflow: hidden; }
+  .head { display: flex; align-items: flex-start; gap: 28px; padding: 30px 32px 26px;
+          background: radial-gradient(90% 130% at 100% 0%, color-mix(in srgb, var(--color-accent) 13%, transparent) 0%, transparent 70%); }
+  .kick { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-accent-300); }
+  h1 { font-size: 34px; font-weight: 500; line-height: 1.12; letter-spacing: -0.02em; margin: 14px 0 0; text-wrap: balance; }
+  .line { font-size: 13px; color: var(--color-neutral-400); margin-top: 10px; }
+  .score { flex: none; width: 96px; padding: 14px 0 15px; text-align: center; border-radius: var(--radius-md);
+           background: var(--color-accent-300); color: #fff; }
+  .score b { display: block; font-family: var(--font-heading); font-weight: 500; font-size: 34px; line-height: 1;
+             font-variant-numeric: tabular-nums; }
+  .score span { display: block; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; margin-top: 7px; opacity: 0.88; }
+  .facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 1px; background: var(--color-divider); }
+  .fact { background: var(--color-surface); padding: 14px 16px; }
+  .fact span { font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-neutral-500); }
+  .fact b { display: block; font-family: var(--font-heading); font-weight: 500; font-size: 15px; margin-top: 5px; }
+  .body { padding: 28px 32px 34px; }
+  .lbl { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-neutral-500); }
+  .bars { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px 28px; margin-top: 14px; }
+  .fbar { display: flex; align-items: center; gap: 12px; }
+  .fbar > span:first-child { width: 132px; flex: none; font-size: 12.5px; color: var(--color-neutral-300); }
+  .track { flex: 1; height: 6px; border-radius: 3px; background: var(--color-neutral-900); overflow: hidden; }
+  .track i { display: block; height: 100%; border-radius: 3px; }
+  .fval { width: 18px; flex: none; text-align: right; font-size: 11.5px; color: var(--color-neutral-500);
+          font-variant-numeric: tabular-nums; }
+  .rule { height: 1px; margin: 26px 0; background: linear-gradient(to right, transparent, var(--color-divider) 24px,
+          var(--color-divider) calc(100% - 24px), transparent); }
+  .note { display: flex; gap: 16px; }
+  .note + .note { margin-top: 16px; }
+  .note > span { width: 54px; flex: none; padding-top: 3px; font-size: 10px; letter-spacing: 0.13em;
+                 text-transform: uppercase; color: var(--color-accent-300); }
+  .note p { margin: 0; flex: 1; font-size: 14.5px; line-height: 1.6; text-wrap: pretty; }
+  .prose { font-size: 14.5px; line-height: 1.7; color: var(--color-neutral-300); }
+  .prose p { margin: 0 0 14px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 26px; }
+  .shot { width: 148px; flex: none; border-radius: var(--radius-md); overflow: hidden; background: var(--color-neutral-900); }
+  .shot img { display: block; width: 100%; }
+  @media (max-width: 640px) {
+    .head { flex-direction: column; gap: 20px; padding: 24px; }
+    .body { padding: 24px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="bar">
+    <a class="brand" href="/">{{ site.title }}</a>
+    <span style="flex: 1"></span>
+    <a class="btn btn-secondary" href="/"><i class="ph ph-arrow-left"></i>All bottles</a>
+  </div>
+
+  <article class="sheet">
+    <div class="head">
+      {% if photo %}<div class="shot"><img src="{{ photo }}" alt="{{ name }}"></div>{% endif %}
+      <div style="flex: 1; min-width: 0">
+        <div class="kick">{{ origin }}{% if type %}  ·  {{ type }}{% endif %}</div>
+        <h1>{{ name }}</h1>
+        <div class="line">{{ age }}{% if abv %}  ·  {{ abv }}{% endif %}{% if cask %}  ·  {{ cask }}{% endif %}</div>
+      </div>
+      <div class="score"><b>{{ score }}</b><span>out of ten</span></div>
+    </div>
+
+    <div class="facts">
+      <div class="fact"><span>Tasted</span><b>{{ tasted }}</b></div>
+      <div class="fact"><span>Age</span><b>{{ age or "NAS" }}</b></div>
+      <div class="fact"><span>Strength</span><b>{{ abv or "Not listed" }}</b></div>
+      <div class="fact"><span>Cask</span><b>{{ cask or "Not listed" }}</b></div>
+    </div>
+
+    <div class="body">
+      {% set ramp = ["#e4e7f5", "#cdc6ee", "#b3a9e5", "#9789d6", "#7b6dc4", "#5d5294"] %}
+      {% set rows = [["Fruit & floral", fam.fruit], ["Sweet & creamy", fam.sweet], ["Spice & dried fruit", fam.spice],
+                     ["Oak & nut", fam.oak], ["Malt & grain", fam.malt], ["Smoke & peat", fam.peat]] %}
+      <div class="lbl">Flavour signature</div>
+      <div class="bars">
+        {% for r in rows %}
+        {% set v = r[1] or 0 %}
+        <div class="fbar">
+          <span>{{ r[0] }}</span>
+          <span class="track"><i style="width: {{ v * 20 }}%; background: {{ ramp[v] }}"></i></span>
+          <span class="fval">{{ v }}</span>
+        </div>
+        {% endfor %}
+      </div>
+
+      <div class="rule"></div>
+
+      {% if nose %}<div class="note"><span>Nose</span><p>{{ nose }}</p></div>{% endif %}
+      {% if palate %}<div class="note"><span>Palate</span><p>{{ palate }}</p></div>{% endif %}
+      {% if finish %}<div class="note"><span>Finish</span><p>{{ finish }}</p></div>{% endif %}
+
+      {% if content | striptags | trim %}
+      <div class="rule"></div>
+      <div class="lbl" style="margin-bottom: 12px">Behind it</div>
+      <div class="prose">{{ content | safe }}</div>
+      {% endif %}
+
+      {% if flavours %}
+      <div class="tags">
+        {% for t in flavours %}<span class="tag tag-accent">{{ t }}</span>{% endfor %}
+      </div>
+      {% endif %}
+    </div>
+  </article>
+</div>
+</body>
+</html>
