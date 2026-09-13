@@ -15,8 +15,8 @@
   /* Card ink. These are print colours, not screen tokens: the light set has
      to hold up as real pigment on white paper, so the navy is a deep one. */
   var INK = {
-    light: { bg: "#ffffff", fg: "#111b2b", muted: "#4e6280", ink: "#1a365d", onInk: "#ffffff", edge: "#93a8c4", rule: "#c6d5e6", soft: "#eef3fa", track: "#dde7f3" },
-    dark: { bg: "#0e1726", fg: "#e4ecf8", muted: "#8ba1c0", ink: "#8fc0ec", onInk: "#0e1726", edge: "#3f5472", rule: "#26374f", soft: "#152439", track: "#1f3049" }
+    light: { bg: "#ffffff", fg: "#111b2b", muted: "#4e6280", ink: "#1a365d", onInk: "#ffffff", edge: "#93a8c4", rule: "#c6d5e6", soft: "#eef3fa", track: "#dde7f3", wash: "rgba(26,54,93,.18)" },
+    dark: { bg: "#0e1726", fg: "#e4ecf8", muted: "#8ba1c0", ink: "#8fc0ec", onInk: "#0e1726", edge: "#3f5472", rule: "#26374f", soft: "#152439", track: "#1f3049", wash: "rgba(143,192,236,.26)" }
   };
 
   var raw = JSON.parse(document.getElementById("bottle-data").textContent || "[]");
@@ -266,13 +266,48 @@
       esc(clamp(d.words, max)) + "</div>";
   }
 
+  /* The cards follow the bottle page: a gradient wash behind the header, the
+     score in a filled block, and the tasting notes on their own tinted panel.
+     No photo on any of them, they are tags. */
+
+  function wash(d, size) {
+    return "radial-gradient(" + size + " at 100% 0%, " + d.c.wash + " 0%, transparent 72%)";
+  }
+
+  function scoreBlock(d, w, pad, numFs, unitFs, radius, centred) {
+    return '<div style="flex:none;' + (centred ? "margin:0 auto;" : "") + "width:" + w + ";padding:" + pad +
+      ";text-align:center;border-radius:" + radius + ";background:" + d.c.ink + ";color:" + d.c.onInk + '">' +
+      '<div style="font-family:var(--font-heading);font-weight:500;font-size:' + numFs +
+      ';line-height:.95;font-variant-numeric:tabular-nums">' + d.score + "</div>" +
+      '<div style="font-size:' + unitFs + ';letter-spacing:.14em;text-indent:.14em;text-transform:uppercase;margin-top:1.1mm;opacity:.85">' +
+      d.unit + "</div></div>";
+  }
+
+  /* Notes on a tinted panel with the label in the ink colour, laid out the
+     way the bottle page sets them. */
+  function notesPanel(d, labelW, labelFs, textFs, pad) {
+    if (!d.notes.length) return "";
+    return '<div style="flex:none;display:flex;flex-direction:column;gap:1.3mm;padding:' + pad +
+      ";border-radius:1.2mm;background:" + d.c.soft + '">' +
+      d.notes.map(function (n) {
+        return '<div style="display:flex;gap:2.4mm;align-items:baseline">' +
+          '<span style="width:' + labelW + ";flex:none;font-size:" + labelFs +
+          ";font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:" + d.c.ink + '">' +
+          esc(n.label) + "</span>" +
+          '<span style="flex:1;min-width:0;font-size:' + textFs + ";line-height:1.34;color:" + d.c.fg + '">' +
+          esc(n.text) + "</span></div>";
+      }).join("") + "</div>";
+  }
+
   function shelfCard(d) {
     return '<div style="width:95mm;height:62mm;overflow:hidden;break-inside:avoid;position:relative;display:flex;' +
-      "flex-direction:column;justify-content:space-between;padding:4.8mm 5.4mm 0 7mm;background:" + d.c.bg +
+      "flex-direction:column;justify-content:space-between;padding:4.6mm 5.4mm 0 7mm;background:" + d.c.bg +
       ";border:.25mm solid " + d.c.edge + ";outline:.4mm solid " + d.c.bg + ";color:" + d.c.fg +
       ';font-family:var(--font-body)">' +
+      '<div style="position:absolute;inset:0;background:' + wash(d, "70% 62%") + '"></div>' +
       '<div style="position:absolute;top:0;bottom:0;left:0;width:1.4mm;background:' + d.c.ink + '"></div>' +
-      '<div style="flex:none;display:flex;align-items:flex-start;gap:4mm">' +
+
+      '<div style="position:relative;flex:none;display:flex;align-items:flex-start;gap:4mm">' +
       '<div style="flex:1;min-width:0">' +
       '<div style="font-size:4.6pt;font-weight:500;letter-spacing:.18em;text-transform:uppercase;line-height:1;color:' +
       d.c.ink + '">' + esc(d.kicker) + "</div>" +
@@ -280,97 +315,101 @@
       esc(d.name) + "</div>" +
       '<div style="font-size:5.2pt;letter-spacing:.06em;line-height:1.35;margin-top:1.4mm;color:' + d.c.muted + '">' +
       esc(d.line) + "</div></div>" +
-      '<div style="flex:none;width:17.5mm;padding:1.9mm 0 2mm;text-align:center;border-radius:1.4mm;background:' +
-      d.c.ink + ";color:" + d.c.onInk + '">' +
-      '<div style="font-family:var(--font-heading);font-size:16pt;line-height:.95;font-variant-numeric:tabular-nums">' +
-      d.score + "</div>" +
-      '<div style="font-size:3.8pt;letter-spacing:.14em;text-indent:.14em;text-transform:uppercase;margin-top:1.1mm;opacity:.85">' +
-      d.unit + "</div></div></div>" +
-      '<div style="flex:none;display:flex;flex-direction:column;gap:1.1mm;padding:1.9mm 0;border-top:.25mm solid ' +
-      d.c.rule + ";border-bottom:.25mm solid " + d.c.rule + ';margin-top:1.8mm">' +
-      notesHtml(d, "9.5mm", "4.2pt", "5.2pt") + "</div>" +
-      '<div style="flex:none;display:grid;grid-template-columns:repeat(2,1fr);gap:1mm 5mm;margin-top:1.8mm">' +
-      d.bars.map(function (b) {
+      scoreBlock(d, "17.5mm", "1.9mm 0 2mm", "16pt", "3.8pt", "1.4mm", false) + "</div>" +
+
+      '<div style="position:relative;flex:none;margin-top:1.8mm">' +
+      notesPanel(d, "9.5mm", "4.2pt", "5.2pt", "2mm 2.4mm") + "</div>" +
+
+      '<div style="position:relative;flex:none;display:grid;grid-template-columns:repeat(2,1fr);gap:1mm 5mm;margin-top:1.6mm">' +
+      d.bars.map(function (bar) {
         return '<div style="display:flex;align-items:center;gap:1.6mm">' +
           '<span style="width:8.5mm;flex:none;font-size:3.8pt;letter-spacing:.1em;text-transform:uppercase;color:' +
-          d.c.muted + '">' + esc(b.short) + "</span>" +
+          d.c.muted + '">' + esc(bar.short) + "</span>" +
           '<span style="flex:1;height:1mm;border-radius:.5mm;background:' + d.c.track + '">' +
-          '<span style="display:block;height:100%;border-radius:.5mm;background:' + b.fill + ";width:" + b.pct + '%"></span>' +
+          '<span style="display:block;height:100%;border-radius:.5mm;background:' + bar.fill + ";width:" + bar.pct + '%"></span>' +
           "</span></div>";
       }).join("") + "</div>" +
-      wordsHtml(d, 96, "5pt", "0.9mm") +
-      '<div style="flex:none;display:flex;justify-content:space-between;align-items:baseline;gap:3mm;width:95mm;' +
-      "margin:1.8mm 0 0 -7mm;padding:1.8mm 5.4mm 1.6mm 7mm;background:" + d.c.soft +
+
+      wordsHtml(d, 88, "5pt", "1.5mm") +
+
+      '<div style="position:relative;flex:none;display:flex;justify-content:space-between;align-items:baseline;gap:3mm;width:95mm;' +
+      "margin:1.5mm 0 0 -7mm;padding:1.7mm 5.4mm 1.5mm 7mm;background:" + d.c.soft +
       ";border-top:.25mm solid " + d.c.rule + ";font-size:4pt;letter-spacing:.16em;text-transform:uppercase;color:" +
       d.c.muted + '">' +
-      "<span>" + esc(d.dateLine) + '</span><span style="color:' + d.c.ink + '">' + esc(d.taglineShort) + "</span></div></div>";
+      "<span>" + esc(d.dateLine) + "</span><span>" + esc(d.taglineShort) + "</span></div></div>";
   }
 
   function hangTag(d) {
     return '<div style="width:46mm;height:96mm;overflow:hidden;break-inside:avoid;position:relative;display:flex;' +
-      "flex-direction:column;align-items:center;justify-content:space-between;padding:10mm 4.8mm 0;background:" + d.c.bg +
+      "flex-direction:column;align-items:center;justify-content:space-between;padding:9.4mm 4.8mm 0;background:" + d.c.bg +
       ";border:.25mm solid " + d.c.edge + ";color:" + d.c.fg + ';font-family:var(--font-body);text-align:center">' +
+      '<span style="position:absolute;inset:0;background:' + wash(d, "110% 32%") + '"></span>' +
       '<span style="position:absolute;top:0;left:0;right:0;height:1.4mm;background:' + d.c.ink + '"></span>' +
-      '<span style="position:absolute;top:5mm;left:50%;width:2.6mm;height:2.6mm;margin-left:-1.3mm;border-radius:50%;border:.3mm solid ' +
+      '<span style="position:absolute;top:4.6mm;left:50%;width:2.6mm;height:2.6mm;margin-left:-1.3mm;border-radius:50%;border:.3mm solid ' +
       d.c.edge + '"></span>' +
-      '<span style="position:relative;flex:none;display:flex;flex-direction:column;align-items:center">' +
+
+      '<span style="position:relative;flex:none;display:flex;flex-direction:column;align-items:center;width:100%">' +
       '<span style="font-size:4.4pt;font-weight:500;letter-spacing:.2em;text-indent:.2em;text-transform:uppercase;line-height:1;color:' +
       d.c.ink + '">' + esc(d.origin) + "</span>" +
-      '<span style="font-family:var(--font-heading);font-size:10pt;font-weight:500;line-height:1.12;letter-spacing:-.012em;margin-top:2.4mm;text-wrap:balance">' +
+      '<span style="font-family:var(--font-heading);font-size:9.5pt;font-weight:500;line-height:1.12;letter-spacing:-.012em;margin-top:2mm;text-wrap:balance">' +
       esc(d.name) + "</span>" +
-      '<span style="width:7mm;height:.5mm;background:' + d.c.ink + ';margin:2.4mm 0"></span>' +
-      '<span style="white-space:pre-line;font-size:4.6pt;letter-spacing:.14em;text-transform:uppercase;line-height:1.5;color:' +
-      d.c.muted + '">' + esc(d.stack) + "</span></span>" +
-      '<span style="position:relative;flex:none;display:flex;flex-direction:column;align-items:center;justify-content:center;' +
-      "width:23mm;height:23mm;border-radius:50%;background:" + d.c.ink + ";color:" + d.c.onInk + '">' +
-      '<span style="font-family:var(--font-heading);font-size:17pt;line-height:1;font-variant-numeric:tabular-nums">' + d.score + "</span>" +
-      '<span style="font-size:3.6pt;letter-spacing:.18em;text-indent:.18em;text-transform:uppercase;margin-top:1.2mm;opacity:.85">' +
-      d.unit + "</span></span>" +
-      '<span style="position:relative;flex:none;display:flex;flex-direction:column;gap:1.1mm;width:33mm">' +
-      barsHtml(d, "8.5mm", "3.8pt") + "</span>" +
-      wordsHtml(d, 72, "4.6pt", "1.4mm") +
-      '<span style="position:relative;flex:none;width:46mm;margin:0 -4.8mm;padding:2.4mm 4mm 2.2mm;background:' +
+      '<span style="white-space:pre-line;font-size:4.2pt;letter-spacing:.12em;text-transform:uppercase;line-height:1.42;margin-top:1.6mm;color:' +
+      d.c.muted + '">' + esc(d.stack) + "</span>" +
+      '<span style="display:block;width:100%;margin-top:2.2mm">' +
+      scoreBlock(d, "21mm", "1.9mm 0 2mm", "15pt", "3.4pt", "1.6mm", true) +
+      "</span></span>" +
+
+      '<span style="position:relative;flex:none;display:block;width:100%;text-align:left;margin-top:2mm">' +
+      notesPanel(d, "6.6mm", "3.3pt", "4pt", "1.5mm 1.8mm") + "</span>" +
+
+      '<span style="position:relative;flex:none;display:flex;flex-direction:column;gap:.9mm;width:34mm;margin-top:1.3mm">' +
+      barsHtml(d, "8.5mm", "3.5pt") + "</span>" +
+
+      wordsHtml(d, 40, "4pt", "1.3mm") +
+
+      '<span style="position:relative;flex:none;width:46mm;margin:1.5mm -4.8mm 0;padding:2mm 4mm 1.9mm;background:' +
       d.c.soft + ";border-top:.25mm solid " + d.c.rule + '">' +
-      '<span style="display:block;font-size:4.8pt;line-height:1.5;letter-spacing:.02em;color:' + d.c.fg + '">' +
+      '<span style="display:block;font-size:4.4pt;line-height:1.45;letter-spacing:.02em;color:' + d.c.fg + '">' +
       esc(d.taglineShort) + "</span>" +
-      '<span style="display:block;font-size:3.8pt;letter-spacing:.16em;text-indent:.16em;text-transform:uppercase;line-height:1.2;margin-top:1.6mm;color:' +
+      '<span style="display:block;font-size:3.8pt;letter-spacing:.16em;text-indent:.16em;text-transform:uppercase;line-height:1.2;margin-top:1.2mm;color:' +
       d.c.muted + '">' + esc(d.dateLine) + "</span></span></div>";
   }
 
   function classicTag(d) {
-    var specs = d.specs.map(function (s) {
+    var specs = d.specs.map(function (sp) {
       return '<span style="display:flex;align-items:baseline;gap:1.6mm;width:100%">' +
         '<span style="flex:none;font-size:4.2pt;letter-spacing:.16em;text-transform:uppercase;color:' + d.c.muted + '">' +
-        esc(s.k) + "</span>" +
+        esc(sp.k) + "</span>" +
         '<span style="flex:1;height:.2mm;background:' + d.c.rule + ';align-self:center"></span>' +
-        '<span style="flex:none;max-width:26mm;text-align:right;font-size:5.2pt;line-height:1.3;letter-spacing:.02em">' +
-        esc(s.v) + "</span></span>";
-    }).join("");
-    var notes = d.notes.map(function (n) {
-      return '<span style="display:block;text-align:left">' +
-        '<span style="display:block;font-size:4pt;letter-spacing:.18em;text-transform:uppercase;color:' + d.c.ink + '">' +
-        esc(n.label) + "</span>" +
-        '<span style="display:block;font-size:5pt;line-height:1.4;margin-top:.6mm">' + esc(n.text) + "</span></span>";
+        '<span style="flex:none;max-width:30mm;text-align:right;font-size:5.2pt;line-height:1.3;letter-spacing:.02em">' +
+        esc(sp.v) + "</span></span>";
     }).join("");
     return '<div style="width:56mm;height:110mm;overflow:hidden;break-inside:avoid;position:relative;display:flex;' +
-      "flex-direction:column;align-items:center;justify-content:space-between;padding:6.8mm 5.4mm 0;background:" + d.c.bg +
+      "flex-direction:column;align-items:center;justify-content:space-between;padding:6.4mm 5.4mm 0;background:" + d.c.bg +
       ";border:.25mm solid " + d.c.edge + ";color:" + d.c.fg + ';font-family:var(--font-body);text-align:center">' +
+      '<span style="position:absolute;inset:0;background:' + wash(d, "110% 28%") + '"></span>' +
       '<span style="position:absolute;top:0;left:0;right:0;height:1.6mm;background:' + d.c.ink + '"></span>' +
-      '<span style="flex:none;display:flex;flex-direction:column;align-items:center;width:100%">' +
+
+      '<span style="position:relative;flex:none;display:flex;flex-direction:column;align-items:center;width:100%">' +
       '<span style="font-size:4.6pt;font-weight:500;letter-spacing:.2em;text-indent:.2em;text-transform:uppercase;line-height:1;color:' +
       d.c.ink + '">' + esc(d.kicker) + "</span>" +
-      '<span style="font-family:var(--font-heading);font-size:12pt;font-weight:500;line-height:1.12;letter-spacing:-.014em;margin-top:2.6mm;text-wrap:balance">' +
+      '<span style="font-family:var(--font-heading);font-size:11.5pt;font-weight:500;line-height:1.12;letter-spacing:-.014em;margin-top:2.2mm;text-wrap:balance">' +
       esc(d.name) + "</span>" +
-      '<span style="display:flex;flex-direction:column;align-items:center;justify-content:center;width:19mm;height:19mm;margin-top:3mm;border-radius:50%;background:' +
-      d.c.ink + ";color:" + d.c.onInk + '">' +
-      '<span style="font-family:var(--font-heading);font-size:15pt;line-height:1;font-variant-numeric:tabular-nums">' + d.score + "</span>" +
-      '<span style="font-size:3.6pt;letter-spacing:.18em;text-indent:.18em;text-transform:uppercase;margin-top:1.2mm;opacity:.85">' +
-      d.unit + "</span></span></span>" +
-      '<span style="flex:none;display:flex;flex-direction:column;gap:1.3mm;width:100%">' + specs + "</span>" +
-      '<span style="flex:none;display:grid;grid-template-columns:repeat(2,1fr);gap:1.1mm 3mm;width:100%">' + barsHtml(d, "7.5mm", "3.6pt") + "</span>" +
-      '<span style="flex:none;display:flex;flex-direction:column;gap:1.2mm;width:100%">' + notes + "</span>" +
-      wordsHtml(d, 124, "4.8pt", "1.4mm") +
-      '<span style="flex:none;width:56mm;margin:0 -5.4mm;padding:2.4mm 4.4mm 2.2mm;background:' + d.c.soft +
+      '<span style="display:block;width:100%;margin-top:2.4mm">' +
+      scoreBlock(d, "20mm", "1.9mm 0 2mm", "14pt", "3.4pt", "1.6mm", true) +
+      "</span></span>" +
+
+      '<span style="position:relative;flex:none;display:flex;flex-direction:column;gap:1.2mm;width:100%;margin-top:2mm">' + specs + "</span>" +
+
+      '<span style="position:relative;flex:none;display:grid;grid-template-columns:repeat(2,1fr);gap:1mm 3mm;width:100%;margin-top:1.6mm">' +
+      barsHtml(d, "7.5mm", "3.6pt") + "</span>" +
+
+      '<span style="position:relative;flex:none;display:block;width:100%;text-align:left;margin-top:1.6mm">' +
+      notesPanel(d, "7.5mm", "3.6pt", "4.4pt", "1.8mm 2mm") + "</span>" +
+
+      wordsHtml(d, 110, "4.6pt", "1.4mm") +
+
+      '<span style="position:relative;flex:none;width:56mm;margin:1.5mm -5.4mm 0;padding:2.2mm 4.4mm 2mm;background:' + d.c.soft +
       ";border-top:.25mm solid " + d.c.rule +
       ";font-size:4pt;letter-spacing:.16em;text-indent:.16em;text-transform:uppercase;color:" + d.c.muted + '">' +
       esc(d.dateLine) + "</span></div>";
