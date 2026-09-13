@@ -12,11 +12,11 @@
   var BAR = ["var(--bar-0)", "var(--bar-1)", "var(--bar-2)", "var(--bar-3)", "var(--bar-4)", "var(--bar-5)"];
   var PBAR = ["var(--pbar-0)", "var(--pbar-1)", "var(--pbar-2)", "var(--pbar-3)", "var(--pbar-4)", "var(--pbar-5)"];
   var SORTS = [["recent", "Most recent"], ["score", "Highest score"], ["price", "Most spent"]];
-  /* Card ink. These are print colours, not screen tokens: the light set has to
-     hold up as real pigment on white paper, so the teal is a deep one. */
+  /* Card ink. These are print colours, not screen tokens: the light set has
+     to hold up as real pigment on white paper, so the navy is a deep one. */
   var INK = {
-    light: { bg: "#ffffff", fg: "#14201f", muted: "#556967", ink: "#0d6e68", onInk: "#ffffff", edge: "#8aa5a2", rule: "#c3d8d5", soft: "#e9f6f4", track: "#dcebe9" },
-    dark: { bg: "#0f2124", fg: "#e4f2f0", muted: "#8ca8a5", ink: "#4fd1c5", onInk: "#0f2124", edge: "#47615e", rule: "#2c4542", soft: "#16302f", track: "#234240" }
+    light: { bg: "#ffffff", fg: "#111b2b", muted: "#4e6280", ink: "#1a365d", onInk: "#ffffff", edge: "#93a8c4", rule: "#c6d5e6", soft: "#eef3fa", track: "#dde7f3" },
+    dark: { bg: "#0e1726", fg: "#e4ecf8", muted: "#8ba1c0", ink: "#8fc0ec", onInk: "#0e1726", edge: "#3f5472", rule: "#26374f", soft: "#152439", track: "#1f3049" }
   };
 
   var raw = JSON.parse(document.getElementById("bottle-data").textContent || "[]");
@@ -205,8 +205,8 @@
 
   function cardData(w) {
     var c = INK[S.ink];
-    var lightBars = ["#dcebe9", "#bcdedb", "#8ecac5", "#57b0a9", "#2a8f88", "#0d6e68"];
-    var darkBars = ["#234240", "#2f5f5b", "#3d8079", "#4ea79d", "#4fd1c5", "#7ce7dd"];
+    var lightBars = ["#dde7f3", "#bcd2ea", "#8fb2da", "#5c8cc4", "#2f5f9e", "#1a365d"];
+    var darkBars = ["#1f3049", "#2b4770", "#376094", "#4a83bd", "#6fa5d9", "#8fc0ec"];
     return {
       c: c,
       name: w.name,
@@ -215,9 +215,10 @@
       line: [w.age, w.abv, w.cask].filter(Boolean).join("  \u00b7  "),
       stack: [[w.age, w.abv].filter(Boolean).join("  \u00b7  "), w.cask].filter(Boolean).join("\n"),
       dateLine: "Tasted " + dLong(w.date),
-      // `cardwords` in the note wins. Without it the card borrows the note's
-      // own "Behind it" prose, so a card always has something to say.
-      words: (w.words || w.story || "").trim(),
+      // `keynote` in the note wins: the owner's one-liner for this bottle.
+      // Without it the card borrows the note's own "Behind it" prose, so a
+      // card always has something to say.
+      words: (w.keynote || w.story || "").trim(),
       score: score(w.score),
       unit: "out of ten",
       taglineShort: w.tags.slice(0, 3).join("  \u00b7  "),
@@ -256,7 +257,7 @@
     }).join("");
   }
 
-  /* The owner's own words, from `cardwords` in the note or its prose. Nothing
+  /* The owner's own words, from `keynote` in the note or its prose. Nothing
      renders at all when a note has neither, so the card just closes up. */
   function wordsHtml(d, max, fs, mt) {
     if (!d.words) return "";

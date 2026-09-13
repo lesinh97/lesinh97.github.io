@@ -1,110 +1,123 @@
-/* Site theme: Nocturne retuned to the palette the old Gatsby Cara site used,
-   lifted verbatim from its theme-ui variables. Two colour modes, dark first.
+/* Site theme: Nocturne retuned to a navy palette. Structure and layout follow
+   the old Gatsby Cara site, but the hues do not: its warm orange accent and
+   multicoloured shapes tinted the whole page, so everything here stays in one
+   cool family. Two colour modes, dark first.
    This is the ONE place the tokens are set; no page defines its own block. */
 
 :root {
-  /* Cara's icon palette. Same in both modes, and the reason the homepage
-     reads as playful rather than grey: the floating shapes each take one. */
-  --ic-red: #e53e3e;
-  --ic-blue: #3182ce;
-  --ic-orange: #ed8936;
-  --ic-yellow: #ecc94b;
-  --ic-pink: #ed64a6;
-  --ic-purple: #805ad5;
-  --ic-green: #48bb78;
+  /* Shape palette. Cool only: the warm icon colours the old site used are
+     what put an orange cast over everything. Variation here is temperature
+     and depth, not hue. */
+  --ic-mist: #cbd9ea;
+  --ic-ice: #a8cdf2;
+  --ic-steel: #7fb2e5;
+  --ic-azure: #4a90d9;
+  --ic-sapphire: #2b6cb0;
+  --ic-slate: #7086a4;
+  --ic-deep: #1e3a5f;
 
   --shell-max: 1280px;
   --radius-md: 10px; --radius-lg: 16px;
 
-  /* Cara's four section gradients. */
-  --grad-1: linear-gradient(to right, #d4145a 0%, #fbb03b 100%);
-  --grad-2: linear-gradient(to right, #662d8c 0%, #ed1e79 100%);
-  --grad-3: linear-gradient(to right, #009245 0%, #fcee21 100%);
-  --grad-4: linear-gradient(to right, #d585ff 0%, #00ffee 100%);
+  /* Section gradients, all in the navy family. Cara's structure, restrained
+     palette: they differ by depth and temperature rather than by hue. */
+  --grad-1: linear-gradient(to right, #16233c 0%, #2b6cb0 100%);
+  --grad-2: linear-gradient(to right, #1a365d 0%, #4a90d9 100%);
+  --grad-3: linear-gradient(to right, #17303f 0%, #3f7fa8 100%);
+  --grad-4: linear-gradient(to right, #23304f 0%, #7fb2e5 100%);
 }
 
 /* ---------- dark, the default, as the old site shipped ---------- */
 
 :root, :root[data-theme="dark"] {
-  --color-bg: #141821;
-  --color-surface: #1c212e;
-  --color-surface-2: #232936;
-  --color-text: #e2e8f0;
+  --color-bg: #0f1626;
+  --color-surface: #162033;
+  --color-surface-2: #1d2941;
+  --color-text: #dde5f2;
   --color-heading: #ffffff;
-  --color-accent: #f6ad55;
-  --color-accent-strong: #ed8936;
-  --color-divider: #2d3748;
+  --color-accent: #7fb2e5;
+  --color-accent-strong: #a8cdf2;
+  --color-divider: #253349;
 
   /* 100 is the most contrast against the ground, 900 the least. */
-  --color-neutral-100: #f7fafc; --color-neutral-200: #edf2f7; --color-neutral-300: #e2e8f0;
-  --color-neutral-400: #cbd5e0; --color-neutral-500: #a0aec0; --color-neutral-600: #718096;
-  --color-neutral-700: #4a5568; --color-neutral-800: #2d3748; --color-neutral-900: #1a202c;
+  --color-neutral-100: #f4f7fc; --color-neutral-200: #e4ebf6; --color-neutral-300: #ccd8ea;
+  --color-neutral-400: #aabbd4; --color-neutral-500: #8b9dba; --color-neutral-600: #66789a;
+  --color-neutral-700: #43587a; --color-neutral-800: #253349; --color-neutral-900: #162033;
 
-  --shape-ink: #ffffff;
-  --shadow-sm: 0 0 0 1px rgba(226, 232, 240, 0.10);
-  --shadow-md: 0 0 0 1px rgba(226, 232, 240, 0.10), 0 8px 24px rgba(0, 0, 0, 0.45);
-  --shadow-lg: 0 0 0 1px rgba(226, 232, 240, 0.13), 0 18px 48px rgba(0, 0, 0, 0.58);
+  --shape-ink: #cbd9ea;
+  --shadow-sm: 0 0 0 1px rgba(221, 229, 242, 0.10);
+  --shadow-md: 0 0 0 1px rgba(221, 229, 242, 0.10), 0 8px 24px rgba(0, 0, 0, 0.50);
+  --shadow-lg: 0 0 0 1px rgba(221, 229, 242, 0.13), 0 18px 48px rgba(0, 0, 0, 0.62);
   --grad-strength: 1;
   --wash-strength: 0.85;
 
   /* Flavour bars, dim to bright. Screen only; the print cards carry their
      own ink. Referenced as var(--bar-N) from inline styles, so they follow
      the colour mode without app.js having to re-render. */
-  --bar-0: #2d3748; --bar-1: #7c4a22; --bar-2: #a8632a;
-  --bar-3: #d07f34; --bar-4: #ed8936; --bar-5: #f6ad55;
-  --pbar-0: #8a4d1e; --pbar-1: #a8632a; --pbar-2: #c47630;
-  --pbar-3: #ed8936; --pbar-4: #f6ad55; --pbar-5: #fbd38d;
+  --bar-0: #253349; --bar-1: #2b4a72; --bar-2: #35618f;
+  --bar-3: #4a90d9; --bar-4: #7fb2e5; --bar-5: #a8cdf2;
+  --pbar-0: #2b4a72; --pbar-1: #35618f; --pbar-2: #3f7cba;
+  --pbar-3: #4a90d9; --pbar-4: #7fb2e5; --pbar-5: #bcdcf7;
 }
 
 /* ---------- light ---------- */
 
 :root[data-theme="light"] {
-  --color-bg: #f7fafc;
+  --color-bg: #f6f8fc;
   --color-surface: #ffffff;
-  --color-surface-2: #edf2f7;
-  --color-text: #2d3748;
-  --color-heading: #000000;
-  --color-accent: #c05621;
-  --color-accent-strong: #9c4221;
-  --color-divider: #e2e8f0;
+  --color-surface-2: #eaf0f8;
+  --color-text: #1f2a3d;
+  --color-heading: #0b1220;
+  --color-accent: #2b5f9e;
+  --color-accent-strong: #1e4676;
+  --color-divider: #dae3ef;
 
   /* The ramp flips so every role keeps its meaning: 100 still means the most
      contrast against the ground, 900 still means a barely-there surface. */
-  --color-neutral-100: #1a202c; --color-neutral-200: #2d3748; --color-neutral-300: #4a5568;
-  --color-neutral-400: #718096; --color-neutral-500: #718096; --color-neutral-600: #a0aec0;
-  --color-neutral-700: #cbd5e0; --color-neutral-800: #e2e8f0; --color-neutral-900: #edf2f7;
+  --color-neutral-100: #0b1220; --color-neutral-200: #1f2a3d; --color-neutral-300: #3a4a63;
+  --color-neutral-400: #5a6d8a; --color-neutral-500: #6b7e9b; --color-neutral-600: #93a5bf;
+  --color-neutral-700: #c2cfe0; --color-neutral-800: #dae3ef; --color-neutral-900: #eaf0f8;
 
-  --shape-ink: #2d3748;
-  --shadow-sm: 0 1px 2px rgba(45, 55, 72, 0.08), 0 0 0 1px rgba(45, 55, 72, 0.06);
-  --shadow-md: 0 2px 6px rgba(45, 55, 72, 0.10), 0 1px 2px rgba(45, 55, 72, 0.06);
-  --shadow-lg: 0 10px 30px rgba(45, 55, 72, 0.14), 0 2px 6px rgba(45, 55, 72, 0.08);
-  --grad-strength: 0.75;
-  --wash-strength: 0.5;
+  --shape-ink: #3a4a63;
+  --shadow-sm: 0 1px 2px rgba(15, 22, 38, 0.08), 0 0 0 1px rgba(15, 22, 38, 0.06);
+  --shadow-md: 0 2px 6px rgba(15, 22, 38, 0.10), 0 1px 2px rgba(15, 22, 38, 0.06);
+  --shadow-lg: 0 10px 30px rgba(15, 22, 38, 0.14), 0 2px 6px rgba(15, 22, 38, 0.08);
+  --grad-strength: 0.7;
+  --wash-strength: 0.45;
 
-  --bar-0: #edf2f7; --bar-1: #fbd38d; --bar-2: #f6ad55;
-  --bar-3: #ed8936; --bar-4: #dd6b20; --bar-5: #c05621;
-  --pbar-0: #f6ad55; --pbar-1: #ed8936; --pbar-2: #dd6b20;
-  --pbar-3: #c05621; --pbar-4: #9c4221; --pbar-5: #7b341e;
+  --bar-0: #eaf0f8; --bar-1: #bcdcf7; --bar-2: #7fb2e5;
+  --bar-3: #4a90d9; --bar-4: #2b6cb0; --bar-5: #1a365d;
+  --pbar-0: #7fb2e5; --pbar-1: #4a90d9; --pbar-2: #2b6cb0;
+  --pbar-3: #24568c; --pbar-4: #1a365d; --pbar-5: #12253f;
 }
 
 /* First visit with no stored choice follows the operating system. */
 @media (prefers-color-scheme: light) {
   :root:not([data-theme]) {
-    --color-bg: #f7fafc; --color-surface: #ffffff; --color-surface-2: #edf2f7;
-    --color-text: #2d3748; --color-heading: #000000;
-    --color-accent: #c05621; --color-accent-strong: #9c4221; --color-divider: #e2e8f0;
-    --color-neutral-100: #1a202c; --color-neutral-200: #2d3748; --color-neutral-300: #4a5568;
-    --color-neutral-400: #718096; --color-neutral-500: #718096; --color-neutral-600: #a0aec0;
-    --color-neutral-700: #cbd5e0; --color-neutral-800: #e2e8f0; --color-neutral-900: #edf2f7;
-    --shape-ink: #2d3748;
-    --shadow-sm: 0 1px 2px rgba(45, 55, 72, 0.08), 0 0 0 1px rgba(45, 55, 72, 0.06);
-    --shadow-md: 0 2px 6px rgba(45, 55, 72, 0.10), 0 1px 2px rgba(45, 55, 72, 0.06);
-    --shadow-lg: 0 10px 30px rgba(45, 55, 72, 0.14), 0 2px 6px rgba(45, 55, 72, 0.08);
-    --grad-strength: 0.75; --wash-strength: 0.5;
-    --bar-0: #edf2f7; --bar-1: #fbd38d; --bar-2: #f6ad55;
-    --bar-3: #ed8936; --bar-4: #dd6b20; --bar-5: #c05621;
-    --pbar-0: #f6ad55; --pbar-1: #ed8936; --pbar-2: #dd6b20;
-    --pbar-3: #c05621; --pbar-4: #9c4221; --pbar-5: #7b341e;
+    --color-bg: #f6f8fc;
+    --color-surface: #ffffff;
+    --color-surface-2: #eaf0f8;
+    --color-text: #1f2a3d;
+    --color-heading: #0b1220;
+    --color-accent: #2b5f9e;
+    --color-accent-strong: #1e4676;
+    --color-divider: #dae3ef;
+
+    --color-neutral-100: #0b1220; --color-neutral-200: #1f2a3d; --color-neutral-300: #3a4a63;
+    --color-neutral-400: #5a6d8a; --color-neutral-500: #6b7e9b; --color-neutral-600: #93a5bf;
+    --color-neutral-700: #c2cfe0; --color-neutral-800: #dae3ef; --color-neutral-900: #eaf0f8;
+
+    --shape-ink: #3a4a63;
+    --shadow-sm: 0 1px 2px rgba(15, 22, 38, 0.08), 0 0 0 1px rgba(15, 22, 38, 0.06);
+    --shadow-md: 0 2px 6px rgba(15, 22, 38, 0.10), 0 1px 2px rgba(15, 22, 38, 0.06);
+    --shadow-lg: 0 10px 30px rgba(15, 22, 38, 0.14), 0 2px 6px rgba(15, 22, 38, 0.08);
+    --grad-strength: 0.7;
+    --wash-strength: 0.45;
+
+    --bar-0: #eaf0f8; --bar-1: #bcdcf7; --bar-2: #7fb2e5;
+    --bar-3: #4a90d9; --bar-4: #2b6cb0; --bar-5: #1a365d;
+    --pbar-0: #7fb2e5; --pbar-1: #4a90d9; --pbar-2: #2b6cb0;
+    --pbar-3: #24568c; --pbar-4: #1a365d; --pbar-5: #12253f;
   }
 }
 
