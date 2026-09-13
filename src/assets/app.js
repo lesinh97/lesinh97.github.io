@@ -15,8 +15,8 @@
   /* Card ink. These are print colours, not screen tokens: the light set has
      to hold up as real pigment on white paper, so the navy is a deep one. */
   var INK = {
-    light: { bg: "#ffffff", fg: "#111b2b", muted: "#4e6280", ink: "#1a365d", onInk: "#ffffff", edge: "#93a8c4", rule: "#c6d5e6", soft: "#eef3fa", track: "#dde7f3", wash: "rgba(26,54,93,.18)" },
-    dark: { bg: "#0e1726", fg: "#e4ecf8", muted: "#8ba1c0", ink: "#8fc0ec", onInk: "#0e1726", edge: "#3f5472", rule: "#26374f", soft: "#152439", track: "#1f3049", wash: "rgba(143,192,236,.26)" }
+    light: { bg: "#ffffff", fg: "#111b2b", muted: "#4e6280", ink: "#1a365d", onInk: "#ffffff", edge: "#93a8c4", rule: "#c6d5e6", soft: "#eef3fa", track: "#dde7f3", wash: "rgba(26,54,93,.18)", cut: "#8fa1b8" },
+    dark: { bg: "#0e1726", fg: "#e4ecf8", muted: "#8ba1c0", ink: "#8fc0ec", onInk: "#0e1726", edge: "#3f5472", rule: "#26374f", soft: "#152439", track: "#1f3049", wash: "rgba(143,192,236,.26)", cut: "#6b7f99" }
   };
 
   var raw = JSON.parse(document.getElementById("bottle-data").textContent || "[]");
@@ -302,7 +302,7 @@
   function shelfCard(d) {
     return '<div style="width:95mm;height:62mm;overflow:hidden;break-inside:avoid;position:relative;display:flex;' +
       "flex-direction:column;justify-content:space-between;padding:4.6mm 5.4mm 0 7mm;background:" + d.c.bg +
-      ";border:.25mm solid " + d.c.edge + ";outline:.4mm solid " + d.c.bg + ";color:" + d.c.fg +
+      ";border:.3mm solid " + d.c.cut + ";color:" + d.c.fg +
       ';font-family:var(--font-body)">' +
       '<div style="position:absolute;inset:0;background:' + wash(d, "70% 62%") + '"></div>' +
       '<div style="position:absolute;top:0;bottom:0;left:0;width:1.4mm;background:' + d.c.ink + '"></div>' +
@@ -342,7 +342,7 @@
   function hangTag(d) {
     return '<div style="width:46mm;height:96mm;overflow:hidden;break-inside:avoid;position:relative;display:flex;' +
       "flex-direction:column;align-items:center;justify-content:space-between;padding:9.4mm 4.8mm 0;background:" + d.c.bg +
-      ";border:.25mm solid " + d.c.edge + ";color:" + d.c.fg + ';font-family:var(--font-body);text-align:center">' +
+      ";border:.3mm solid " + d.c.cut + ";color:" + d.c.fg + ';font-family:var(--font-body);text-align:center">' +
       '<span style="position:absolute;inset:0;background:' + wash(d, "110% 32%") + '"></span>' +
       '<span style="position:absolute;top:0;left:0;right:0;height:1.4mm;background:' + d.c.ink + '"></span>' +
       '<span style="position:absolute;top:4.6mm;left:50%;width:2.6mm;height:2.6mm;margin-left:-1.3mm;border-radius:50%;border:.3mm solid ' +
@@ -386,7 +386,7 @@
     }).join("");
     return '<div style="width:56mm;height:110mm;overflow:hidden;break-inside:avoid;position:relative;display:flex;' +
       "flex-direction:column;align-items:center;justify-content:space-between;padding:6.4mm 5.4mm 0;background:" + d.c.bg +
-      ";border:.25mm solid " + d.c.edge + ";color:" + d.c.fg + ';font-family:var(--font-body);text-align:center">' +
+      ";border:.3mm solid " + d.c.cut + ";color:" + d.c.fg + ';font-family:var(--font-body);text-align:center">' +
       '<span style="position:absolute;inset:0;background:' + wash(d, "110% 28%") + '"></span>' +
       '<span style="position:absolute;top:0;left:0;right:0;height:1.6mm;background:' + d.c.ink + '"></span>' +
 
@@ -420,8 +420,10 @@
     var cols = S.shape === "card" ? "repeat(auto-fill, 95mm)" : S.shape === "tag2" ? "repeat(auto-fill, 46mm)" : "repeat(auto-fill, 56mm)";
     var el = document.getElementById("sheet");
     el.style.gridTemplateColumns = cols;
+    // A 4mm alley between cards leaves room for scissors on both cuts.
     el.style.gap = "4mm";
-    el.style.justifyContent = "center";
+    el.style.justifyContent = "start";
+    el.style.alignContent = "start";
     el.innerHTML = list.filter(function (w) { return S.picked.indexOf(w.id) > -1; })
       .map(function (w) { return draw(cardData(w)); }).join("");
   }

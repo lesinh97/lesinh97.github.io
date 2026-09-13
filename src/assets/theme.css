@@ -233,8 +233,15 @@ html { scrollbar-width: thin; scrollbar-color: var(--color-neutral-700) var(--co
 }
 
 @media print {
-  .topnav, .sitefoot { display: none !important; }
+  /* `color-scheme: dark` gives the root a real UA background, which stops the
+     body's white propagating to the page canvas: the sheet then prints inside
+     a black frame the size of the paper. Force the light scheme on paper. */
+  html {
+    color-scheme: light !important;
+    background: #fff !important;
+  }
   body { background: #fff !important; color: #000 !important; }
+  .topnav, .sitefoot { display: none !important; }
 }
 
 /* Tables in prose. They scroll inside their own box rather than widening
