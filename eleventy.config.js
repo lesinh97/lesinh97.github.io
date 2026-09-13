@@ -1,5 +1,9 @@
 module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy({ "src/assets": "assets" });
+  // The custom domain. Pages reads _site/CNAME from the deployed artifact, so
+  // this has to land at the site root, not under assets. Drop it and
+  // shin.technology stops resolving on the next deploy.
+  eleventyConfig.addPassthroughCopy({ "src/CNAME": "CNAME" });
 
   // Collected by glob, not by a `tags` key: the notes use `flavours` for their
   // tasting words so Eleventy's tag system stays out of the way.

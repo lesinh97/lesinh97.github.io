@@ -76,6 +76,19 @@ check it in print preview at both Letter and A4, and confirm every card still sa
 Card width is deliberately *not* a clean `scrollWidth == clientWidth`: the footer strips use
 negative margins to bleed to the card edge. Height is the test that matters.
 
+## Publishing
+
+Lives at `lesinh97/lesinh97.github.io` on the custom domain **shin.technology**.
+
+- `src/CNAME` holds the domain and is passthrough-copied to `_site/CNAME`. Pages reads it
+  from the deployed artifact, so if it stops being emitted the domain stops resolving.
+- The new site is on `main`. The repo default branch is still `master`, which holds an
+  unrelated Jekyll site from 2021; `landing`, `pre-release`, `release` and `old-site` are
+  that era too. Do not build from them.
+- `.github/workflows/pages.yml` triggers on pushes to `main` and deploys `_site/`.
+  A workflow runs from the branch it was pushed to, so the default branch being `master`
+  does not stop it.
+
 ## Likely next jobs
 
 - Flavour pages, or a similarity finder over the `fam` vectors.
