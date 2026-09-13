@@ -106,8 +106,8 @@ the whole page wider than the viewport. Every auto-fit grid here uses
 
 ## Print
 
-`@media print` hides `.screen` and shows `#sheet`, a grid of mm-sized cards. Three shapes:
-shelf card 95x62mm, hang tag 46x102mm, classic tag 56x110mm. Sizes are in mm on purpose. The
+`@media print` hides `.screen` and shows `#sheet`, a grid of mm-sized cards. Two shapes:
+shelf card 95x62mm and hang tag 46x102mm. Sizes are in mm on purpose. The
 shelf card is deliberately a little over a business card (85x55mm) to carry the keynote.
 
 The cards mirror the bottle page: a radial `wash` behind the header, the score in a filled
@@ -125,9 +125,18 @@ not guessed: with a keynote on all thirteen bottles, 187 characters still fits e
 and 196 overflows the shelf card, the tightest of the three for text because its name and
 score share a row. Change the clamp and you must re-measure.
 
-The date row is `signedRow()`: tasted date left, the katakana signature right. The signature
-needs Noto Sans JP, loaded in `base.njk`; without it the browser falls back to a brush-style
-system face that does not match the cards.
+The date row is `signedRow()`: tasted date left, the katakana signature right.
+
+Two traps live in that one line. `SIG_FONT` is quoted with **single** quotes because it is
+interpolated into a `style="..."` attribute: double quotes there close the attribute early
+and silently drop the font-family and every declaration after it. And `#sheet` is
+`display:none` until print, so the browser never downloads a webfont for it; `app.js` calls
+`document.fonts.load` for the signature glyphs at startup, or the printed page falls back to
+a brush-style system face.
+
+Card footers bleed to the edge with negative margins and no explicit width. Giving one the
+card's full width overhangs the border, because `box-sizing` is `border-box` and the content
+box is narrower than the card by the border on each side.
 
 The cards set their own colours from the `INK` table in `app.js` and default to `light`, so
 they stay black on white paper no matter how dark the screen theme gets. If you change a card,
