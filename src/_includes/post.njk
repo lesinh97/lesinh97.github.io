@@ -1,0 +1,29 @@
+---
+layout: base.njk
+navCurrent: /blog/
+extraCss: ["/assets/blog.css"]
+---
+<article>
+  <header class="pagehead">
+    <div class="shell" style="max-width: 720px">
+      <div class="meta">
+        <span>{{ date | readableDate }}</span>
+        {% if readingTime %}<span>{{ readingTime }}</span>{% endif %}
+      </div>
+      <h1>{{ title }}</h1>
+      {% if summary %}<p>{{ summary }}</p>{% endif %}
+    </div>
+  </header>
+
+  <div class="post">
+    <div class="prose">{{ content | safe }}</div>
+
+    {% if topics %}
+    <div class="posttags">
+      {% for t in topics %}<span class="tag tag-accent">{{ t }}</span>{% endfor %}
+    </div>
+    {% endif %}
+
+    <a class="backlink" href="/blog/"><i class="ph ph-arrow-left"></i>All posts</a>
+  </div>
+</article>

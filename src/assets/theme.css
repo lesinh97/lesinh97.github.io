@@ -1,0 +1,99 @@
+/* Site theme: Nocturne tuned to the Cara palette, plus the shared shell.
+   This file is the ONE place the tokens are set. It used to be a `html:root`
+   block copy-pasted into two templates; every page now links this instead. */
+
+html:root {
+  /* Cara's ground: a deep navy, not a neutral black. */
+  --color-bg: #141821;
+  --color-surface: #1b2130;
+  --color-surface-2: #212939;
+  --color-text: #dfe5f3;
+  --color-accent: #8b7fe8;
+  --color-divider: color-mix(in srgb, #dfe5f3 14%, transparent);
+
+  /* Neutral ramp, re-pitched to the navy ground. 100 is lightest. */
+  --color-neutral-100: #f2f5fd; --color-neutral-200: #dfe5f3; --color-neutral-300: #c3cbe0;
+  --color-neutral-400: #a3accb; --color-neutral-500: #8590b3; --color-neutral-600: #69749a;
+  --color-neutral-700: #4b5673; --color-neutral-800: #323b52; --color-neutral-900: #212939;
+
+  --shadow-sm: 0 0 0 1px rgba(223, 229, 243, 0.09);
+  --shadow-md: 0 0 0 1px rgba(223, 229, 243, 0.10), 0 8px 24px rgba(5, 8, 14, 0.55);
+  --shadow-lg: 0 0 0 1px rgba(223, 229, 243, 0.12), 0 18px 48px rgba(5, 8, 14, 0.68);
+  --radius-md: 10px; --radius-lg: 16px;
+
+  /* Cara's four signature section gradients, in her order. */
+  --grad-1: linear-gradient(to right, #d4145a 0%, #fbb03b 100%);
+  --grad-2: linear-gradient(to right, #662d8c 0%, #ed1e79 100%);
+  --grad-3: linear-gradient(to right, #009245 0%, #fcee21 100%);
+  --grad-4: linear-gradient(to right, #d585ff 0%, #00ffee 100%);
+
+  --shell-max: 1280px;
+}
+
+body { margin: 0; background: var(--color-bg); color: var(--color-text); font-family: var(--font-body);
+       -webkit-font-smoothing: antialiased; }
+a { color: var(--color-accent); }
+a:hover { color: color-mix(in srgb, var(--color-accent) 70%, #fff); }
+
+/* Scroll chrome, so the dark ground does not get a light browser scrollbar. */
+html { scrollbar-width: thin; scrollbar-color: var(--color-neutral-700) var(--color-bg); }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--color-bg); }
+::-webkit-scrollbar-thumb { background: var(--color-neutral-800); border-radius: 999px;
+  border: 2px solid var(--color-bg); background-clip: padding-box; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-neutral-700); background-clip: padding-box; }
+
+/* ---------- shared nav ---------- */
+
+.shell { max-width: var(--shell-max); margin: 0 auto; padding: 0 28px; }
+.topnav { position: sticky; top: 0; z-index: 40; backdrop-filter: blur(10px);
+          background: color-mix(in srgb, var(--color-bg) 82%, transparent);
+          border-bottom: 1px solid var(--color-divider); }
+.topnav .shell { display: flex; align-items: center; gap: 26px; height: 58px; }
+.navbrand { font-family: var(--font-heading); font-weight: 500; font-size: 15px; letter-spacing: 0.18em;
+            text-transform: uppercase; color: var(--color-text); text-decoration: none; margin-right: auto; }
+.navbrand:hover { color: var(--color-accent); }
+.navlink { font-size: 13.5px; letter-spacing: 0.04em; color: var(--color-neutral-400); text-decoration: none; }
+.navlink:hover { color: var(--color-text); }
+.navlink[aria-current="page"] { color: var(--color-accent); }
+
+/* ---------- shared footer ---------- */
+
+.sitefoot { border-top: 1px solid var(--color-divider); margin-top: 72px; }
+.sitefoot .shell { display: flex; flex-wrap: wrap; gap: 16px; align-items: center;
+                   padding-top: 26px; padding-bottom: 34px; font-size: 12.5px; color: var(--color-neutral-500); }
+.sitefoot a { color: var(--color-neutral-400); text-decoration: none; }
+.sitefoot a:hover { color: var(--color-accent); }
+
+/* ---------- prose, used by blog posts and bottle notes ---------- */
+
+.prose { font-size: 15.5px; line-height: 1.75; color: var(--color-neutral-300); }
+.prose > :first-child { margin-top: 0; }
+.prose p { margin: 0 0 18px; text-wrap: pretty; }
+.prose h2 { font-size: 22px; font-weight: 500; margin: 38px 0 12px; color: var(--color-text); }
+.prose h3 { font-size: 17px; font-weight: 500; margin: 28px 0 10px; color: var(--color-text); }
+.prose ul, .prose ol { margin: 0 0 18px; padding-left: 22px; }
+.prose li { margin-bottom: 7px; }
+.prose blockquote { margin: 22px 0; padding: 2px 0 2px 18px; border-left: 2px solid var(--color-accent);
+                    color: var(--color-neutral-400); }
+.prose code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.88em;
+              padding: 2px 5px; border-radius: 4px; background: var(--color-neutral-900); }
+.prose pre { overflow-x: auto; padding: 16px 18px; border-radius: var(--radius-md);
+             background: var(--color-neutral-900); border: 1px solid var(--color-divider); }
+.prose pre code { padding: 0; background: none; }
+.prose img { max-width: 100%; border-radius: var(--radius-md); }
+.prose hr { border: 0; height: 1px; margin: 32px 0;
+            background: linear-gradient(to right, transparent, var(--color-divider) 24px,
+                        var(--color-divider) calc(100% - 24px), transparent); }
+
+/* Rules fade at their ends. */
+.rule, .softrule { border: 0; height: 1px;
+  background: linear-gradient(to right, transparent, var(--color-divider) 24px,
+              var(--color-divider) calc(100% - 24px), transparent); }
+
+.kicker { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-accent); }
+
+@media print {
+  .topnav, .sitefoot { display: none !important; }
+  body { background: #fff !important; color: #000 !important; }
+}

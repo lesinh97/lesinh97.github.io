@@ -1,0 +1,128 @@
+/* Cara: the parallax one-pager. Full-viewport sections, layers that drift at
+   their own speed, skewed gradient dividers, floating shapes. */
+
+.px { position: relative; overflow-x: clip; }
+
+.px-page { position: relative; min-height: 100vh; display: flex; align-items: center;
+           padding: 120px 0; isolation: isolate; }
+.px-inner { position: relative; z-index: 3; width: 100%; }
+
+/* The skewed gradient band behind a section. Cara's signature divider. */
+.px-divider { position: absolute; z-index: 0; inset: 0; overflow: hidden; }
+.px-divider > span { position: absolute; left: -12%; right: -12%; top: 0; bottom: 0;
+                     transform: skewY(-7deg); transform-origin: 0 0; border-radius: 40px; }
+.px-divider.g1 > span { background: var(--grad-1); }
+.px-divider.g2 > span { background: var(--grad-2); }
+.px-divider.g3 > span { background: var(--grad-3); }
+.px-divider.g4 > span { background: var(--grad-4); }
+/* Cara keeps the gradients as an atmosphere, not a wall of colour. */
+.px-divider.soft > span { opacity: 0.18; }
+.px-divider.wash > span { opacity: 0.1; }
+
+/* A parallax layer. The speed is read from data-speed by parallax.js. */
+.px-layer { position: absolute; inset: 0; z-index: 1; pointer-events: none;
+            will-change: transform; }
+
+/* ---------- floating shapes ---------- */
+
+.shape { position: absolute; display: block; color: var(--color-neutral-100); }
+.shape svg { display: block; width: 100%; height: 100%; }
+.shape.fill svg { fill: currentColor; stroke: none; }
+.shape.line svg { fill: none; stroke: currentColor; stroke-width: 2.5; }
+
+.a-updown { animation: updown 4s ease-in-out infinite alternate; }
+.a-updownwide { animation: updown-wide 8s ease-in-out infinite alternate; }
+.a-spin { animation: spin 22s linear infinite; }
+.a-spin-slow { animation: spin 48s linear infinite reverse; }
+
+@keyframes updown { from { transform: translateY(-11px); } to { transform: translateY(11px); } }
+@keyframes updown-wide { from { transform: translateY(-24px); } to { transform: translateY(24px); } }
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+/* Motion is decoration here, so it all stops when the visitor asks it to. */
+@media (prefers-reduced-motion: reduce) {
+  .a-updown, .a-updownwide, .a-spin, .a-spin-slow { animation: none; }
+  .px-layer { transform: none !important; }
+}
+
+/* ---------- intro ---------- */
+
+.hello { font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--color-accent); }
+.introline { font-family: var(--font-heading); font-weight: 500; margin: 18px 0 0;
+             font-size: clamp(38px, 7vw, 76px); line-height: 1.04; letter-spacing: -0.03em; }
+.introsub { max-width: 30ch; margin: 22px 0 0; font-size: clamp(16px, 2.1vw, 21px); line-height: 1.55;
+            color: var(--color-neutral-400); text-wrap: pretty; }
+.introsub a { color: var(--color-text); text-decoration: none; box-shadow: inset 0 -2px 0 0 var(--color-accent); }
+.introsub a:hover { background: color-mix(in srgb, var(--color-accent) 18%, transparent); }
+.scrollcue { display: inline-flex; align-items: center; gap: 9px; margin-top: 46px; font-size: 11px;
+             letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-neutral-500);
+             text-decoration: none; }
+.scrollcue:hover { color: var(--color-accent); }
+.scrollcue i { animation: nudge 1.8s ease-in-out infinite; }
+@keyframes nudge { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(4px); } }
+@media (prefers-reduced-motion: reduce) { .scrollcue i { animation: none; } }
+
+/* ---------- section headings ---------- */
+
+.px-h { font-family: var(--font-heading); font-weight: 500; margin: 0;
+        font-size: clamp(30px, 5vw, 54px); letter-spacing: -0.025em; }
+.px-lede { max-width: 52ch; margin: 16px 0 0; font-size: 15.5px; line-height: 1.65;
+           color: var(--color-neutral-400); text-wrap: pretty; }
+
+/* ---------- project cards ---------- */
+
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 22px; margin-top: 42px; }
+.pcard { position: relative; display: block; overflow: hidden; padding: 28px 26px 30px; text-decoration: none;
+         border-radius: var(--radius-lg); color: var(--color-text);
+         background: color-mix(in srgb, var(--color-surface) 82%, transparent);
+         border: 1px solid var(--color-divider);
+         transition: transform .25s cubic-bezier(.2,.7,.2,1), box-shadow .25s ease, border-color .25s ease; }
+.pcard::before { content: ""; position: absolute; inset: 0; opacity: 0.13;
+                 transition: opacity .25s ease; }
+.pcard.g1::before { background: var(--grad-1); }
+.pcard.g2::before { background: var(--grad-2); }
+.pcard.g3::before { background: var(--grad-3); }
+.pcard.g4::before { background: var(--grad-4); }
+.pcard > * { position: relative; }
+.pcard:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); border-color: transparent; color: var(--color-text); }
+.pcard:hover::before { opacity: 0.28; }
+.pcard:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 3px; }
+.pcard b { display: block; font-family: var(--font-heading); font-weight: 500; font-size: 21px;
+           letter-spacing: -0.01em; margin-top: 10px; }
+.pcard p { margin: 10px 0 0; font-size: 13.5px; line-height: 1.6; color: var(--color-neutral-300); }
+.pcard .go { display: inline-flex; align-items: center; gap: 7px; margin-top: 18px; font-size: 11px;
+             letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-neutral-400); }
+.pcard:hover .go { color: var(--color-text); }
+
+/* ---------- about ---------- */
+
+.about { display: flex; flex-wrap: wrap; gap: 40px; align-items: flex-start; margin-top: 40px; }
+.avatar { width: 168px; height: 168px; flex: none; border-radius: 50%; overflow: hidden;
+          background: var(--color-neutral-900); box-shadow: var(--shadow-md);
+          display: flex; align-items: center; justify-content: center;
+          font-family: var(--font-heading); font-size: 46px; color: var(--color-neutral-600); }
+.avatar img { width: 100%; height: 100%; object-fit: cover; }
+.aboutbody { flex: 1; min-width: 260px; max-width: 58ch; font-size: 15.5px; line-height: 1.72;
+             color: var(--color-neutral-300); }
+.aboutbody p { margin: 0 0 16px; text-wrap: pretty; }
+
+/* ---------- contact ---------- */
+
+.bigmail { display: inline-block; margin-top: 26px; font-family: var(--font-heading); font-weight: 500;
+           font-size: clamp(22px, 4vw, 42px); letter-spacing: -0.02em; text-decoration: none;
+           color: var(--color-text); box-shadow: inset 0 -3px 0 0 var(--color-accent); }
+.bigmail:hover { color: var(--color-text); background: color-mix(in srgb, var(--color-accent) 20%, transparent); }
+.links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 38px; }
+.links a { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none;
+           padding: 9px 17px; border-radius: 999px; color: var(--color-neutral-300);
+           border: 1px solid var(--color-divider); }
+.links a:hover { color: var(--color-text); border-color: var(--color-accent);
+                 background: color-mix(in srgb, var(--color-accent) 14%, transparent); }
+
+@media (max-width: 1024px) {
+  /* Below this the text column reflows wide enough to run under the shapes. */
+  .shape { display: none; }
+}
+@media (max-width: 720px) {
+  .px-page { min-height: 0; padding: 96px 0; }
+}

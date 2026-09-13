@@ -9,8 +9,8 @@
     ["peat", "Smoke & peat"]
   ];
   var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  var BAR = ["#e4e7f5", "#cdc6ee", "#b3a9e5", "#9789d6", "#7b6dc4", "#5d5294"];
-  var PBAR = ["#796cbf", "#6f62b1", "#655aa3", "#5d5294", "#544a85", "#423a6a"];
+  var BAR = ["#2a3348", "#3f3d6d", "#524e93", "#6b62bb", "#8b7fe8", "#b5abfc"];
+  var PBAR = ["#4a4685", "#5a5499", "#6862b8", "#7a70cf", "#8b7fe8", "#a99ff5"];
   var SORTS = [["recent", "Most recent"], ["score", "Highest score"], ["price", "Most spent"]];
   var INK = {
     light: { bg: "#ffffff", fg: "#292b31", muted: "#5f6373", ink: "#5d5294", onInk: "#ffffff", edge: "#9296ab", rule: "#c9ccdc", soft: "#f2f0fc", track: "#e4e7f5" },
@@ -405,7 +405,7 @@
       "<p>Pick one to read its note.</p></div>" +
       '<div class="stats">' +
       '<div><div class="stat-n">' + list.length + '</div><div class="stat-l">Bottles logged</div></div>' +
-      '<div><div class="stat-n" style="color:var(--color-accent-300)">' + score(avg) + '</div><div class="stat-l">Average score</div></div>' +
+      '<div><div class="stat-n" style="color:var(--color-accent)">' + score(avg) + '</div><div class="stat-l">Average score</div></div>' +
       '<div><div class="stat-n">' + esc(top) + '</div><div class="stat-l">Favourite origin</div></div>' +
       "</div></div>" +
       '<div class="cols"><div class="col">' + shelfHtml(sel) + chipsHtml() +
