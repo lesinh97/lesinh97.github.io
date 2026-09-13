@@ -45,6 +45,7 @@ permalink: /whisky/index.html
 "nose": {{ (b.data.nose or "") | dump | safe }},
 "palate": {{ (b.data.palate or "") | dump | safe }},
 "finish": {{ (b.data.finish or "") | dump | safe }},
+"words": {{ (b.data.cardwords or "") | dump | safe }},
 "story": {{ (b.templateContent | striptags | trim) | dump | safe }}
 }{% if not loop.last %},{% endif %}{% endfor %}]
 </script>

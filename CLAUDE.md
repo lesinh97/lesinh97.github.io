@@ -49,13 +49,36 @@ hex except the Cara gradients and the two JS bar ramps, which are noted where th
   Do not reintroduce a per-page token block.
 - `src/assets/cara.css`, `ledger.css`, `bottle.css`, `blog.css` are the per-page sheets.
 
+## Colour modes
+
+Two modes, dark first, both lifted verbatim from the old Gatsby site's theme-ui variables
+so the site still looks like itself. `src/assets/theme-toggle.js` owns the switch; an inline
+script in `base.njk` sets `data-theme` before first paint so light-mode visitors get no dark
+flash. With no stored choice the page follows `prefers-color-scheme`.
+
+| | dark | light |
+| --- | --- | --- |
+| ground | `#141821` | `#f7fafc` |
+| text | `#e2e8f0` | `#2d3748` |
+| accent | `#f6ad55` | `#c05621` |
+
+The neutral ramp **flips** between modes so each step keeps its meaning: 100 is always the
+most contrast against the ground, 900 always a barely-there surface. Anything that needs a
+colour per mode belongs in `theme.css`, never in a template.
+
+Flavour bars are `var(--bar-0..5)` / `var(--pbar-0..5)`, referenced straight from inline
+styles so they follow the mode with no re-render. Do not put raw hexes back in `BAR`/`PBAR`.
+
 ## Design rules
 
-- Dark ground, Cara's deep navy (`--color-bg`). Faithful to
-  [gatsby-starter-portfolio-cara](https://github.com/LekoArts/gatsby-starter-portfolio-cara).
-- Cara's four section gradients are tokens: `--grad-1` through `--grad-4`. They are
-  atmosphere, not walls: `.px-divider.soft` at 18%, `.wash` at 10%, project cards at 13%
-  rising to 28% on hover. Do not run one at full strength across a section.
+- Faithful to [gatsby-starter-portfolio-cara](https://github.com/LekoArts/gatsby-starter-portfolio-cara).
+- Cara's four section gradients are tokens, `--grad-1` to `--grad-4`, and they are **bands,
+  not washes**. A gradient stretched over a whole section at low opacity is what made this
+  look muddy. Use `.b1` / `.b2` / `.b3` bands at full strength; only `.wide` may pass behind
+  copy, and it stays faint. Band skew is 6deg: a full-width band sweeps vertically by
+  `width * tan(angle)`, so a steeper angle drags it across the text column.
+- The floating shapes take Cara's icon palette (`--ic-red` through `--ic-green`). They are
+  meant to be multicoloured; making them all one neutral is what reads as drab.
 - One interactive accent, `--color-accent`, as a line, a small fill, or a tonal tint.
 - Buttons are outlined, not filled. Left-aligned, asymmetric layout.
 - Rules fade to transparent at their ends. See `.rule` / `.softrule` in theme.css.
@@ -63,10 +86,23 @@ hex except the Cara gradients and the two JS bar ramps, which are noted where th
 - All decorative motion stops under `prefers-reduced-motion: reduce`, including the parallax.
 - No em dashes or en dashes in user-facing copy. No decorative subtitles.
 
+## Responsive
+
+`minmax(Npx, 1fr)` in a grid track cannot shrink below N, so on a narrower phone it forces
+the whole page wider than the viewport. Every auto-fit grid here uses
+`minmax(min(Npx, 100%), 1fr)`. If a page starts scrolling sideways on mobile, look there first.
+
 ## Print
 
 `@media print` hides `.screen` and shows `#sheet`, a grid of mm-sized cards. Three shapes:
-shelf card 85x55mm, hang tag 40x88mm, classic tag 50x100mm. Sizes are in mm on purpose.
+shelf card 95x62mm, hang tag 46x96mm, classic tag 56x110mm. Sizes are in mm on purpose.
+
+Card ink is teal and lives in the `INK` table in `app.js`. It is print pigment, not a screen
+token, so it does **not** follow the colour mode and is the one place raw hexes are correct.
+
+A note's `cardwords` prints on its card; without it the card falls back to the note's own
+prose. Card text is clamped by `clamp()` to fit the fixed millimetre shape, per card type.
+Change a clamp and you must re-check overflow.
 
 The cards set their own colours from the `INK` table in `app.js` and default to `light`, so
 they stay black on white paper no matter how dark the screen theme gets. If you change a card,

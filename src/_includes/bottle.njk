@@ -23,8 +23,8 @@ extraCss: ["/assets/bottle.css"]
     </div>
 
     <div class="body">
-      {# Dim to bright, matching the sparkline ramp in app.js. #}
-      {% set ramp = ["#2a3348", "#3f3d6d", "#524e93", "#6b62bb", "#8b7fe8", "#b5abfc"] %}
+      {# Theme-aware ramp, shared with the sparkline in app.js. #}
+      {% set ramp = ["var(--bar-0)", "var(--bar-1)", "var(--bar-2)", "var(--bar-3)", "var(--bar-4)", "var(--bar-5)"] %}
       {% set rows = [["Fruit & floral", fam.fruit], ["Sweet & creamy", fam.sweet], ["Spice & dried fruit", fam.spice],
                      ["Oak & nut", fam.oak], ["Malt & grain", fam.malt], ["Smoke & peat", fam.peat]] %}
       <div class="lbl">Flavour signature</div>
