@@ -90,7 +90,7 @@
     var items = sortBy(list.slice(), "recent").map(function (w) {
       var on = sel && w.id === sel.id;
       var shot = w.photo
-        ? '<img src="' + esc(w.photo) + '" alt="' + esc(w.name) + '">'
+        ? '<img src="' + esc(w.photo) + '" alt="' + esc(w.name) + '" loading="lazy" decoding="async">'
         : '<i class="ph ph-wine"></i>';
       return '<div class="tile' + (on ? " on" : "") + '">' +
         '<div class="shot">' + shot + "</div>" +
@@ -157,7 +157,7 @@
 
   function panelHtml(sel) {
     if (!sel) return "";
-    var shot = sel.photo ? '<img src="' + esc(sel.photo) + '" alt="' + esc(sel.name) + '">' : '<i class="ph ph-wine"></i>';
+    var shot = sel.photo ? '<img src="' + esc(sel.photo) + '" alt="' + esc(sel.name) + '" decoding="async">' : '<i class="ph ph-wine"></i>';
     var facts = [
       ["Tasted", dLong(sel.date)], ["Strength", sel.abv || "\u2013"],
       ["Age", sel.age || "NAS"], ["Paid", money(sel.price)]

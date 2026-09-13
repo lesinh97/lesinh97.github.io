@@ -6,7 +6,7 @@ extraCss: ["/assets/bottle.css"]
 <div class="bwrap">
   <article class="sheet">
     <div class="head">
-      {% if photo %}<div class="shot"><img src="{{ photo }}" alt="{{ name }}"></div>{% endif %}
+      {% if photo %}<div class="shot"><img src="{{ photo }}" alt="{{ name }}" decoding="async"></div>{% endif %}
       <div style="flex: 1; min-width: 0">
         <div class="kick">{{ origin }}{% if type %}  ·  {{ type }}{% endif %}</div>
         <h1>{{ name }}</h1>
