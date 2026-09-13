@@ -17,6 +17,7 @@ fam:
   malt: 2
   peat: 0
 flavours: ["Cherry", "Toffee", "Orange peel", "Almond"]
+keynote: ""
 nose: "Red berries in syrup, orange oil, a little marzipan."
 palate: "Plush and sweet, cherry and toffee, wine tannin at the edges."
 finish: "Medium-long, sweet-sour, drying with nutty oak."

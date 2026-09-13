@@ -17,6 +17,7 @@ fam:
   malt: 3
   peat: 1
 flavours: ["Tropical fruit", "Pineapple", "Coconut", "Lime"]
+keynote: ""
 nose: "Tropical and loud: mango skin, pineapple core, coconut water."
 palate: "Sharp sweetness at full strength; water opens custard and lime."
 finish: "Medium, tart, a faint ashy edge."

@@ -17,6 +17,7 @@ fam:
   malt: 2
   peat: 0
 flavours: ["Apple blossom", "Honey", "Vanilla"]
+keynote: ""
 nose: "Light and polite: apple blossom, pear drop, soft vanilla."
 palate: "Thin but pleasant; honey and cereal, little grip."
 finish: "Short, sweet, gone quickly."

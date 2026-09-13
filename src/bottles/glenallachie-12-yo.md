@@ -17,6 +17,7 @@ fam:
   malt: 3
   peat: 0
 flavours: ["Mincemeat", "Cinnamon", "Marmalade", "Ginger"]
+keynote: ""
 nose: "Mincemeat and cinnamon toast, a little orange marmalade."
 palate: "Sweet sherry and baking spice, honeyed malt underneath."
 finish: "Medium-long, ginger warmth."

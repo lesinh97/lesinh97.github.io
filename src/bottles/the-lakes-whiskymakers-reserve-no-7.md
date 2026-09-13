@@ -17,6 +17,7 @@ fam:
   malt: 2
   peat: 0
 flavours: ["Blood orange", "Cocoa", "Clove", "Sea salt"]
+keynote: ""
 nose: "Blood orange and cocoa nib, a savoury balsamic lift."
 palate: "Rich, slightly saline; red fruit, dark chocolate, clove."
 finish: "Long and tannic, drying nicely."

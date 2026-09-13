@@ -17,6 +17,7 @@ fam:
   malt: 3
   peat: 0
 flavours: ["Fig", "Milk chocolate", "Raisin", "Almond"]
+keynote: ""
 nose: "Soft and sweet: dried fig, milk chocolate, toasted nut."
 palate: "Silky triple-distilled malt, raisin and light caramel."
 finish: "Medium, gentle, nutty."

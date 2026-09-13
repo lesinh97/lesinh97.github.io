@@ -17,6 +17,7 @@ fam:
   malt: 2
   peat: 0
 flavours: ["Date", "Treacle", "Prune", "Espresso"]
+keynote: ""
 nose: "Sticky date, dark honey, a whiff of old bookshop."
 palate: "Dense PX sweetness: treacle, prune, warm spice."
 finish: "Sweet and long, tailing into espresso."

@@ -17,6 +17,7 @@ fam:
   malt: 2
   peat: 0
 flavours: ["Raisin", "Fig", "Clove", "Chocolate"]
+keynote: ""
 nose: "Dark and syrupy: raisin, fig, a rub of clove on the rim."
 palate: "Thick sherry sweetness, then dry cocoa and cracked pepper."
 finish: "Long and warming; leather and stewed fruit."

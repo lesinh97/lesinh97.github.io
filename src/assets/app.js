@@ -8,6 +8,10 @@
     ["malt", "Malt & grain"],
     ["peat", "Smoke & peat"]
   ];
+  /* Signed in katakana, two characters, echoing the mark in the nav. */
+  var SIG = "\u30b7\u30f3";
+  var SIG_FONT = '"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif';
+
   var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   var BAR = ["var(--bar-0)", "var(--bar-1)", "var(--bar-2)", "var(--bar-3)", "var(--bar-4)", "var(--bar-5)"];
   var PBAR = ["var(--pbar-0)", "var(--pbar-1)", "var(--pbar-2)", "var(--pbar-3)", "var(--pbar-4)", "var(--pbar-5)"];
@@ -215,10 +219,11 @@
       line: [w.age, w.abv, w.cask].filter(Boolean).join("  \u00b7  "),
       stack: [[w.age, w.abv].filter(Boolean).join("  \u00b7  "), w.cask].filter(Boolean).join("\n"),
       dateLine: "Tasted " + dLong(w.date),
-      // `keynote` in the note wins: the owner's one-liner for this bottle.
-      // Without it the card borrows the note's own "Behind it" prose, so a
-      // card always has something to say.
-      words: (w.keynote || w.story || "").trim(),
+      sig: SIG,
+      // The card prints `keynote` and nothing else. The note's markdown body
+      // is prose for the page, not a caption: truncating it mid-sentence read
+      // as broken, so a bottle with no keynote simply shows no line.
+      words: (w.keynote || "").trim(),
       score: score(w.score),
       unit: "out of ten",
       taglineShort: w.tags.slice(0, 3).join("  \u00b7  "),
@@ -269,6 +274,16 @@
   /* The cards follow the bottle page: a gradient wash behind the header, the
      score in a filled block, and the tasting notes on their own tinted panel.
      No photo on any of them, they are tags. */
+
+  /* Tasted date on the left, signature on the right, on one baseline. */
+  function signedRow(d, fs, sigFs) {
+    return '<span style="display:flex;align-items:baseline;justify-content:space-between;gap:3mm;width:100%">' +
+      '<span style="font-size:' + fs + ';letter-spacing:.16em;text-transform:uppercase;color:' + d.c.muted + '">' +
+      esc(d.dateLine) + "</span>" +
+      '<span style="flex:none;font-family:' + SIG_FONT + ";font-size:" + sigFs +
+      ";font-weight:500;letter-spacing:.22em;text-indent:.22em;line-height:1;color:" + d.c.ink + '">' +
+      esc(d.sig) + "</span></span>";
+  }
 
   function wash(d, size) {
     return "radial-gradient(" + size + " at 100% 0%, " + d.c.wash + " 0%, transparent 72%)";
@@ -330,17 +345,21 @@
           "</span></div>";
       }).join("") + "</div>" +
 
-      wordsHtml(d, 88, "5pt", "1.5mm") +
+      wordsHtml(d, 180, "5pt", "1.5mm") +
 
       '<div style="position:relative;flex:none;display:flex;justify-content:space-between;align-items:baseline;gap:3mm;width:95mm;' +
       "margin:1.5mm 0 0 -7mm;padding:1.7mm 5.4mm 1.5mm 7mm;background:" + d.c.soft +
       ";border-top:.25mm solid " + d.c.rule + ";font-size:4pt;letter-spacing:.16em;text-transform:uppercase;color:" +
       d.c.muted + '">' +
-      "<span>" + esc(d.dateLine) + "</span><span>" + esc(d.taglineShort) + "</span></div></div>";
+      '<span style="flex:1;min-width:0">' + esc(d.dateLine) + "</span>" +
+      '<span style="flex:none">' + esc(d.taglineShort) + "</span>" +
+      '<span style="flex:none;font-family:' + SIG_FONT +
+      ';font-size:6pt;font-weight:500;letter-spacing:.22em;text-indent:.22em;line-height:1;color:' +
+      d.c.ink + '">' + esc(d.sig) + "</span></div></div>";
   }
 
   function hangTag(d) {
-    return '<div style="width:46mm;height:96mm;overflow:hidden;break-inside:avoid;position:relative;display:flex;' +
+    return '<div style="width:46mm;height:102mm;overflow:hidden;break-inside:avoid;position:relative;display:flex;' +
       "flex-direction:column;align-items:center;justify-content:space-between;padding:9.4mm 4.8mm 0;background:" + d.c.bg +
       ";border:.3mm solid " + d.c.cut + ";color:" + d.c.fg + ';font-family:var(--font-body);text-align:center">' +
       '<span style="position:absolute;inset:0;background:' + wash(d, "110% 32%") + '"></span>' +
@@ -365,14 +384,11 @@
       '<span style="position:relative;flex:none;display:flex;flex-direction:column;gap:.9mm;width:34mm;margin-top:1.3mm">' +
       barsHtml(d, "8.5mm", "3.5pt") + "</span>" +
 
-      wordsHtml(d, 40, "4pt", "1.3mm") +
+      wordsHtml(d, 180, "4pt", "1.3mm") +
 
       '<span style="position:relative;flex:none;width:46mm;margin:1.5mm -4.8mm 0;padding:2mm 4mm 1.9mm;background:' +
       d.c.soft + ";border-top:.25mm solid " + d.c.rule + '">' +
-      '<span style="display:block;font-size:4.4pt;line-height:1.45;letter-spacing:.02em;color:' + d.c.fg + '">' +
-      esc(d.taglineShort) + "</span>" +
-      '<span style="display:block;font-size:3.8pt;letter-spacing:.16em;text-indent:.16em;text-transform:uppercase;line-height:1.2;margin-top:1.2mm;color:' +
-      d.c.muted + '">' + esc(d.dateLine) + "</span></span></div>";
+      signedRow(d, "3.8pt", "5.5pt") + "</span></div>";
   }
 
   function classicTag(d) {
@@ -407,12 +423,11 @@
       '<span style="position:relative;flex:none;display:block;width:100%;text-align:left;margin-top:1.6mm">' +
       notesPanel(d, "7.5mm", "3.6pt", "4.4pt", "1.8mm 2mm") + "</span>" +
 
-      wordsHtml(d, 110, "4.6pt", "1.4mm") +
+      wordsHtml(d, 180, "4.6pt", "1.4mm") +
 
       '<span style="position:relative;flex:none;width:56mm;margin:1.5mm -5.4mm 0;padding:2.2mm 4.4mm 2mm;background:' + d.c.soft +
       ";border-top:.25mm solid " + d.c.rule +
-      ";font-size:4pt;letter-spacing:.16em;text-indent:.16em;text-transform:uppercase;color:" + d.c.muted + '">' +
-      esc(d.dateLine) + "</span></div>";
+      '">' + signedRow(d, "4pt", "6.5pt") + "</span></div>";
   }
 
   function sheetHtml() {

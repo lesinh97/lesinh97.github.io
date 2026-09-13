@@ -17,6 +17,7 @@ fam:
   malt: 0
   peat: 0
 flavours: ["Dried apricot", "Walnut", "Plum", "Tobacco"]
+keynote: ""
 nose: "Rancio and dried apricot, walnut husk, old furniture polish."
 palate: "Grapey and oily, plum jam over dry tannin."
 finish: "Very long: nut oil, tobacco leaf, faint orange."
