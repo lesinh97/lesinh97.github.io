@@ -55,3 +55,18 @@
   .postrow .thumb { width: 100%; height: 150px; }
   .posthero { padding: 0 18px; }
 }
+
+/* ---------- comments ---------- */
+
+/* The widget itself is a giscus iframe and styles itself from one of giscus's
+   own themes, so all this owns is the frame around it: the rule, the label,
+   and the room. */
+.comments { margin: 52px 0 0; }
+.comments .rule { margin: 0 0 30px; }
+.comments h2 { font-family: var(--font-heading); font-weight: 500; font-size: 13px;
+               letter-spacing: 0.14em; text-transform: uppercase; margin: 0;
+               color: var(--color-neutral-400); }
+.commentnote { margin: 10px 0 22px; font-size: 13px; line-height: 1.6;
+               color: var(--color-neutral-500); }
+.commentnote a { color: var(--color-accent); }
+#comments { min-height: 160px; }

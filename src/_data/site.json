@@ -8,6 +8,14 @@
     "title": "Dram Ledger",
     "description": "A whisky tasting journal"
   },
+  "comments": {
+    "repo": "lesinh97/lesinh97.github.io",
+    "repoId": "REPLACE_WITH_data-repo-id",
+    "category": "Comments",
+    "categoryId": "REPLACE_WITH_data-category-id",
+    "themeDark": "dark",
+    "themeLight": "light"
+  },
   "nav": [
     {
       "label": "Home",

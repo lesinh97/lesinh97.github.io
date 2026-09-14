@@ -2,6 +2,7 @@
 layout: base.njk
 navCurrent: /blog/
 extraCss: ["/assets/blog.css"]
+extraJs: ["/assets/comments.js"]
 ---
 <article>
   <header class="pagehead">
@@ -25,6 +26,8 @@ extraCss: ["/assets/blog.css"]
       {% for t in topics %}<span class="tag tag-accent">{{ t }}</span>{% endfor %}
     </div>
     {% endif %}
+
+    {% include "comments.njk" %}
 
     <a class="backlink" href="/blog/"><i class="ph ph-arrow-left"></i>All posts</a>
   </div>

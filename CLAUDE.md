@@ -79,6 +79,21 @@ colour per mode belongs in `theme.css`, never in a template.
 Flavour bars are `var(--bar-0..5)` / `var(--pbar-0..5)`, referenced straight from inline
 styles so they follow the mode with no re-render. Do not put raw hexes back in `BAR`/`PBAR`.
 
+## Comments
+
+giscus on the blog posts only, backed by GitHub Discussions in the site repo. No backend.
+
+- Ids live in `src/_data/site.json` under `comments`. `src/_includes/comments.njk` renders
+  nothing while `repoId` still holds the `REPLACE_` placeholder, so a half-configured build
+  has no comment section rather than a broken one. A post opts out with `comments: false`.
+- `src/assets/comments.js` injects the giscus script so it can read the current mode, and
+  `theme-toggle.js` fires a `themechange` event that it answers with a `postMessage` to the
+  iframe. The toggle does not know giscus exists; keep it that way.
+- `themeDark` / `themeLight` are giscus theme *names*. A custom URL there must be the whole
+  giscus stylesheet, not a few variable overrides: it is the only CSS the iframe loads, so a
+  partial one leaves the widget unstyled. That is why this uses the stock presets and styles
+  only the frame around them, in `blog.css`.
+
 ## Design rules
 
 - Faithful to [gatsby-starter-portfolio-cara](https://github.com/LekoArts/gatsby-starter-portfolio-cara).

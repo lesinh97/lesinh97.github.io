@@ -23,6 +23,9 @@
       btn.setAttribute("title", mode === "light" ? "Switch to dark" : "Switch to light");
       btn.setAttribute("aria-label", mode === "light" ? "Switch to dark" : "Switch to light");
     }
+    // Anything that cannot read the token itself listens for this. The giscus
+    // comment widget is in a cross-origin iframe, so it has to be told.
+    document.dispatchEvent(new CustomEvent("themechange", { detail: { mode: mode } }));
   }
 
   document.addEventListener("click", function (e) {
