@@ -4,23 +4,27 @@ origin: "England"
 type: "Single malt"
 age: "NAS"
 abv: "52%"
-cask: "Sherry-led blend"
+cask: "Oloroso, PX & red wine"
 tasted: "2026-01-31"
 price: 3600000
 score: 8.8
-photo: 
+photo: /assets/bottles/the-lakes-whiskymakers-reserve-no-6.webp
 fam:
   fruit: 4
   sweet: 5
   spice: 4
-  oak: 3
+  oak: 4
   malt: 2
   peat: 0
-flavours: ["Cherry", "Toffee", "Orange peel", "Almond"]
-keynote: ""
-nose: "Red berries in syrup, orange oil, a little marzipan."
-palate: "Plush and sweet, cherry and toffee, wine tannin at the edges."
-finish: "Medium-long, sweet-sour, drying with nutty oak."
+flavours: ["Raisin", "Dark chocolate", "Roasted coffee", "Clove"]
+keynote: "Oloroso, Pedro Ximenez and red wine casks at 52 percent. Raisin, fig and date under dark chocolate and roasted coffee, oak keeping it honest."
+nose: "Rich and heady. Dried fruit as raisin, fig and date, warm cinnamon and clove, dark chocolate, roasted coffee and oak."
+palate: "Deep and layered. Dried fruit sweetness, the heat of the spice, a mild dark chocolate bitterness, light oak tannin at the edges."
+finish: "Long and smooth, warm with spice and oak."
 ---
 
+<!-- Draft review. Tasting notes below are compiled from published sources, not from a tasting of my own. Verify before publishing. Source: dangtauwhisky.com -->
+
 The Lakes Distillery opened in Cumbria in 2014, one of the new English malt producers. Its house style is blending led, built around sherry casks rather than an age statement.
+
+The Whiskymaker's Reserve series is the flagship, each release a different marriage of casks numbered in sequence rather than by age. No. 6 is built from oloroso and Pedro Ximenez sherry casks with red wine casks alongside, bottled at 52 percent without chill filtering or colouring.
