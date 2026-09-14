@@ -1,0 +1,25 @@
+{# Comments, via giscus: the thread is a GitHub Discussion in the site repo,
+   so there is no backend here and nothing to moderate but the Discussion
+   itself. Rendered only once site.json carries the real ids, so a build made
+   before they are pasted in simply has no comment section rather than a
+   broken widget. A post can opt out with `comments: false` in its front
+   matter.
+
+   The widget is injected by /assets/comments.js rather than by a script tag
+   here, because its theme has to be read from the page at load time and kept
+   in step with the colour toggle afterwards. #}
+{% if site.comments and "REPLACE" not in site.comments.repoId and comments != false %}
+<section class="comments">
+  <hr class="rule">
+  <h2>Comments</h2>
+  <p class="commentnote">Signed in with GitHub. Threads live in
+    <a href="https://github.com/{{ site.comments.repo }}/discussions">the repo's discussions</a>.</p>
+  <div id="comments"
+       data-repo="{{ site.comments.repo }}"
+       data-repo-id="{{ site.comments.repoId }}"
+       data-category="{{ site.comments.category }}"
+       data-category-id="{{ site.comments.categoryId }}"
+       data-theme-dark="{{ site.comments.themeDark }}"
+       data-theme-light="{{ site.comments.themeLight }}"></div>
+</section>
+{% endif %}
