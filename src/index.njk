@@ -2,61 +2,58 @@
 layout: base.njk
 navCurrent: /
 extraCss: ["/assets/cara.css"]
-extraJs: ["/assets/parallax.js"]
 permalink: /index.html
 ---
 {# Cara's four movements: intro, the things, about, contact. Each section is a
-   .px-page; the .px-layer inside it drifts against the scroll at data-speed. #}
+   .px-page. The shape field inside it comes from src/_data/shapes.js, grouped
+   far to near, and is rendered by the shared macro in field.njk. The sprite it
+   points at is in base.njk, on every page. #}
+{% import "field.njk" as px %}
 
 <main class="px">
 
   {# ---------- intro ---------- #}
   <section class="px-page" id="intro">
-    <div class="px-divider g1"><span class="wide faint"></span><span class="b1"></span><span class="b3"></span></div>
-    <div class="px-layer" data-speed="0.22">
-      <span class="shape line a-updownwide c-steel" style="top: 16%; left: 8%; width: 64px; height: 64px; opacity: .5">
-        <svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="20"/></svg></span>
-      <span class="shape fill a-updown c-ice" style="bottom: 9%; left: 34%; width: 26px; height: 26px; opacity: .35">
-        <svg viewBox="0 0 44 44"><polygon points="22,4 40,38 4,38"/></svg></span>
-      <span class="shape line a-spin c-azure" style="top: 24%; right: 16%; width: 96px; height: 96px; opacity: .35">
-        <svg viewBox="0 0 44 44"><rect x="6" y="6" width="32" height="32"/></svg></span>
+    <div class="px-divider g1">
+      <span class="wide faint" data-speed="0.05"></span>
+      <span class="b1" data-speed="0.14"></span>
+      <span class="b3" data-speed="-0.09"></span>
     </div>
-    <div class="px-layer" data-speed="0.45">
-      <span class="shape fill a-updown c-mist" style="top: 74%; right: 24%; width: 18px; height: 18px; opacity: .45">
-        <svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="20"/></svg></span>
-      <span class="shape line a-updownwide c-sapphire" style="top: 8%; right: 38%; width: 42px; height: 42px; opacity: .3">
-        <svg viewBox="0 0 44 44"><polygon points="22,3 41,13 41,31 22,41 3,31 3,13"/></svg></span>
-    </div>
+    <div class="px-glow"></div>
+    {{ px.field(shapes.intro) }}
 
     <div class="px-inner shell">
-      <div class="hello">{{ site.title }}</div>
-      <h1 class="introline">Hi, I am Sinh,</h1>
-      <p class="introsub">
-        Call me Shin. Welcome to my personal blog. Enjoy!
-      </p>
-      <p class="introsub" style="margin-top: 14px">
-        I keep a <a href="/whisky/">whisky tasting journal</a> and write the
-        odd <a href="/blog/">post</a>.
-      </p>
-      <a class="scrollcue" href="#things">Have a look <i class="ph ph-arrow-down"></i></a>
+      <div class="hero rise">
+        <div class="hello">{{ site.title }}</div>
+        <h1 class="introline">Hi, I am Sinh,</h1>
+        <p class="introsub">
+          Call me Shin. Welcome to my personal blog. Enjoy!
+        </p>
+        <p class="introsub">
+          I keep a <a href="/whisky/">whisky tasting journal</a> and write the
+          odd <a href="/blog/">post</a>.
+        </p>
+        <a class="scrollcue" href="#things">
+          <span class="cueline"></span>
+          <span>Have a look <i class="ph ph-arrow-down"></i></span>
+        </a>
+      </div>
     </div>
   </section>
 
   {# ---------- the things ---------- #}
   <section class="px-page" id="things">
-    <div class="px-divider g2"><span class="wide"></span><span class="b2"></span></div>
-    <div class="px-layer" data-speed="0.3">
-      <span class="shape line a-updownwide c-slate" style="top: 12%; right: 8%; width: 78px; height: 78px; opacity: .35">
-        <svg viewBox="0 0 44 44"><polygon points="22,4 40,38 4,38"/></svg></span>
-      <span class="shape fill a-updown c-ice" style="bottom: 14%; left: 6%; width: 22px; height: 22px; opacity: .4">
-        <svg viewBox="0 0 44 44"><rect x="4" y="4" width="36" height="36" rx="6"/></svg></span>
+    <div class="px-divider g2">
+      <span class="wide" data-speed="0.06"></span>
+      <span class="b2" data-speed="-0.12"></span>
     </div>
+    {{ px.field(shapes.things) }}
 
     <div class="px-inner shell">
-      <h2 class="px-h">The things</h2>
-      <p class="px-lede">Two of them are worth your time. The rest is in progress.</p>
+      <h2 class="px-h" data-reveal>The things<span class="hrule"></span></h2>
+      <p class="px-lede" data-reveal>Two of them are worth your time. The rest is in progress.</p>
 
-      <div class="cards">
+      <div class="cards" data-reveal data-stagger="110">
         <a class="pcard g2" href="/whisky/">
           <span class="kicker">{{ collections.bottles | length }} bottles</span>
           <b>{{ site.whisky.title }}</b>
@@ -85,18 +82,18 @@ permalink: /index.html
 
   {# ---------- about ---------- #}
   <section class="px-page" id="about">
-    <div class="px-divider g3"><span class="wide"></span><span class="b1"></span></div>
-    <div class="px-layer" data-speed="0.26">
-      <span class="shape line a-spin-slow c-steel" style="top: 9%; right: 7%; width: 110px; height: 110px; opacity: .28">
-        <svg viewBox="0 0 44 44"><polygon points="22,3 41,13 41,31 22,41 3,31 3,13"/></svg></span>
-      <span class="shape fill a-updownwide c-mist" style="bottom: 14%; left: 9%; width: 20px; height: 20px; opacity: .4">
-        <svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="20"/></svg></span>
+    <div class="px-divider g3">
+      <span class="wide" data-speed="0.05"></span>
+      <span class="b1" data-speed="0.16"></span>
     </div>
+    {{ px.field(shapes.about) }}
 
     <div class="px-inner shell">
-      <h2 class="px-h">About</h2>
-      <div class="about">
-        <div class="avatar">{{ site.author | first }}</div>
+      <h2 class="px-h" data-reveal>About<span class="hrule"></span></h2>
+      <div class="about" data-reveal data-stagger="130">
+        <div class="avatar">
+          <img class="brandmark avamark" src="/assets/brand/mark.png" alt="" aria-hidden="true">
+        </div>
         <div class="aboutbody">
           <p>I am {{ site.author }}. By day I work on software. By evening I pour something
             peaty, write down what I taste, and argue with myself about whether it was worth
@@ -112,19 +109,18 @@ permalink: /index.html
 
   {# ---------- contact ---------- #}
   <section class="px-page" id="contact">
-    <div class="px-divider g4"><span class="wide"></span><span class="b2"></span><span class="b3"></span></div>
-    <div class="px-layer" data-speed="0.2">
-      <span class="shape line a-updownwide c-azure" style="top: 22%; right: 10%; width: 70px; height: 70px; opacity: .3">
-        <svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="20"/></svg></span>
-      <span class="shape fill a-updown c-ice" style="bottom: 11%; left: 16%; width: 24px; height: 24px; opacity: .35">
-        <svg viewBox="0 0 44 44"><polygon points="22,4 40,38 4,38"/></svg></span>
+    <div class="px-divider g4">
+      <span class="wide" data-speed="0.05"></span>
+      <span class="b2" data-speed="0.13"></span>
+      <span class="b3" data-speed="-0.1"></span>
     </div>
+    {{ px.field(shapes.contact) }}
 
     <div class="px-inner shell">
-      <h2 class="px-h">Say hello</h2>
-      <p class="px-lede">Whisky recommendations especially welcome.</p>
-      <a class="bigmail" href="mailto:{{ site.email }}">{{ site.email }}</a>
-      <div class="links">
+      <h2 class="px-h" data-reveal>Say hello<span class="hrule"></span></h2>
+      <p class="px-lede" data-reveal>Whisky recommendations especially welcome.</p>
+      <div data-reveal><a class="bigmail" href="mailto:{{ site.email }}">{{ site.email }}</a></div>
+      <div class="links" data-reveal data-stagger="70">
         {% for s in site.social %}<a href="{{ s.url }}">{{ s.label }}</a>{% endfor %}
         <a href="/whisky/">Whisky</a>
         <a href="/blog/">Blog</a>

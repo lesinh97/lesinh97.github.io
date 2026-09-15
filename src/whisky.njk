@@ -6,9 +6,20 @@ extraCss: ["/assets/ledger.css"]
 extraJs: ["/assets/app.js"]
 permalink: /whisky/index.html
 ---
+{% import "field.njk" as px %}
+
+{# The same backdrop the bottle notes carry. Nothing on this page below the
+   toolbar is marked for a reveal: app.js re-renders #body from scratch on
+   every keystroke and filter, so a one-shot observer would fire on elements
+   that are about to be thrown away. #}
+<div class="pxback">
+  {{ px.band(2) }}
+  {{ px.field(shapes.ledger) }}
+</div>
+
 <div class="page">
   <div class="screen wrap">
-    <div class="toolbar">
+    <div class="toolbar rise">
       <div style="display: flex; align-items: baseline; gap: 10px; margin-right: auto">
         <span class="kick">{{ site.whisky.title }}</span>
       </div>

@@ -34,6 +34,9 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500&display=swap">
 <link rel="stylesheet" href="/assets/nocturne.css">
 <link rel="stylesheet" href="/assets/theme.css">
+{# The shared motion layer: bands, the drifting field, arrivals. Every page
+   gets it, so no page looks like it belongs to a different site. #}
+<link rel="stylesheet" href="/assets/motion.css">
 {% for href in extraCss %}<link rel="stylesheet" href="{{ href }}">
 {% endfor %}
 <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
@@ -41,11 +44,13 @@
 </head>
 <body>
 
+{% include "sprite.njk" %}
+
 {% if not hideNav %}
 <header class="topnav">
   <div class="shell">
     <a class="navbrand" href="/">
-      <img class="navmark" src="/assets/brand/mark.png" alt="" aria-hidden="true">
+      <img class="brandmark navmark" src="/assets/brand/mark.png" alt="" aria-hidden="true">
       <span>{{ site.title }}</span>
     </a>
     {% for n in site.nav %}
@@ -84,6 +89,10 @@
   }
 </script>
 <script src="/assets/theme-toggle.js"></script>
+{# Both bail out on a page that has no hooks for them, so they are loaded
+   everywhere rather than listed per page in extraJs. #}
+<script src="/assets/motion.js"></script>
+<script src="/assets/parallax.js"></script>
 {% for src in extraJs %}<script src="{{ src }}"></script>
 {% endfor %}
 </body>

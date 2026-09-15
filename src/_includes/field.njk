@@ -1,0 +1,34 @@
+{# The drifting icon field, shared by every page.
+
+   Call it with one of the fields from src/_data/shapes.js:
+
+     {% import "field.njk" as px %}
+     {{ px.field(shapes.blog) }}
+
+   A field is three groups, far to near. Each group is a .px-layer that drifts
+   against the scroll at its own data-speed and leans toward the pointer by its
+   own --pull; parallax.js writes both. The symbols it points at live in
+   sprite.njk, which base.njk renders once per page. The container has to be
+   `position: relative` and clip its overflow: .px-page and .pagehead both do.
+#}
+{% macro field(groups) %}
+  {% for g in groups %}
+  <div class="px-layer" data-speed="{{ g.speed }}" style="--pull: {{ g.pull }}px; --lag: {{ loop.index0 * 90 }}ms">
+    {% for s in g.items %}
+    <span class="shape {{ s.mode }} c-{{ s.ink }}{% if s.spin %} s-spin{% if s.spinRev %} s-rev{% endif %}{% endif %}{% if s.pulse %} s-pulse{% endif %}{% if s.edgy %} s-edge{% endif %}"
+          style="top:{{ s.y }}%;{{ s.edge }}:{{ s.x }}%;width:{{ s.size }}px;height:{{ s.size }}px;--o:{{ s.o }};--amp:{{ s.amp }}px;--dur:{{ s.dur }}s;--delay:{{ s.delay }}s;--spin:{{ s.spinDur }}s;--sw:{{ s.sw }}"
+    ><svg viewBox="0 0 44 44" aria-hidden="true"><use href="#sh-{{ s.sym }}"/></svg></span>
+    {% endfor %}
+  </div>
+  {% endfor %}
+{% endmacro %}
+
+{# The skewed band behind a page header. `g` picks which of the four section
+   gradients it uses, so the inner pages stay in the same rotation the
+   homepage sections do. #}
+{% macro band(g) %}
+  <div class="px-divider g{{ g }}">
+    <span class="hb" data-speed="0.07"></span>
+    <span class="hs" data-speed="0.16"></span>
+  </div>
+{% endmacro %}

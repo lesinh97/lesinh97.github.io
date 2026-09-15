@@ -1,68 +1,15 @@
-/* Cara: the parallax one-pager. Full-viewport sections, layers that drift at
-   their own speed, skewed gradient dividers, floating shapes. */
+/* Cara: the parallax one-pager.
+
+   Only what is unique to the homepage lives here. The bands, the drifting
+   field, the arrival and the cursor sheen are in motion.css, because the rest
+   of the site uses them too. This sheet is the four movements: intro, the
+   things, about, contact. */
 
 .px { position: relative; overflow-x: clip; }
 
 .px-page { position: relative; min-height: 100vh; display: flex; align-items: center;
            padding: 120px 0; isolation: isolate; }
 .px-inner { position: relative; z-index: 3; width: 100%; }
-
-/* Cara's dividers are skewed BANDS over the dark ground, not a wash across the
-   whole section. Running a gradient at low opacity over everything is what
-   made this look muddy; a smaller band at full strength is the real thing. */
-.px-divider { position: absolute; z-index: 0; inset: 0; overflow: hidden; pointer-events: none; }
-/* A skew of N degrees over a full-width band sweeps it vertically by
-   width * tan(N), so a steep angle drags the band across the copy. Six
-   degrees keeps the diagonal obvious while leaving the text column clear. */
-.px-divider > span { position: absolute; left: -18%; right: -18%;
-                     transform: skewY(-6deg); border-radius: 28px;
-                     opacity: var(--grad-strength); }
-.px-divider.g1 > span { background: var(--grad-1); }
-.px-divider.g2 > span { background: var(--grad-2); }
-.px-divider.g3 > span { background: var(--grad-3); }
-.px-divider.g4 > span { background: var(--grad-4); }
-
-/* Band geometry. Each section places its bands differently, the way Cara
-   staggers hers, so no two screens look like the same stripe. */
-.px-divider > span.b1 { top: -2%; height: 14%; }
-.px-divider > span.b2 { top: 78%; height: 20%; }
-.px-divider > span.b3 { top: 93%; height: 7%; }
-/* The only band allowed to pass behind the copy, so it stays faint. */
-.px-divider > span.wide { top: 6%; height: 64%; opacity: calc(var(--grad-strength) * 0.16); }
-.px-divider > span.faint { opacity: calc(var(--wash-strength) * 0.18); }
-
-/* A parallax layer. The speed is read from data-speed by parallax.js. */
-.px-layer { position: absolute; inset: 0; z-index: 1; pointer-events: none;
-            will-change: transform; }
-
-/* ---------- floating shapes ---------- */
-
-.shape { position: absolute; display: block; color: var(--shape-ink); }
-.shape.c-mist { color: var(--ic-mist); }
-.shape.c-ice { color: var(--ic-ice); }
-.shape.c-steel { color: var(--ic-steel); }
-.shape.c-azure { color: var(--ic-azure); }
-.shape.c-sapphire { color: var(--ic-sapphire); }
-.shape.c-slate { color: var(--ic-slate); }
-.shape.c-deep { color: var(--ic-deep); }
-.shape svg { display: block; width: 100%; height: 100%; }
-.shape.fill svg { fill: currentColor; stroke: none; }
-.shape.line svg { fill: none; stroke: currentColor; stroke-width: 2.5; }
-
-.a-updown { animation: updown 4s ease-in-out infinite alternate; }
-.a-updownwide { animation: updown-wide 8s ease-in-out infinite alternate; }
-.a-spin { animation: spin 22s linear infinite; }
-.a-spin-slow { animation: spin 48s linear infinite reverse; }
-
-@keyframes updown { from { transform: translateY(-11px); } to { transform: translateY(11px); } }
-@keyframes updown-wide { from { transform: translateY(-24px); } to { transform: translateY(24px); } }
-@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-
-/* Motion is decoration here, so it all stops when the visitor asks it to. */
-@media (prefers-reduced-motion: reduce) {
-  .a-updown, .a-updownwide, .a-spin, .a-spin-slow { animation: none; }
-  .px-layer { transform: none !important; }
-}
 
 /* ---------- intro ---------- */
 
@@ -71,20 +18,40 @@
              font-size: clamp(38px, 7vw, 76px); line-height: 1.04; letter-spacing: -0.03em; }
 .introsub { max-width: 32ch; margin: 22px 0 0; font-size: clamp(16px, 2.1vw, 21px); line-height: 1.55;
             color: var(--color-neutral-200); text-wrap: pretty; }
-.introsub a { color: var(--color-text); text-decoration: none; box-shadow: inset 0 -2px 0 0 var(--color-accent); }
-.introsub a:hover { background: color-mix(in srgb, var(--color-accent) 18%, transparent); }
-.scrollcue { display: inline-flex; align-items: center; gap: 9px; margin-top: 46px; font-size: 11px;
-             letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-neutral-500);
-             text-decoration: none; }
+.introsub + .introsub { margin-top: 14px; }
+/* A standing hairline under the link with the accent sweeping across it on
+   hover, rather than the whole underline switching on at once. */
+.introsub a { color: var(--color-text); text-decoration: none; background-repeat: no-repeat;
+              background-image: linear-gradient(var(--color-accent), var(--color-accent)),
+                                linear-gradient(var(--color-neutral-700), var(--color-neutral-700));
+              background-size: 0% 2px, 100% 1px; background-position: 0 100%, 0 100%;
+              transition: background-size .4s cubic-bezier(.2, .7, .2, 1); }
+.introsub a:hover { background-size: 100% 2px, 100% 1px; }
+
+.scrollcue { display: inline-flex; flex-direction: column; align-items: flex-start; gap: 14px;
+             margin-top: 46px; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+             color: var(--color-neutral-500); text-decoration: none; transition: color .2s ease; }
 .scrollcue:hover { color: var(--color-accent); }
-.scrollcue i { animation: nudge 1.8s ease-in-out infinite; }
-@keyframes nudge { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(4px); } }
-@media (prefers-reduced-motion: reduce) { .scrollcue i { animation: none; } }
+.scrollcue i { vertical-align: -1px; margin-left: 6px; }
+/* A lit segment running down a dim track: the same job the arrow nudge did,
+   but it reads as direction rather than as a twitch. Moved with a transform
+   rather than `top`, so it stays off the layout path. */
+.cueline { position: relative; display: block; width: 1px; height: 46px; overflow: hidden;
+           background: var(--color-neutral-700); }
+.cueline::after { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 18px;
+                  background: linear-gradient(to bottom, transparent, var(--color-accent));
+                  transform: translateY(-20px); animation: px-cue 2.4s ease-in-out infinite; }
+@keyframes px-cue { 0% { transform: translateY(-20px); } 65%, 100% { transform: translateY(46px); } }
+@media (prefers-reduced-motion: reduce) {
+  .cueline::after { animation: none; transform: translateY(14px); } }
 
 /* ---------- section headings ---------- */
 
 .px-h { font-family: var(--font-heading); font-weight: 500; margin: 0;
         font-size: clamp(30px, 5vw, 54px); letter-spacing: -0.025em; }
+/* Wider than the header version in motion.css: there is a whole section to
+   balance here, not a title block. */
+.px-h .hrule { width: 200px; margin-left: 22px; }
 .px-lede { max-width: 52ch; margin: 16px 0 0; font-size: 15.5px; line-height: 1.65;
            color: var(--color-neutral-300); text-wrap: pretty; }
 
@@ -95,32 +62,73 @@
          border-radius: var(--radius-lg); color: var(--color-text);
          background: color-mix(in srgb, var(--color-surface) 82%, transparent);
          border: 1px solid var(--color-divider);
-         transition: transform .25s cubic-bezier(.2,.7,.2,1), box-shadow .25s ease, border-color .25s ease; }
-.pcard::before { content: ""; position: absolute; inset: 0; opacity: 0.13;
-                 transition: opacity .25s ease; }
+         transition: transform .35s cubic-bezier(.2, .7, .2, 1), box-shadow .35s ease, border-color .35s ease; }
+/* How much of the gradient shows is a per-mode token: the light palette is
+   pale enough that 0.13 of it over a white card is nothing at all. */
+.pcard::before { content: ""; position: absolute; inset: 0; z-index: 0; opacity: var(--card-tint);
+                 transition: opacity .35s ease, transform .5s cubic-bezier(.2, .7, .2, 1); }
 .pcard.g1::before { background: var(--grad-1); }
 .pcard.g2::before { background: var(--grad-2); }
 .pcard.g3::before { background: var(--grad-3); }
 .pcard.g4::before { background: var(--grad-4); }
-.pcard > * { position: relative; }
-.pcard:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); border-color: transparent; color: var(--color-text); }
-.pcard:hover::before { opacity: 0.28; }
+/* The card carries its own sheen rather than using [data-sheen], because it
+   already owns ::before for the gradient. motion.js writes --cx / --cy either
+   way. They are named apart from a layer's --tilt-* on purpose: those inherit
+   all the way down here, and a unitless number in a gradient position kills
+   the whole declaration. */
+.pcard::after { content: ""; position: absolute; inset: 0; z-index: 1; opacity: 0; pointer-events: none;
+                background: radial-gradient(240px circle at var(--cx, 50%) var(--cy, 50%),
+                            color-mix(in srgb, var(--color-accent) 20%, transparent), transparent 62%);
+                transition: opacity .35s ease; }
+.pcard > * { position: relative; z-index: 2; }
+.pcard:hover { transform: translateY(-7px); box-shadow: var(--shadow-lg); border-color: transparent; color: var(--color-text); }
+.pcard:hover::before { opacity: var(--card-tint-hover); transform: scale(1.06); }
+.pcard:hover::after { opacity: 1; }
 .pcard:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 3px; }
 .pcard b { display: block; font-family: var(--font-heading); font-weight: 500; font-size: 21px;
            letter-spacing: -0.01em; margin-top: 10px; }
 .pcard p { margin: 10px 0 0; font-size: 13.5px; line-height: 1.6; color: var(--color-neutral-300); }
 .pcard .go { display: inline-flex; align-items: center; gap: 7px; margin-top: 18px; font-size: 11px;
-             letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-neutral-400); }
+             letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-neutral-400);
+             transition: color .25s ease; }
+.pcard .go i { transition: transform .35s cubic-bezier(.2, .7, .2, 1); }
 .pcard:hover .go { color: var(--color-text); }
+.pcard:hover .go .ph-arrow-right { transform: translateX(6px); }
+.pcard:hover .go .ph-arrow-down { transform: translateY(4px); }
+@media (prefers-reduced-motion: reduce) {
+  .pcard, .pcard::before, .pcard::after, .pcard .go i { transition: none; }
+  .pcard:hover, .pcard:hover::before { transform: none; }
+  .pcard:hover .go i { transform: none; }
+}
 
 /* ---------- about ---------- */
 
 .about { display: flex; flex-wrap: wrap; gap: 40px; align-items: flex-start; margin-top: 40px; }
-.avatar { width: 168px; height: 168px; flex: none; border-radius: 50%; overflow: hidden;
-          background: var(--color-neutral-900); box-shadow: var(--shadow-md);
-          display: flex; align-items: center; justify-content: center;
-          font-family: var(--font-heading); font-size: 46px; color: var(--color-neutral-600); }
-.avatar img { width: 100%; height: 100%; object-fit: cover; }
+/* The mark, シン, on a tinted disc. The disc is a surface plus one of the
+   section gradients rather than a flat neutral, so the About section belongs to
+   the same page as the bands behind it. */
+.avatar { position: relative; width: 188px; height: 188px; flex: none; border-radius: 50%;
+          display: grid; place-items: center; isolation: isolate;
+          background: var(--color-surface);
+          box-shadow: var(--shadow-md),
+                      0 0 0 1px color-mix(in srgb, var(--color-accent) 16%, transparent),
+                      0 0 46px color-mix(in srgb, var(--color-accent) 12%, transparent); }
+.avatar::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: 50%;
+                  background: var(--grad-2); opacity: var(--card-tint); }
+/* The mark is 2.29:1, so it is sized on width and centred: cropping it to fill
+   a circle would cut the strokes off. The inset is optical, not measured, and
+   it wants to stay generous or the glyph fights the ring around it. */
+/* No filter here, deliberately: theme.css puts `invert(1)` on .brandmark for
+   the dark ground, and `filter` does not stack across rules, so anything set
+   here would be dropped in one mode and kept in the other. */
+.avamark { width: 66%; height: auto; display: block; }
+/* A ring turning around the mark, so About has one moving thing of its own
+   rather than borrowing the shape field. */
+.avatar::after { content: ""; position: absolute; inset: -11px; border-radius: 50%;
+                 border: 1px solid transparent; border-top-color: var(--color-accent);
+                 border-right-color: color-mix(in srgb, var(--color-accent) 35%, transparent);
+                 animation: px-spin 14s linear infinite; }
+@media (prefers-reduced-motion: reduce) { .avatar::after { animation: none; } }
 .aboutbody { flex: 1; min-width: 260px; max-width: 58ch; font-size: 15.5px; line-height: 1.72;
              color: var(--color-neutral-200); }
 .aboutbody p { margin: 0 0 16px; text-wrap: pretty; }
@@ -129,19 +137,24 @@
 
 .bigmail { display: inline-block; margin-top: 26px; font-family: var(--font-heading); font-weight: 500;
            font-size: clamp(22px, 4vw, 42px); letter-spacing: -0.02em; text-decoration: none;
-           color: var(--color-text); box-shadow: inset 0 -3px 0 0 var(--color-accent); }
-.bigmail:hover { color: var(--color-text); background: color-mix(in srgb, var(--color-accent) 20%, transparent); }
+           color: var(--color-text); background-repeat: no-repeat;
+           background-image: linear-gradient(var(--color-accent), var(--color-accent)),
+                             linear-gradient(var(--color-neutral-700), var(--color-neutral-700));
+           background-size: 0% 3px, 100% 1px; background-position: 0 100%, 0 100%;
+           transition: background-size .5s cubic-bezier(.2, .7, .2, 1), color .25s ease; }
+.bigmail:hover { color: var(--color-heading); background-size: 100% 3px, 100% 1px; }
 .links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 38px; }
 .links a { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none;
            padding: 9px 17px; border-radius: 999px; color: var(--color-neutral-300);
-           border: 1px solid var(--color-divider); }
-.links a:hover { color: var(--color-text); border-color: var(--color-accent);
+           border: 1px solid var(--color-divider);
+           transition: transform .28s cubic-bezier(.2, .7, .2, 1), color .2s ease,
+                       border-color .2s ease, background .2s ease; }
+.links a:hover { color: var(--color-text); border-color: var(--color-accent); transform: translateY(-3px);
                  background: color-mix(in srgb, var(--color-accent) 14%, transparent); }
+@media (prefers-reduced-motion: reduce) { .links a:hover { transform: none; } }
 
-@media (max-width: 1024px) {
-  /* Below this the text column reflows wide enough to run under the shapes. */
-  .shape { display: none; }
-}
 @media (max-width: 720px) {
   .px-page { min-height: 0; padding: 96px 0; }
+  .avatar { width: 146px; height: 146px; }
+  .px-h .hrule { width: 64px; margin-left: 14px; }
 }

@@ -1,0 +1,287 @@
+/* The motion layer, shared by every page.
+
+   This started life inside cara.css, as homepage decoration. It is here now
+   because the rest of the site should not look like a different site: the
+   ledger, the blog and a bottle note all get the same drifting field, the same
+   skewed band behind the header, the same arrival.
+
+   Motion here is composed, never overwritten. Everything that moves takes its
+   transform from custom properties so two sources can drive one element:
+   parallax.js writes --py from the scroll and --tilt-x / --tilt-y from the
+   pointer, CSS keyframes own the rest. Nothing assigns `transform` from
+   script. That is what lets a divider band keep its skew while it drifts.
+
+   Load order is nocturne, theme, motion, then the page's own sheet. */
+
+/* ---------- gradient bands ---------- */
+
+/* Cara's dividers are skewed BANDS over the dark ground, not a wash across the
+   whole section. Running a gradient at low opacity over everything is what
+   made this look muddy; a smaller band at full strength is the real thing. */
+.px-divider { position: absolute; z-index: 0; inset: 0; overflow: hidden; pointer-events: none; }
+/* A skew of N degrees over a full-width band sweeps it vertically by
+   width * tan(N), so a steep angle drags the band across the copy. Six
+   degrees keeps the diagonal obvious while leaving the text column clear.
+   The translate is parallax: bands carry their own data-speed, smaller than
+   the shapes above them, so ground and foreground shear apart. */
+.px-divider > span { position: absolute; left: -18%; right: -18%;
+                     transform: skewY(-6deg) translate3d(0, var(--py, 0px), 0);
+                     border-radius: 28px; will-change: transform; }
+.px-divider.g1 > span { background: var(--grad-1); }
+.px-divider.g2 > span { background: var(--grad-2); }
+.px-divider.g3 > span { background: var(--grad-3); }
+.px-divider.g4 > span { background: var(--grad-4); }
+
+/* Band geometry, as a fraction of the block behind it. The homepage sections
+   are a full viewport tall, so b1 to b3 are thin slices at full strength and
+   each section stacks them differently: no two screens are the same stripe.
+   Full strength means no opacity at all: how hard a band hits is decided by the
+   gradient theme.css hands it for the current mode, not by fading a single
+   palette down. See the note above the mode blocks there. */
+.px-divider > span.b1 { top: -2%; height: 14%; }
+.px-divider > span.b2 { top: 78%; height: 20%; }
+.px-divider > span.b3 { top: 93%; height: 7%; }
+/* A page header is a fifth of that height, so the same slice would be a
+   hairline. The header band is instead one large diagonal at low strength,
+   with a thin crisp slice under the nav to give it an edge. The band stops
+   short of the bottom on purpose: run it past the edge and the header ends on
+   a flat horizontal cut instead of on the diagonal. */
+.px-divider > span.hb { top: 20%; height: 82%; opacity: var(--band-head);
+                        border-bottom: 1px solid color-mix(in srgb, var(--color-accent) 22%, transparent);
+                        /* Fades in from the top the way .rule fades at its ends,
+                           so the wash arrives rather than starting on a cut. The
+                           bottom stays crisp: that edge is the accent line. */
+                        -webkit-mask-image: linear-gradient(to bottom, transparent, #000 34%);
+                        mask-image: linear-gradient(to bottom, transparent, #000 34%); }
+.px-divider > span.hs { top: -4%; height: 12%; }
+/* Inside a .pagehead the whole thing is barely 270px tall, and a 6deg skew
+   sweeps a full-width band by width * tan(6deg), which is most of that. The
+   diagonal has to flatten or the crisp slice lands on the kicker. */
+.pagehead .px-divider > span { transform: skewY(-3.5deg) translate3d(0, var(--py, 0px), 0); }
+/* Sized so the swept band still ends inside the header. The skew adds
+   width * 1.36 * tan(3.5deg) of vertical travel, about 58px at 1440 and 107px
+   at 2560, and whatever spills past the header bottom is clipped off square:
+   one flat grey line across the page, which is the exact thing the diagonal
+   is there to avoid. 54% leaves room for that travel up to an ultrawide. */
+.pagehead .px-divider > span.hb { top: 8%; height: 49%; }
+.pagehead .px-divider > span.hs { top: -8%; height: 12%; }
+/* The only band allowed to pass behind body copy, so it stays faint. It is
+   also the only one that moves on its own: a slow drift across an oversized
+   gradient, far too gradual to read as animation up close, but enough that the
+   section is never a still image. */
+.px-divider > span.wide { top: 6%; height: 64%; opacity: var(--band-wash);
+                          background-size: 220% 100%;
+                          animation: px-slide 26s ease-in-out infinite alternate;
+                          /* The crisp bands are meant to cut. This one passes
+                             behind body copy, so it fades out at both ends
+                             instead, the same way .rule does. A hard edge under
+                             a paragraph reads as a panel, not as a band. */
+                          -webkit-mask-image: linear-gradient(to bottom, transparent, #000 24%, #000 76%, transparent);
+                          mask-image: linear-gradient(to bottom, transparent, #000 24%, #000 76%, transparent); }
+.px-divider > span.faint { opacity: var(--band-faint); }
+@keyframes px-slide { from { background-position: 0% 50%; } to { background-position: 100% 50%; } }
+
+/* A soft pool of accent, breathing slowly. It is the one wash on the site
+   rather than a band, so it is only ever used where there is no body copy for
+   it to grey out. */
+.px-glow { position: absolute; z-index: 0; left: -10%; top: 4%; width: 70%; height: 74%;
+           pointer-events: none; border-radius: 50%; filter: blur(22px);
+           background: radial-gradient(closest-side,
+                       color-mix(in srgb, var(--color-accent) 16%, transparent), transparent);
+           animation: px-breathe 13s ease-in-out infinite alternate; }
+@keyframes px-breathe { from { opacity: .55; transform: scale(.92); }
+                        to   { opacity: 1;   transform: scale(1.08); } }
+
+/* ---------- the drifting field ---------- */
+
+/* Wallpaper, so the sprite stays out of the flow and out of the a11y tree. */
+.px-sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+/* A parallax layer. parallax.js writes --py from the scroll and --tilt-* from
+   the pointer; --pull is how far this layer leans toward the cursor, which is
+   what separates near groups from far ones when the mouse moves. */
+.px-layer { position: absolute; inset: 0; z-index: 1; pointer-events: none; will-change: transform;
+            transform: translate3d(calc(var(--tilt-x, 0) * var(--pull, 0px)),
+                                   calc(var(--py, 0px) + var(--tilt-y, 0) * var(--pull, 0px)), 0);
+            opacity: 0; animation: px-fade 1.1s ease var(--lag, 0ms) forwards; }
+@keyframes px-fade { to { opacity: 1; } }
+
+/* Every shape carries its own clock: --dur, a negative --delay so the field is
+   already desynchronised on the first frame, and --amp for how far it swims.
+   src/_data/shapes.js picks all three from a fixed seed. */
+.shape { position: absolute; display: block; color: var(--shape-ink); opacity: var(--o, .4);
+         animation: px-float var(--dur, 8s) ease-in-out var(--delay, 0s) infinite alternate; }
+@keyframes px-float {
+  from { transform: translate3d(0, calc(var(--amp, 14px) * -1), 0); }
+  to   { transform: translate3d(0, var(--amp, 14px), 0); }
+}
+
+.shape.c-mist { color: var(--ic-mist); }
+.shape.c-ice { color: var(--ic-ice); }
+.shape.c-steel { color: var(--ic-steel); }
+.shape.c-azure { color: var(--ic-azure); }
+.shape.c-sapphire { color: var(--ic-sapphire); }
+.shape.c-slate { color: var(--ic-slate); }
+.shape.c-deep { color: var(--ic-deep); }
+
+.shape svg { display: block; width: 100%; height: 100%; transform-origin: center; }
+.shape.fill svg { fill: currentColor; stroke: none; }
+/* Stroke weight is per shape, not fixed: 2.5 reads as hair on a 120px icon and
+   closes a 14px one up solid. */
+.shape.line svg { fill: none; stroke: currentColor; stroke-width: var(--sw, 2.5);
+                  stroke-linecap: round; stroke-linejoin: round; }
+
+/* The float lives on the shape, the spin on the svg inside it, so the two never
+   fight over `transform`. A shape gets one of spin or pulse, never both. */
+.shape.s-spin svg { animation: px-spin var(--spin, 40s) linear var(--delay, 0s) infinite; }
+.shape.s-spin.s-rev svg { animation-direction: reverse; }
+.shape.s-pulse svg { animation: px-pulse var(--spin, 20s) ease-in-out var(--delay, 0s) infinite alternate; }
+@keyframes px-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes px-pulse { from { transform: scale(.82); } to { transform: scale(1.12); } }
+
+/* ---------- arrival ---------- */
+
+/* Above the fold, nothing waits for an observer: .rise stands its children up
+   one at a time as the page loads. `backwards` holds the from-state through
+   the delay, or every line flashes in place first and then animates. */
+.rise > * { animation: px-rise .9s cubic-bezier(.2, .7, .2, 1) backwards; }
+.rise > :nth-child(1) { animation-delay: .06s; }
+.rise > :nth-child(2) { animation-delay: .16s; }
+.rise > :nth-child(3) { animation-delay: .28s; }
+.rise > :nth-child(4) { animation-delay: .38s; }
+.rise > :nth-child(5) { animation-delay: .52s; }
+.rise > :nth-child(6) { animation-delay: .62s; }
+@keyframes px-rise { from { opacity: 0; transform: translateY(28px); } }
+
+/* Below the fold, motion.js stamps .reveal-ready on <html> before it observes
+   anything, so if the script never runs the page is simply all visible rather
+   than all blank.
+
+   The rise is the `translate` property, not `transform`, and that is the whole
+   reason this works: a card both rises into view and lifts on hover, and if
+   both used `transform` the revealed state would win on specificity and the
+   hover lift would never move again. The two properties compose instead. */
+.reveal-ready [data-reveal] { opacity: 0; translate: 0 24px;
+  transition: opacity .75s ease, translate .75s cubic-bezier(.2, .7, .2, 1); }
+.reveal-ready [data-reveal].is-in { opacity: 1; translate: none; }
+/* A staggered container does not fade itself: its children do, one after the
+   next, with motion.js setting --d per child. */
+.reveal-ready [data-reveal][data-stagger] { opacity: 1; translate: none; transition: none; }
+.reveal-ready [data-stagger] > * { opacity: 0; translate: 0 26px;
+  transition: opacity .7s ease var(--d, 0ms), translate .7s cubic-bezier(.2, .7, .2, 1) var(--d, 0ms); }
+.reveal-ready [data-stagger].is-in > * { opacity: 1; translate: none; }
+
+/* A backdrop for a page that already has a header of its own: the band and the
+   field pinned to the top of the page, behind everything else. It deliberately
+   has no positioned ancestor, so it measures against the initial containing
+   block and runs the full viewport width rather than the content column. The
+   negative z-index is what keeps it behind the copy: at 0 it would paint over
+   in-flow content, which is not positioned and so paints earlier. */
+.pxback { position: absolute; z-index: -1; inset: 0 0 auto 0; height: 480px;
+          overflow: hidden; pointer-events: none;
+          /* Without this the backdrop ends on a hard horizontal line straight
+             across the page, which undoes every diagonal inside it. */
+          -webkit-mask-image: linear-gradient(to bottom, #000 58%, transparent 100%);
+          mask-image: linear-gradient(to bottom, #000 58%, transparent 100%); }
+
+/* ---------- shared header ---------- */
+
+/* Every page that is not the homepage opens with one of these: the band, a
+   quiet field of shapes, and a title that stands up as the page loads. */
+/* The padding scales with the viewport, and not for looks: the band's skew
+   sweeps by a fraction of the *width*, so on a wide screen a fixed-height
+   header cannot contain it and the overflow clips the diagonal off square. A
+   header that grows with the page keeps the geometry in proportion. */
+.pagehead { position: relative; overflow: hidden; isolation: isolate;
+            padding-block: clamp(96px, 7vw, 190px) clamp(66px, 5vw, 140px); }
+.pagehead .shell { position: relative; z-index: 3; }
+.pagehead h1 { font-family: var(--font-heading); font-weight: 500; margin: 12px 0 0;
+               font-size: clamp(32px, 5.5vw, 54px); letter-spacing: -0.025em; text-wrap: balance; }
+.pagehead p { max-width: 56ch; margin: 16px 0 0; font-size: 15.5px; line-height: 1.65;
+              color: var(--color-neutral-400); text-wrap: pretty; }
+/* The accent hairline that draws itself out of a heading as it arrives. */
+.hrule { display: inline-block; vertical-align: middle; width: 110px; height: 1px; margin-left: 18px;
+         transform-origin: left; transform: scaleX(0);
+         background: linear-gradient(to right, var(--color-accent), transparent);
+         transition: transform .9s cubic-bezier(.2, .7, .2, 1) .35s; }
+.rise .hrule, [data-reveal].is-in .hrule { transform: scaleX(1); }
+
+/* ---------- cursor sheen ---------- */
+
+/* Every clickable surface on the site lights up under the cursor. motion.js
+   writes --cx / --cy in px against the element box; this is the whole of the
+   effect, and the list below is the whole of where it applies.
+
+   The rule is a box, not a link: anything with a card, row, pill, chip, tile
+   or button shape glows. Bare text links keep the underline and colour change
+   they already have, because a radial tint behind a run of inline text reads
+   as a smudge rather than as a highlight.
+
+   Keep this list and SHEEN in motion.js in step. The list is deliberately by
+   class rather than by data attribute: most of the ledger is rendered from
+   app.js on every keystroke, and markup that is thrown away that often should
+   not have to carry the hook.
+
+   The pseudo sits at -1, behind the content rather than over it. That is what
+   the isolation is for: without a stacking context of its own the tint slides
+   behind the page background and disappears. */
+[data-sheen], .links a, .tile, .chip, .row, .rgo, .btn, .modetoggle {
+  position: relative; isolation: isolate; }
+[data-sheen]::before, .links a::before, .tile::before, .chip::before, .row::before,
+.rgo::before, .btn::before, .modetoggle::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; opacity: 0;
+  pointer-events: none; border-radius: inherit;
+  background: radial-gradient(var(--sheen-r, 260px) circle at var(--cx, 50%) var(--cy, 50%),
+              color-mix(in srgb, var(--color-accent) var(--sheen-a, 15%), transparent), transparent 62%);
+  transition: opacity .35s ease; }
+[data-sheen]:hover::before, .links a:hover::before, .tile:hover::before, .chip:hover::before,
+.row:hover::before, .rgo:hover::before, .btn:hover::before, .modetoggle:hover::before {
+  opacity: 1; }
+/* A 260px pool inside a 30px chip is a flat wash: the gradient needs to fall
+   off inside the element for the cursor to be visible in it at all. Small
+   things get a small radius and a little more accent to make up for the area. */
+.chip, .btn, .modetoggle, .rgo { --sheen-r: 88px; --sheen-a: 24%; }
+.links a { --sheen-r: 120px; --sheen-a: 20%; }
+.tile { --sheen-r: 130px; --sheen-a: 22%; }
+
+/* ---------- reduced motion ---------- */
+
+/* All of this is decoration, so it all stops when the visitor asks it to, and
+   anything waiting on a reveal is simply shown. */
+@media (prefers-reduced-motion: reduce) {
+  .shape, .shape svg, .px-glow, .px-layer, .px-divider > span.wide, .rise > * { animation: none; }
+  .px-layer { opacity: 1; transform: none; }
+  .px-divider > span { transform: skewY(-6deg); }
+  .pagehead .px-divider > span { transform: skewY(-3.5deg); }
+  .hrule { transform: scaleX(1); transition: none; }
+  [data-sheen]::before, .links a::before, .tile::before, .chip::before, .row::before,
+  .rgo::before, .btn::before, .modetoggle::before { transition: none; }
+  .reveal-ready [data-reveal], .reveal-ready [data-stagger] > * {
+    opacity: 1; translate: none; transition: none; }
+}
+
+/* ---------- small screens ---------- */
+
+@media (max-width: 1024px) {
+  /* Below this the text column reflows wide enough to run under the middle of
+     the field, so only the shapes pinned to an edge stay, and dimmer. */
+  .shape { display: none; }
+  .shape.s-edge { display: block; opacity: calc(var(--o, .4) * .55); }
+  .px-glow { width: 90%; }
+}
+@media (max-width: 720px) {
+  .shape, .shape.s-edge { display: none; }
+  .pagehead { padding-block: 62px 44px; }
+  .hrule { width: 54px; margin-left: 12px; }
+}
+
+@media print {
+  /* None of this belongs on paper, and a skewed navy band least of all. */
+  .px-divider, .px-layer, .px-glow, .px-sprite, .pxback, .hrule { display: none !important; }
+  /* The print cards carry no classes at all, so the glow cannot reach them,
+     but a hover tint has no meaning on paper either way. */
+  [data-sheen]::before, .links a::before, .tile::before, .chip::before, .row::before,
+  .rgo::before, .btn::before, .modetoggle::before, .pcard::after { display: none !important; }
+  .rise > *, [data-reveal], [data-stagger] > * {
+    opacity: 1 !important; translate: none !important; animation: none !important; }
+}

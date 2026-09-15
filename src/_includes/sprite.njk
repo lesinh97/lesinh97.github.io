@@ -1,0 +1,18 @@
+{# Every shape on the site points at one of these. Rendered once per page from
+   base.njk, kept out of the flow and out of the accessibility tree: these are
+   wallpaper, they carry no meaning. Arrows and crosses are line art only, and
+   the data file knows it: filled in, they are just blobs. #}
+<svg class="px-sprite" aria-hidden="true" focusable="false"><defs>
+  <symbol id="sh-circle" viewBox="0 0 44 44"><circle cx="22" cy="22" r="19"/></symbol>
+  <symbol id="sh-ring" viewBox="0 0 44 44"><path fill-rule="evenodd" d="M22 3a19 19 0 1 0 0 38 19 19 0 0 0 0-38zm0 10a9 9 0 1 1 0 18 9 9 0 0 1 0-18z"/></symbol>
+  <symbol id="sh-triangle" viewBox="0 0 44 44"><polygon points="22,5 39,37 5,37"/></symbol>
+  <symbol id="sh-box" viewBox="0 0 44 44"><rect x="6" y="6" width="32" height="32" rx="4"/></symbol>
+  <symbol id="sh-hexa" viewBox="0 0 44 44"><polygon points="22,3 40,13 40,31 22,41 4,31 4,13"/></symbol>
+  <symbol id="sh-diamond" viewBox="0 0 44 44"><polygon points="22,4 38,22 22,40 6,22"/></symbol>
+  <symbol id="sh-dots" viewBox="0 0 44 44"><g><circle cx="11" cy="11" r="3"/><circle cx="22" cy="11" r="3"/><circle cx="33" cy="11" r="3"/><circle cx="11" cy="22" r="3"/><circle cx="22" cy="22" r="3"/><circle cx="33" cy="22" r="3"/><circle cx="11" cy="33" r="3"/><circle cx="22" cy="33" r="3"/><circle cx="33" cy="33" r="3"/></g></symbol>
+  <symbol id="sh-plus" viewBox="0 0 44 44"><path d="M22 8v28M8 22h28"/></symbol>
+  <symbol id="sh-cross" viewBox="0 0 44 44"><path d="M10 10 34 34M34 10 10 34"/></symbol>
+  <symbol id="sh-arrowup" viewBox="0 0 44 44"><path d="M22 38V8M11 19 22 8l11 11"/></symbol>
+  <symbol id="sh-arrowur" viewBox="0 0 44 44"><path d="M11 33 33 11M18 11h15v15"/></symbol>
+  <symbol id="sh-chevrons" viewBox="0 0 44 44"><path d="M12 17 22 7l10 10M12 27l10 10 10-10"/></symbol>
+</defs></svg>
