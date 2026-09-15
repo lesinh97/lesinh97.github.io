@@ -107,12 +107,14 @@
       var shot = w.photo
         ? '<img src="' + esc(w.photo) + '" alt="' + esc(w.name) + '" loading="lazy" decoding="async">'
         : '<i class="ph ph-wine"></i>';
-      return '<div class="tile' + (on ? " on" : "") + '">' +
-        '<div class="shot">' + shot + "</div>" +
-        '<button data-act="pick" data-id="' + esc(w.id) + '">' + esc(w.name) + "</button></div>";
+      // The whole tile is the button: the photo is the obvious thing to aim at.
+      return '<button class="tile' + (on ? " on" : "") + '" data-act="pick" data-id="' + esc(w.id) +
+        '"' + (on ? ' aria-current="true"' : "") + '>' +
+        '<span class="shot">' + shot + "</span>" +
+        '<span class="tname">' + esc(w.name) + "</span></button>";
     }).join("");
-    return '<div style="display:flex;align-items:baseline;gap:10px"><span class="lbl">Bottle shots</span>' +
-      '<span style="font-size:11px;color:var(--color-neutral-600)">Add a photo path to a note, click a name to open it</span></div>' +
+    return '<div class="shelfhead"><span class="lbl">Bottle shots</span>' +
+      '<span class="shelfhint">Add a photo path to a note, tap one to open it</span></div>' +
       '<div class="shelf">' + items + "</div>";
   }
 
@@ -449,8 +451,27 @@
 
   /* ---------- render ---------- */
 
+  // #body is rewritten whole on every interaction, which would throw away the
+  // shelf's horizontal scroll and the list's vertical one. Carry both across.
+  function scrollState() {
+    var shelf = document.querySelector(".shelf"), lst = document.querySelector(".list");
+    return { shelf: shelf ? shelf.scrollLeft : 0, list: lst ? lst.scrollTop : 0 };
+  }
+  function restoreScroll(was) {
+    var shelf = document.querySelector(".shelf"), lst = document.querySelector(".list");
+    if (lst) lst.scrollTop = was.list;
+    if (!shelf) return;
+    shelf.scrollLeft = was.shelf;
+    // A pick from the list can select a bottle that is off screen in the strip.
+    var on = shelf.querySelector(".tile.on");
+    if (!on) return;
+    var l = on.offsetLeft, r = l + on.offsetWidth;
+    if (l < shelf.scrollLeft) shelf.scrollLeft = l - 10;
+    else if (r > shelf.scrollLeft + shelf.clientWidth) shelf.scrollLeft = r - shelf.clientWidth + 10;
+  }
+
   function render() {
-    var rows = filtered(), sel = selected();
+    var rows = filtered(), sel = selected(), was = scrollState();
     var avg = list.length ? list.reduce(function (t, w) { return t + (w.score || 0); }, 0) / list.length : 0;
     var counts = {};
     list.forEach(function (w) { counts[w.origin] = (counts[w.origin] || 0) + 1; });
@@ -474,6 +495,7 @@
       "</span><span>Total " + money(spend) + "</span></div></div>" +
       '<div class="col">' + panelHtml(sel) + "</div></div>";
 
+    restoreScroll(was);
     document.getElementById("modal").innerHTML = modalHtml();
     sheetHtml();
   }
