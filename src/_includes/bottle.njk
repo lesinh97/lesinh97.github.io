@@ -3,8 +3,18 @@ layout: base.njk
 navCurrent: /whisky/
 extraCss: ["/assets/bottle.css"]
 ---
+{% import "field.njk" as px %}
+
+{# A full-bleed backdrop behind the top of the page. It has no positioned
+   ancestor on purpose, so it measures against the initial containing block and
+   spans the viewport width rather than the 880px note column. #}
+<div class="pxback">
+  {{ px.band(3) }}
+  {{ px.field(shapes.bottle) }}
+</div>
+
 <div class="bwrap">
-  <article class="sheet">
+  <article class="sheet rise">
     <div class="head">
       {% if photo %}<div class="shot"><img src="{{ photo }}" alt="{{ name }}" decoding="async"></div>{% endif %}
       <div style="flex: 1; min-width: 0">
@@ -15,7 +25,7 @@ extraCss: ["/assets/bottle.css"]
       <div class="score"><b>{{ score }}</b><span>out of ten</span></div>
     </div>
 
-    <div class="facts">
+    <div class="facts" data-reveal data-stagger="70">
       <div class="fact"><span>Tasted</span><b>{{ tasted | readableDate }}</b></div>
       <div class="fact"><span>Age</span><b>{{ age or "NAS" }}</b></div>
       <div class="fact"><span>Strength</span><b>{{ abv or "Not listed" }}</b></div>
@@ -28,7 +38,7 @@ extraCss: ["/assets/bottle.css"]
       {% set rows = [["Fruit & floral", fam.fruit], ["Sweet & creamy", fam.sweet], ["Spice & dried fruit", fam.spice],
                      ["Oak & nut", fam.oak], ["Malt & grain", fam.malt], ["Smoke & peat", fam.peat]] %}
       <div class="lbl">Flavour signature</div>
-      <div class="bars">
+      <div class="bars" data-reveal data-stagger="60">
         {% for r in rows %}
         {% set v = r[1] or 0 %}
         <div class="fbar">
@@ -52,7 +62,7 @@ extraCss: ["/assets/bottle.css"]
       {% endif %}
 
       {% if flavours %}
-      <div class="tags">
+      <div class="tags" data-reveal data-stagger="45">
         {% for t in flavours %}<span class="tag tag-accent">{{ t }}</span>{% endfor %}
       </div>
       {% endif %}

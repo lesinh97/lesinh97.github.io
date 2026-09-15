@@ -4,9 +4,13 @@ navCurrent: /blog/
 extraCss: ["/assets/blog.css"]
 extraJs: ["/assets/comments.js"]
 ---
+{% import "field.njk" as px %}
+
 <article>
   <header class="pagehead">
-    <div class="shell" style="max-width: 720px">
+    {{ px.band(4) }}
+    {{ px.field(shapes.post) }}
+    <div class="shell rise" style="max-width: 720px">
       <div class="meta">
         <span>{{ date | readableDate }}</span>
         {% if readingTime %}<span>{{ readingTime }}</span>{% endif %}
@@ -16,13 +20,13 @@ extraJs: ["/assets/comments.js"]
     </div>
   </header>
 
-  {% if image %}<div class="posthero"><img src="{{ image }}" alt=""></div>{% endif %}
+  {% if image %}<div class="posthero" data-reveal><img src="{{ image }}" alt=""></div>{% endif %}
 
   <div class="post">
     <div class="prose">{{ content | safe }}</div>
 
     {% if topics %}
-    <div class="posttags">
+    <div class="posttags" data-reveal data-stagger="60">
       {% for t in topics %}<span class="tag tag-accent">{{ t }}</span>{% endfor %}
     </div>
     {% endif %}

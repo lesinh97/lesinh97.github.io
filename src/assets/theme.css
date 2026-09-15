@@ -18,14 +18,17 @@
 
   --shell-max: 1280px;
   --radius-md: 10px; --radius-lg: 16px;
-
-  /* Section gradients, all in the navy family. Cara's structure, restrained
-     palette: they differ by depth and temperature rather than by hue. */
-  --grad-1: linear-gradient(to right, #16233c 0%, #2b6cb0 100%);
-  --grad-2: linear-gradient(to right, #1a365d 0%, #4a90d9 100%);
-  --grad-3: linear-gradient(to right, #17303f 0%, #3f7fa8 100%);
-  --grad-4: linear-gradient(to right, #23304f 0%, #7fb2e5 100%);
 }
+
+/* The four section gradients are set per mode, below, and that is the point.
+   They used to live up here as one dark navy set that light mode dimmed with
+   an opacity multiplier, which cannot work: a dark band faded to 70% over a
+   near-white ground is still a dark band, so every diagonal edge on the page
+   landed as a hard line. Dark mode reads well because its bands sit a step
+   above the ground; light mode needs bands that sit a step *below* a pale one.
+   Same structure, same navy family, inverted relationship to the paper.
+   A band's strength is its colour. Do not reintroduce an opacity knob and try
+   to make one palette serve both modes with it. */
 
 /* ---------- dark, the default, as the old site shipped ---------- */
 
@@ -48,8 +51,15 @@
   --shadow-sm: 0 0 0 1px rgba(221, 229, 242, 0.10);
   --shadow-md: 0 0 0 1px rgba(221, 229, 242, 0.10), 0 8px 24px rgba(0, 0, 0, 0.50);
   --shadow-lg: 0 0 0 1px rgba(221, 229, 242, 0.13), 0 18px 48px rgba(0, 0, 0, 0.62);
-  --grad-strength: 1;
-  --wash-strength: 0.85;
+
+  /* Navy on a dark ground: the bands lift out of the page. */
+  --grad-1: linear-gradient(to right, #16233c 0%, #2b6cb0 100%);
+  --grad-2: linear-gradient(to right, #1a365d 0%, #4a90d9 100%);
+  --grad-3: linear-gradient(to right, #17303f 0%, #3f7fa8 100%);
+  --grad-4: linear-gradient(to right, #23304f 0%, #7fb2e5 100%);
+  /* The crisp bands run at full strength; only the washes are dialled back. */
+  --band-wash: 0.16; --band-faint: 0.15; --band-head: 0.19;
+  --card-tint: 0.13; --card-tint-hover: 0.3;
 
   /* Flavour bars, dim to bright. Screen only; the print cards carry their
      own ink. Referenced as var(--bar-N) from inline styles, so they follow
@@ -82,8 +92,17 @@
   --shadow-sm: 0 1px 2px rgba(15, 22, 38, 0.08), 0 0 0 1px rgba(15, 22, 38, 0.06);
   --shadow-md: 0 2px 6px rgba(15, 22, 38, 0.10), 0 1px 2px rgba(15, 22, 38, 0.06);
   --shadow-lg: 0 10px 30px rgba(15, 22, 38, 0.14), 0 2px 6px rgba(15, 22, 38, 0.08);
-  --grad-strength: 0.7;
-  --wash-strength: 0.45;
+
+  /* The same four gradients, a step below the paper instead of above the
+     ground. Still navy, still ordered by depth and temperature. */
+  --grad-1: linear-gradient(to right, #c9d7ea 0%, #8cb4dc 100%);
+  --grad-2: linear-gradient(to right, #d2ddef 0%, #7fb2e5 100%);
+  --grad-3: linear-gradient(to right, #cdddea 0%, #93bdd8 100%);
+  --grad-4: linear-gradient(to right, #dae3f1 0%, #a8cdf2 100%);
+  /* A wash carries further on paper-white before it reads as a tint, and
+     the card gradients need more of themselves to show at all. */
+  --band-wash: 0.5; --band-faint: 0.3; --band-head: 0.62;
+  --card-tint: 0.4; --card-tint-hover: 0.72;
 
   --bar-0: #eaf0f8; --bar-1: #bcdcf7; --bar-2: #7fb2e5;
   --bar-3: #4a90d9; --bar-4: #2b6cb0; --bar-5: #1a365d;
@@ -111,8 +130,17 @@
     --shadow-sm: 0 1px 2px rgba(15, 22, 38, 0.08), 0 0 0 1px rgba(15, 22, 38, 0.06);
     --shadow-md: 0 2px 6px rgba(15, 22, 38, 0.10), 0 1px 2px rgba(15, 22, 38, 0.06);
     --shadow-lg: 0 10px 30px rgba(15, 22, 38, 0.14), 0 2px 6px rgba(15, 22, 38, 0.08);
-    --grad-strength: 0.7;
-    --wash-strength: 0.45;
+
+    /* The same four gradients, a step below the paper instead of above the
+       ground. Still navy, still ordered by depth and temperature. */
+    --grad-1: linear-gradient(to right, #c9d7ea 0%, #8cb4dc 100%);
+    --grad-2: linear-gradient(to right, #d2ddef 0%, #7fb2e5 100%);
+    --grad-3: linear-gradient(to right, #cdddea 0%, #93bdd8 100%);
+    --grad-4: linear-gradient(to right, #dae3f1 0%, #a8cdf2 100%);
+    /* A wash carries further on paper-white before it reads as a tint, and
+       the card gradients need more of themselves to show at all. */
+    --band-wash: 0.5; --band-faint: 0.3; --band-head: 0.62;
+    --card-tint: 0.4; --card-tint-hover: 0.72;
 
     --bar-0: #eaf0f8; --bar-1: #bcdcf7; --bar-2: #7fb2e5;
     --bar-3: #4a90d9; --bar-4: #2b6cb0; --bar-5: #1a365d;
@@ -144,18 +172,38 @@ html { scrollbar-width: thin; scrollbar-color: var(--color-neutral-700) var(--co
 .shell { max-width: var(--shell-max); margin: 0 auto; padding: 0 28px; }
 .topnav { position: sticky; top: 0; z-index: 40; backdrop-filter: blur(10px);
           background: color-mix(in srgb, var(--color-bg) 82%, transparent);
-          border-bottom: 1px solid var(--color-divider); }
-.topnav .shell { display: flex; align-items: center; gap: 22px; height: 58px; }
+          border-bottom: 1px solid var(--color-divider);
+          transition: box-shadow .3s ease, background .3s ease; }
+.topnav .shell { display: flex; align-items: center; gap: 22px; height: 58px;
+                 transition: height .3s cubic-bezier(.2, .7, .2, 1); }
+/* Once the page has moved at all the bar tightens and lifts off the content,
+   so it reads as chrome rather than as part of the first screen. */
+.topnav.is-stuck { background: color-mix(in srgb, var(--color-bg) 93%, transparent);
+                   box-shadow: var(--shadow-md); }
+.topnav.is-stuck .shell { height: 50px; }
+/* How far down the page you are. Built by motion.js, which also scales it: it
+   is chrome that means nothing without the script, so it is not in the markup. */
+.navprog { position: absolute; left: 0; right: 0; bottom: -1px; height: 2px;
+           transform: scaleX(0); transform-origin: left;
+           background: linear-gradient(to right, var(--color-accent), var(--color-accent-strong)); }
 .navbrand { display: inline-flex; align-items: center; gap: 9px; margin-right: auto;
             font-family: var(--font-heading); font-weight: 500; font-size: 15px; letter-spacing: 0.18em;
             text-transform: uppercase; color: var(--color-heading); text-decoration: none; }
 .navbrand:hover { color: var(--color-accent); }
 .navmark { height: 15px; width: auto; flex: none; }
-/* The mark is black line art on transparent, so it inverts for the dark ground. */
-:root:not([data-theme="light"]) .navmark { filter: invert(1); }
-@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) .navmark { filter: none; } }
-:root[data-theme="dark"] .navmark { filter: invert(1); }
-.navlink { font-size: 13.5px; letter-spacing: 0.04em; color: var(--color-neutral-500); text-decoration: none; }
+/* The mark is black line art on transparent, so it inverts for the dark ground.
+   Every copy of it on the site answers the mode here, under .brandmark: the nav
+   one and the avatar one differ in size, not in how they are coloured, and two
+   copies of this rule would drift the first time one of them was touched. */
+:root:not([data-theme="light"]) .brandmark { filter: invert(1); }
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) .brandmark { filter: none; } }
+:root[data-theme="dark"] .brandmark { filter: invert(1); }
+.navlink { position: relative; font-size: 13.5px; letter-spacing: 0.04em;
+           color: var(--color-neutral-500); text-decoration: none; transition: color .2s ease; }
+.navlink::after { content: ""; position: absolute; left: 0; right: 0; bottom: -7px; height: 1px;
+                  background: currentColor; transform: scaleX(0); transform-origin: left;
+                  transition: transform .3s cubic-bezier(.2, .7, .2, 1); }
+.navlink:hover::after, .navlink[aria-current="page"]::after { transform: scaleX(1); }
 .navlink:hover { color: var(--color-text); }
 .navlink[aria-current="page"] { color: var(--color-accent); }
 
@@ -212,6 +260,13 @@ html { scrollbar-width: thin; scrollbar-color: var(--color-neutral-700) var(--co
               var(--color-divider) calc(100% - 24px), transparent); }
 
 .kicker { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-accent); }
+
+/* The shell's own motion. The progress line still tracks the page, because
+   that is information rather than decoration; it just stops sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .topnav, .topnav .shell, .navlink, .navlink::after, .modetoggle { transition: none; }
+  .topnav.is-stuck .shell { height: 58px; }
+}
 
 /* ---------- small screens ---------- */
 

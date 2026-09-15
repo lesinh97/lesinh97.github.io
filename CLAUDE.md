@@ -37,18 +37,40 @@ tasting journal and a blog behind it. The whisky notes are written in Obsidian.
 - `src/whisky.njk` serialises `collections.bottles` into
   `<script id="bottle-data" type="application/json">` with an explicit Nunjucks loop. Add a
   field to the notes and you must add it to that loop too.
+- `src/assets/brand/mark.png` is the wordmark, シン in katakana as hollow brush strokes. It
+  appears twice, in the nav and on the homepage About disc, and both carry `.brandmark`:
+  that is the class theme.css inverts for the dark ground, and it is the only place the
+  inversion is decided. Size the copies with a second class, never with a second filter.
+  `filter` does not stack across rules, so a `drop-shadow` on the avatar copy would be
+  silently thrown away in whichever mode also sets `invert(1)`.
+- `src/_data/shapes.js` generates the drifting icon fields from a fixed seed: random
+  looking, identical on every build. Each field is three groups, far to near, and depth sets
+  size, opacity, float amplitude and speed together. `src/_includes/field.njk` renders one
+  with `{% import "field.njk" as px %}` then `{{ px.field(shapes.blog) }}`; `px.band(n)` is
+  the skewed band behind a page header. The symbols live in `src/_includes/sprite.njk`,
+  which base.njk renders once per page, so any page can use shapes.
 - `src/assets/app.js` is plain vanilla JS, no build step, no dependencies. It re-renders
   `#body`, `#modal` and `#sheet` from a single `S` state object on every interaction. The
   search input lives outside the re-rendered region so it keeps focus.
-- `src/assets/parallax.js` drives the homepage layers. One rAF loop, one passive scroll
-  listener. Every `.px-layer[data-speed]` drifts against the scroll of its `.px-page`.
+- `src/assets/parallax.js` drives every `[data-speed]` element on any page, not just the
+  homepage. It writes CSS custom properties, never `transform`: `--py` in px from the scroll
+  on each element, `--tilt-x` / `--tilt-y` as numbers in -1..1 on `<html>` from the pointer.
+  The composition is in motion.css. This matters: a divider band also carries its skew and a
+  shape layer also carries the pointer lean, so assigning `transform` from script wipes
+  whichever half CSS owns. One passive scroll listener plus a short-lived rAF that eases the
+  pointer and then stops; nothing runs while the page sits still.
+- `src/assets/motion.js` is the rest of it, also on every page: reveal on scroll, the
+  progress line and stuck state in the nav, the cursor sheen. Each part looks for its own
+  hook and does nothing without one. Both scripts are loaded from base.njk rather than per
+  page, because both bail out cleanly on a page with no hooks.
 - Dates in front matter must be quoted, or YAML turns them into timezone-dependent
   timestamps. The `readableDate` filter parses the string, it does not construct a `Date`.
 
 ## Stylesheets
 
-Load order is nocturne, theme, then the page's own sheet. Nothing below nocturne sets a raw
-hex except the Cara gradients and the two JS bar ramps, which are noted where they appear.
+Load order is nocturne, theme, motion, then the page's own sheet. Nothing below nocturne
+sets a raw hex except the Cara gradients and the two JS bar ramps, which are noted where
+they appear.
 
 - `src/assets/nocturne.css` is the generated design system and is natively dark. Take every
   colour, font, space and radius from its `--color-*` / `--font-*` / `--space-*` /
@@ -57,7 +79,13 @@ hex except the Cara gradients and the two JS bar ramps, which are noted where th
   nav, footer, `.prose`, scroll chrome. **This is the only place the tokens are set.** It used
   to be a `html:root` block copy-pasted into two templates, and the copies had already drifted.
   Do not reintroduce a per-page token block.
+- `src/assets/motion.css` is the shared motion layer: the gradient bands, the drifting
+  field, the arrivals, `.pagehead`, the cursor sheen. It is on every page. This used to live
+  inside cara.css as homepage decoration, and the result was that the blog had one kind of
+  header, the ledger had none, and the homepage had all the movement. Anything a second page
+  would want belongs here, not in a page sheet.
 - `src/assets/cara.css`, `ledger.css`, `bottle.css`, `blog.css` are the per-page sheets.
+  cara.css is now only what is unique to the one-pager: the hero, the cards, about, contact.
 
 ## Colour modes
 
@@ -75,6 +103,20 @@ flash. With no stored choice the page follows `prefers-color-scheme`.
 The neutral ramp **flips** between modes so each step keeps its meaning: 100 is always the
 most contrast against the ground, 900 always a barely-there surface. Anything that needs a
 colour per mode belongs in `theme.css`, never in a template.
+
+The four section gradients flip with it. `--grad-1` to `--grad-4` are **set inside each mode
+block**, dark navy on the dark ground and pale navy on the light one. They used to be one
+dark set defined once, with light mode dimming them through a `--grad-strength` multiplier,
+and that cannot work: a dark band faded to 70% over a near-white page is still a dark band,
+so every diagonal on the site landed as a hard line and light mode read as a stack of
+separated slabs while dark mode read as one page. A band's strength is its colour. Do not
+reintroduce an opacity knob and try to make one palette serve both modes with it.
+
+What is left as opacity is per mode too, because a wash has to carry further on paper-white
+before it reads as a tint at all: `--band-wash` (`.wide`), `--band-faint` (`.faint`),
+`--band-head` (`.hb`), and `--card-tint` / `--card-tint-hover` for the homepage cards. The
+crisp bands carry no opacity at all. 0.13 of the light gradient over a white card is nothing,
+which is why the card tint is a token and not a number in cara.css.
 
 Flavour bars are `var(--bar-0..5)` / `var(--pbar-0..5)`, referenced straight from inline
 styles so they follow the mode with no re-render. Do not put raw hexes back in `BAR`/`PBAR`.
@@ -97,27 +139,88 @@ giscus on the blog posts only, backed by GitHub Discussions in the site repo. No
 ## Design rules
 
 - Faithful to [gatsby-starter-portfolio-cara](https://github.com/LekoArts/gatsby-starter-portfolio-cara).
-- Cara's four section gradients are tokens, `--grad-1` to `--grad-4`, and they are **bands,
-  not washes**. A gradient stretched over a whole section at low opacity is what made this
-  look muddy. Use `.b1` / `.b2` / `.b3` bands at full strength; only `.wide` may pass behind
-  copy, and it stays faint. Band skew is 6deg: a full-width band sweeps vertically by
-  `width * tan(angle)`, so a steeper angle drags it across the text column.
+- Cara's four section gradients are tokens, `--grad-1` to `--grad-4`, set per colour mode
+  (see Colour modes), and they are **bands, not washes**. A gradient stretched over a whole section at low opacity is what made this
+  look muddy. Use `.b1` / `.b2` / `.b3` bands at full strength on a homepage section and
+  `.hb` / `.hs` in a page header; only `.wide` and `.hb` may pass behind copy, and both are
+  masked so they fade rather than cut. Section skew is 6deg, header skew 3.5deg; see
+  Responsive for why the two differ.
 - Everything stays in one cool family. The shapes use `--ic-mist` through `--ic-deep`, which
   vary by depth and temperature rather than hue, and the four section gradients are all navy.
   No warm hue anywhere: the check suite fails the build if any painted colour has blue as its
   weakest channel.
 - One interactive accent, `--color-accent`, as a line, a small fill, or a tonal tint.
 - Buttons are outlined, not filled. Left-aligned, asymmetric layout.
-- Rules fade to transparent at their ends. See `.rule` / `.softrule` in theme.css.
+- Rules fade to transparent at their ends. See `.rule` / `.softrule` in theme.css, and the
+  masks on `.wide` / `.hb` / `.pxback`, which apply the same idea to a band.
 - Headings stay at weight 500. Hierarchy is size and space, not boldness.
 - All decorative motion stops under `prefers-reduced-motion: reduce`, including the parallax.
+  Anything waiting on a reveal is shown outright rather than left hidden. See Motion.
 - No em dashes or en dashes in user-facing copy. No decorative subtitles.
+
+## Motion
+
+Every page moves the same way. The vocabulary is small and it is all in motion.css.
+
+- **Arrival above the fold** is `.rise` on a container: its children stand up one at a time
+  as the page loads, no script involved. `backwards` fill holds the from-state through the
+  delay, or each line flashes in place first.
+- **Arrival below the fold** is `data-reveal` on a thing, plus `data-stagger="ms"` on a
+  container whose children should arrive in turn. motion.js sets `--d` per child and stamps
+  `.reveal-ready` on `<html>` *before* it observes anything, so if the script never runs the
+  page is all visible rather than all blank. Reveals fire once and unobserve.
+- The reveal rise uses the `translate` property, **not** `transform`, and it has to stay that
+  way. A card both rises into view and lifts on hover; with both on `transform` the revealed
+  state wins on specificity and the hover lift stops moving for good. The two properties
+  compose.
+- The ledger is the exception: nothing below its toolbar is marked for a reveal, because
+  app.js re-renders `#body` on every keystroke and a one-shot observer would fire on elements
+  that are about to be thrown away.
+- A shape floats on the element and spins or pulses on the `<svg>` inside it, so the two
+  never fight over `transform`. shapes.js gives a shape one of spin or pulse, never both.
+- Delays in the generated field are **negative**. A positive delay leaves the whole field
+  sitting still and then moving off together; a negative one starts each shape part way
+  through its own float.
+- Every clickable surface glows under the cursor. The rule is a **box, not a link**:
+  anything with a card, row, pill, chip, tile or button shape lights up; bare text links keep
+  the underline and colour change they already have, because a radial tint behind a run of
+  inline text reads as a smudge. The selector list is in motion.css and mirrored by `SHEEN`
+  in motion.js; keep the two in step. `data-sheen` still works for opting a one-off in.
+- motion.js writes `--cx` / `--cy` in px from **one delegated listener**, not one per
+  element: most of the ledger is rebuilt by app.js on every keystroke, and anything bound to
+  those nodes is stale a moment later. Those names are deliberately not `--tilt-*`: the tilt
+  inherits all the way down from the root, and a unitless number in a gradient position kills
+  the declaration silently.
+- Size the glow with `--sheen-r` and `--sheen-a`, not with a second gradient. A 260px pool
+  inside a 30px chip is a flat wash: the falloff has to happen inside the element or the
+  cursor is invisible in it.
+- Shapes are hidden below 1024px except the ones pinned to an edge, and all of them below
+  720px. Below 1024 the text column reflows wide enough to run under the middle of the field.
 
 ## Responsive
 
 `minmax(Npx, 1fr)` in a grid track cannot shrink below N, so on a narrower phone it forces
 the whole page wider than the viewport. Every auto-fit grid here uses
 `minmax(min(Npx, 100%), 1fr)`. If a page starts scrolling sideways on mobile, look there first.
+
+Band geometry is width dependent and that is the trap, twice over. A full-width band skewed
+N degrees sweeps vertically by `width * tan(N)`. Over a 100vh homepage section, 6 degrees is a clean
+diagonal. Over a `.pagehead`, which is barely 270px tall, the same 6 degrees drags the crisp
+slice straight across the kicker, so header bands are skewed 3.5 degrees instead and the
+reduced-motion reset has to repeat that number. Bands themselves never widen the document:
+they are `left: -18%; right: -18%` inside an `overflow: hidden` parent.
+
+The second half of the trap is that the sweep grows with the viewport while a fixed header
+does not, so on a wide screen the band outgrows `.pagehead` and the overflow clips the
+diagonal off square: one flat line across the page, which is the exact thing the diagonal is
+there to avoid. `.pagehead` therefore scales its padding with `clamp(…, 7vw, …)` and `.hb` is
+only 49% tall. Measured clear from 1070px to 3410px. Change either and re-measure both.
+
+The washes are masked rather than clipped. `.wide` and `.hb` pass behind body copy, and a
+hard edge under a paragraph reads as a grey panel rather than as a band, so both fade out
+with a `mask-image` the way `.rule` fades at its ends. `.pxback`, the backdrop on pages that
+have a header of their own, fades at the bottom for the same reason: without it the page
+carries a horizontal cut straight across it that undoes every diagonal above.
 
 ## Print
 
@@ -202,4 +305,3 @@ Do not delete either until you are sure no browser still holds the old registrat
 
 - Flavour pages, or a similarity finder over the `fam` vectors.
 - `@11ty/eleventy-img` over `src/assets/bottles/` so photos are resized at build time.
-- A real avatar image on the homepage About section, replacing the initial.

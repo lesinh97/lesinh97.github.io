@@ -6,10 +6,14 @@ pageDescription: My thought, my sharing, my expression.
 extraCss: ["/assets/blog.css"]
 permalink: /blog/index.html
 ---
+{% import "field.njk" as px %}
+
 <header class="pagehead">
-  <div class="shell">
+  {{ px.band(1) }}
+  {{ px.field(shapes.blog) }}
+  <div class="shell rise">
     <div class="kicker">Writing</div>
-    <h1>Blog</h1>
+    <h1>Blog<span class="hrule"></span></h1>
     <p>My thought, my sharing, my expression.</p>
   </div>
 </header>
@@ -17,9 +21,9 @@ permalink: /blog/index.html
 <div class="shell">
   {% set posts = collections.posts %}
   {% if posts | length %}
-  <div class="postlist">
+  <div class="postlist" data-reveal data-stagger="80">
     {% for p in posts %}
-    <a class="postrow{% if p.data.image %} haspic{% endif %}" href="{{ p.url }}">
+    <a class="postrow{% if p.data.image %} haspic{% endif %}" href="{{ p.url }}" data-sheen>
       {% if p.data.image %}<span class="thumb"><img src="{{ p.data.image }}" alt="" loading="lazy"></span>{% endif %}
       <span class="rowbody">
       <div class="meta">
