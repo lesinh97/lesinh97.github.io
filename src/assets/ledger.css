@@ -18,17 +18,26 @@
 .cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(380px, 100%), 1fr)); gap: 30px; align-items: start; }
 .col { min-width: 0; }
 .lbl { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-neutral-500); }
-.shelf { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 12px; margin: 9px 0 14px; }
-.tile { width: 92px; flex: none; }
-.tile .shot { height: 116px; overflow: hidden; border-radius: var(--radius-sm); background: var(--color-neutral-900);
-              display: flex; align-items: center; justify-content: center; box-shadow: inset 0 0 0 1px var(--color-divider); }
+.shelfhead { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.shelfhint { font-size: 11px; color: var(--color-neutral-600); }
+.shelf { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 12px; margin: 9px 0 14px;
+         scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch; }
+/* The tile is one button, photo included, so the whole thing is the target. */
+.tile { width: 92px; flex: none; display: block; padding: 0; text-align: left; cursor: pointer;
+        background: transparent; border: 0; scroll-snap-align: start; }
+.tile .shot { display: flex; height: 116px; overflow: hidden; border-radius: var(--radius-sm); background: var(--color-neutral-900);
+              align-items: center; justify-content: center; box-shadow: inset 0 0 0 1px var(--color-divider); }
 .tile .shot img { width: 100%; height: 100%; object-fit: cover; }
 .tile .shot .ph { font-size: 20px; color: var(--color-neutral-700); }
-.tile button { display: block; width: 100%; margin-top: 6px; padding: 0; text-align: left; cursor: pointer;
-               background: transparent; border: 0; font-family: var(--font-heading); font-size: 11.5px; line-height: 1.3;
+.tile .tname { display: block; margin-top: 6px; font-family: var(--font-heading); font-size: 11.5px; line-height: 1.3;
                color: var(--color-neutral-400); }
+@media (hover: hover) {
+  .tile:hover .shot { box-shadow: inset 0 0 0 1px var(--color-accent); }
+  .tile:hover .tname { color: var(--color-neutral-200); }
+}
+.tile:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 3px; border-radius: var(--radius-sm); }
 .tile.on .shot { box-shadow: inset 0 0 0 1px var(--color-accent); }
-.tile.on button { color: var(--color-accent); }
+.tile.on .tname { color: var(--color-accent); }
 .chiprow { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 4px; }
 .chip { cursor: pointer; white-space: nowrap; font-family: var(--font-heading); font-size: 11.5px; letter-spacing: 0.06em;
         text-transform: uppercase; padding: 6px 13px; border-radius: 999px; background: transparent;
@@ -135,8 +144,18 @@
   .panel { position: static; }
   /* The sparkline is the first thing worth dropping when the row gets tight. */
   .spark { display: none; }
+  /* The strip scrolls edge to edge on a phone, so it reads as swipeable rather
+     than as a box that happens to be cut off. Snap points land a tile on the gutter. */
+  .shelf { margin-inline: -18px; padding-inline: 18px; scroll-padding-left: 18px;
+           scroll-snap-type: x mandatory; gap: 8px; }
+  .tile { width: 78px; }
+  .tile .shot { height: 98px; }
+  .tile .tname { font-size: 11px; }
 }
 @media (max-width: 380px) {
   .wrap { padding: 0 14px; }
+  .shelf { margin-inline: -14px; padding-inline: 14px; scroll-padding-left: 14px; }
+  .tile { width: 72px; }
+  .tile .shot { height: 90px; }
   .rsub { font-size: 11px; }
 }
