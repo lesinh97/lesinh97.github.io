@@ -348,3 +348,19 @@
   .sr-mid b { font-size: 26px; }
   .sr-note { margin-top: 8px; }
 }
+
+/* ---------- bottle photos ---------- */
+
+/* One shape everywhere a bottle photo appears: the shelf strip, the ledger
+   panel, a note page, the gallery, a brand's list. They were three different
+   aspect ratios cropping with `cover`, which cut the top off a boxed set in the
+   strip while the note page showed the same shot whole. Square box, whole
+   image, never cropped. The packshots are square, so nothing is letterboxed
+   until a photo that is not square gets added, and then it survives intact. */
+.tile .shot, .pshot, .shot, .gshot, .bshot {
+  aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
+  overflow: hidden; border-radius: var(--radius-sm); background: var(--color-neutral-800);
+}
+.tile .shot img, .pshot img, .shot img, .gshot img, .bshot img {
+  width: 100%; height: 100%; object-fit: contain; display: block;
+}

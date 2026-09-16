@@ -36,15 +36,12 @@
         transition: background .2s ease, border-color .2s ease, transform .2s ease; }
 .brow:hover { background: color-mix(in srgb, var(--color-text) 5%, transparent);
               border-color: var(--color-divider); transform: translateX(4px); color: var(--color-text); }
-.bshot { width: 44px; height: 60px; flex: none; display: flex; align-items: center; justify-content: center;
-         overflow: hidden; border-radius: var(--radius-sm); background: var(--color-neutral-900);
-         color: var(--color-neutral-600); }
-.bshot img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.bshot { width: 54px; flex: none; color: var(--color-neutral-600); }
 .bmain { flex: 1; min-width: 0; }
 .bmain b { display: block; font-family: var(--font-heading); font-weight: 500; font-size: 15.5px; }
 .bmeta { display: block; margin-top: 3px; font-size: 12px; color: var(--color-neutral-500); }
 .bfill { display: block; width: 92px; height: 4px; margin-top: 8px; border-radius: 3px;
-         background: var(--color-neutral-900); overflow: hidden; }
+         background: var(--color-neutral-800); overflow: hidden; }
 .bfill i { display: block; height: 100%; border-radius: 3px; background: var(--color-accent); }
 .bscore { flex: none; width: 40px; text-align: right; font-family: var(--font-heading);
           font-size: 16px; font-variant-numeric: tabular-nums; color: var(--color-accent); }

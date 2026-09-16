@@ -28,7 +28,7 @@ extraCss: ["/assets/bottle.css"]
       {% endif %}
       <div style="flex: 1; min-width: 0">
         <div class="kick">{{ origin }}{% if type %}  ·  {{ type }}{% endif %}</div>
-        <h1>{{ name }}</h1>
+        <h1>{{ name }}{% if bottleCount > 1 %}<span class="rebuys">bought {{ bottleCount }}x</span>{% endif %}</h1>
         <div class="line">{{ age }}{% if abv %}  ·  {{ abv }}{% endif %}{% if cask %}  ·  {{ cask }}{% endif %}</div>
       </div>
       {# Score in the middle, how much is left as the arc around it. The dash

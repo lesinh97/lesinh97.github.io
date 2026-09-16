@@ -193,11 +193,11 @@
     var bars = FAMS.map(function (f, i) {
       return '<i style="height:' + (3 + (w.fam[f[0]] || 0) * 3.8) + "px;background:" + BAR[w.fam[f[0]] || 0] + '"></i>';
     }).join("");
-    // An empty bottle stays listed but steps back from the ones you can pour.
-    return '<div class="row' + (on ? " on" : "") + (w.left === 0 ? " out" : "") +
-      '" data-act="pick" data-id="' + esc(w.id) + '">' +
+    return '<div class="row' + (on ? " on" : "") + '" data-act="pick" data-id="' + esc(w.id) + '">' +
       '<span class="init">' + esc(initials(w.name)) + "</span>" +
-      '<span style="flex:1;min-width:0"><span class="rname">' + esc(w.name) + "</span>" +
+      '<span style="flex:1;min-width:0"><span class="rname">' + esc(w.name) +
+      (w.bottles > 1 ? '<span class="rtimes" title="' + w.bottles + ' bottles bought">x' + w.bottles + "</span>" : "") +
+      "</span>" +
       '<span class="rsub">' + esc(sub) + "</span></span>" +
       '<span class="spark">' + bars + "</span>" +
       fillCell(w) +
@@ -528,12 +528,17 @@
     if (lst) lst.scrollTop = was.list;
     if (!shelf) return;
     shelf.scrollLeft = was.shelf;
-    // A pick from the list can select a bottle that is off screen in the strip.
+    /* A pick from the list can select a bottle that is off screen in the strip.
+       Measured with rects, not offsetLeft: .shelf is not a positioned element,
+       so offsetLeft was reported against some ancestor further up and compared
+       against shelf.scrollLeft, which sent the strip somewhere arbitrary on
+       every click. Rect deltas are in the scroller's own space whatever the
+       offsetParent turns out to be. */
     var on = shelf.querySelector(".tile.on");
     if (!on) return;
-    var l = on.offsetLeft, r = l + on.offsetWidth;
-    if (l < shelf.scrollLeft) shelf.scrollLeft = l - 10;
-    else if (r > shelf.scrollLeft + shelf.clientWidth) shelf.scrollLeft = r - shelf.clientWidth + 10;
+    var sr = shelf.getBoundingClientRect(), tr = on.getBoundingClientRect();
+    if (tr.left < sr.left) shelf.scrollLeft += tr.left - sr.left - 10;
+    else if (tr.right > sr.right) shelf.scrollLeft += tr.right - sr.right + 10;
   }
 
   function render() {

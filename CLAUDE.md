@@ -36,7 +36,16 @@ tasting journal and a blog behind it. The whisky notes are written in Obsidian.
   that file, both fatal: a computed key must not read another computed key (Eleventy's
   dependency proxy is not an array, so `.filter` throws), and must not be named after the
   key it derives from (circular).
-- `left: null` means never recorded, which is not empty. Null draws no bar; 0 dims the row.
+- `left: null` means never recorded, which is not empty. Null draws no bar, 0 draws an empty
+  one. Finished bottles are **not** greyed out: the bar and ring already say so.
+- Bar tracks use `--color-neutral-800`, never 900. In dark mode 900 *is* the surface colour,
+  so a 900 track is invisible on a card.
+- Every bottle photo is a square box with `object-fit: contain`, set once in motion.css for
+  the strip, the panel, the note, the gallery and a brand list. Page sheets must not set a
+  height or a fit for these or they win, since they load after motion.css.
+- `restoreScroll` measures the shelf with rects, not `offsetLeft`: `.shelf` is not positioned,
+  so `offsetLeft` came from some ancestor and every tile click threw the strip somewhere
+  arbitrary.
 - The score sits in `.sring` (motion.css): number in the middle, fill level as the arc, plus
   the slow-turning ring the homepage mark carries. Offset is `339.292 * (1 - pct/100)`.
   It is `overflow: hidden` on purpose: the turning ring is a square box, and rotating one
