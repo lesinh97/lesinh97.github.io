@@ -32,7 +32,11 @@
 .cvbody > b a { color: inherit; text-decoration: none;
                 box-shadow: inset 0 -1px 0 0 color-mix(in srgb, var(--color-accent) 50%, transparent); }
 .cvbody > b a:hover { color: var(--color-accent); }
-.cvorg { margin-top: 5px; font-size: 13.5px; line-height: 1.6; color: var(--color-neutral-400); }
+/* One employer is written in Japanese, and Noto Sans JP is already loaded for
+   the print-card signature, so name it here rather than falling back to
+   whatever the system offers. */
+.cvorg { margin-top: 5px; font-size: 13.5px; line-height: 1.6; color: var(--color-neutral-400);
+         font-family: var(--font-body), "Noto Sans JP", sans-serif; }
 .cvorg a { color: var(--color-accent); text-decoration: none; }
 .cvbody ul { margin: 12px 0 0; padding-left: 18px; font-size: 14px; line-height: 1.7;
              color: var(--color-neutral-300); }

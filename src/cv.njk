@@ -17,7 +17,7 @@ permalink: /cv/index.html
   <div class="shell rise">
     <span class="cvmark"><img class="brandmark" src="/assets/brand/mark.png" alt="" aria-hidden="true"></span>
     <div class="kicker">{{ cv.headline or "Software" }}</div>
-    <h1>{{ site.author | default("Shin") }}<span class="hrule"></span></h1>
+    <h1>{{ cv.name or site.author }}<span class="hrule"></span></h1>
     <p>{{ cv.summary }}</p>
     <div class="cvlinks">
       <a href="mailto:{{ site.email }}">{{ site.email }}</a>

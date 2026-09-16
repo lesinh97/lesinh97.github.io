@@ -1,38 +1,100 @@
 {
-  "_README": "The CV at /cv/. Every section below renders only when it has content, so the page is never half-built: fill a list and its section appears. Nothing here is invented; the empty fields are waiting for Shin.",
+  "_README": "The CV at /cv/, taken from the LinkedIn PDF export. Every section renders only when it has content, so the page is never half-built. `points` is empty on every role because the export carries no bullets: add two or three per role and they appear.",
 
-  "headline": "",
-  "location": "",
-  "available": "",
+  "name": "Sinh Le Dinh",
+  "headline": "Data Plumber",
+  "location": "Da Nang City, Vietnam",
 
-  "summary": "I work on software. Linux, networks and the hardware underneath them are where I am most at home, and I write about them when something is worth writing down.",
+  "summary": "I am a data engineer who likes owning the whole path from raw data to something people actually trust and use. For the past few years I have been building a healthcare analytics platform on Azure, with Databricks, Delta Lake and dbt at the core and Azure DevOps for CI/CD. Day to day that means designing incremental pipelines and writing models that are tested and documented. I work closely with PMs and tech leads to turn loose requirements into maintainable models. I would rather ship one well-tested model than three clever ones. Open to Data Engineer and Analytics Engineer roles where the modern data stack and governance both matter.",
 
   "roles": [
     {
-      "title": "",
-      "org": "",
-      "url": "",
-      "from": "",
+      "title": "Data Engineer",
+      "org": "Axon Active",
+      "from": "August 2025",
       "to": "",
+      "location": "Da Nang Metropolitan Area",
+      "points": []
+    },
+    {
+      "title": "Back End Developer",
+      "org": "FPT Software",
+      "from": "June 2023",
+      "to": "November 2025",
       "location": "",
+      "points": []
+    },
+    {
+      "title": "Data Engineer",
+      "org": "FPT Software",
+      "from": "October 2022",
+      "to": "November 2025",
+      "location": "",
+      "points": []
+    },
+    {
+      "title": "System Performance Engineer",
+      "org": "FPT Software",
+      "from": "September 2021",
+      "to": "October 2022",
+      "location": "Vietnam",
+      "points": []
+    },
+    {
+      "title": "System Engineer",
+      "org": "日本システム株式会社",
+      "from": "April 2019",
+      "to": "September 2021",
+      "location": "Kagoshima, Japan",
+      "points": []
+    },
+    {
+      "title": "Web Developer",
+      "org": "Sun*",
+      "from": "May 2019",
+      "to": "July 2019",
+      "location": "Da Nang",
+      "points": []
+    },
+    {
+      "title": "Summer Intern",
+      "org": "Framgia Inc.",
+      "from": "May 2018",
+      "to": "July 2018",
+      "location": "Vietnam",
       "points": []
     }
   ],
 
   "education": [
-    { "school": "", "award": "", "from": "", "to": "" }
+    {
+      "school": "Danang University of Science and Technology",
+      "award": "Engineer's Degree, Computer Programming",
+      "from": "2015",
+      "to": "2020"
+    }
   ],
 
   "skills": [
-    { "group": "", "items": [] }
+    { "group": "Platform", "items": ["Databricks", "Delta Lake", "dbt", "Azure Data Factory", "Azure DevOps", "BigQuery"] },
+    { "group": "Modelling", "items": ["Data Vault 2.0", "Kimball modelling", "Data architecture"] },
+    { "group": "Languages", "items": ["SQL", "Python"] },
+    { "group": "Reporting", "items": ["Power BI"] },
+    { "group": "Practice", "items": ["Data quality and monitoring", "Data engineering", "CI/CD"] }
   ],
 
   "certifications": [
-    { "name": "", "issuer": "", "year": "" }
+    { "name": "Fundamental IT Engineer", "issuer": "", "year": "" },
+    { "name": "Data Engineering with Microsoft Azure", "issuer": "", "year": "" },
+    { "name": "Programming for Data Science with Python", "issuer": "", "year": "" },
+    { "name": "Cloud Modernization: Cloud Data Quality & Data Governance", "issuer": "", "year": "" },
+    { "name": "JLPT N3", "issuer": "", "year": "" }
   ],
 
   "languages": [
-    { "name": "", "level": "" }
+    { "name": "Vietnamese", "level": "" },
+    { "name": "English", "level": "Professional working" },
+    { "name": "Japanese", "level": "Limited working" }
   ],
 
   "links": [
