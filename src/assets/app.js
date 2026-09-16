@@ -154,16 +154,33 @@
       '<i class="ph ph-arrows-down-up"></i>' + label + "</button></div>";
   }
 
-  /* null left means never recorded, which is not empty: draw nothing. */
+  /* The track shows on every row so the columns line up. A null level draws
+     no bar inside it, which is different from a bar at zero. */
   function fillCell(w) {
-    if (w.left == null) return '<span class="rfill"></span>';
-    return '<span class="rfill" title="' + w.left + '% left"><i style="width:' + w.left + '%"></i></span>';
+    var known = w.left != null;
+    return '<span class="rfill' + (known ? "" : " unknown") + '" title="' +
+      (known ? w.left + "% left" : "level not recorded") + '">' +
+      (known ? '<i style="width:' + w.left + '%"></i>' : "") + "</span>";
+  }
+
+  /* Score in the middle, how much is left as the arc around it. Same markup as
+     the note page; the styles are shared in motion.css. */
+  function scoreRing(w) {
+    var dash = (339.292 * (1 - (w.left || 0) / 100)).toFixed(2);
+    return '<div class="sr-wrap"><div class="sring" style="--dash:' + dash + '">' +
+      '<svg viewBox="0 0 120 120" aria-hidden="true">' +
+      '<circle class="sr-track" cx="60" cy="60" r="54"/>' +
+      '<circle class="sr-arc" cx="60" cy="60" r="54"/></svg>' +
+      '<div class="sr-mid"><b>' + score(w.score) + "</b><span>" +
+      (w.score == null ? "unscored" : "of 10") + "</span></div></div>" +
+      '<div class="sr-note">' + (w.left == null ? "level not recorded" : w.left + "% left") +
+      "</div></div>";
   }
 
   function fillBar(w) {
     if (w.left == null) return "";
     var note = w.left === 0 ? "finished" : w.ml ? "about " + w.ml + " ml left" : "left";
-    return '<div class="lbl" style="margin-bottom:10px">In the bottle</div>' +
+    return '<div class="lbl" style="margin-bottom:10px">Aqua vitae level</div>' +
       '<div class="pfill"><span class="pfilltrack"><i style="width:' + w.left + '%"></i></span>' +
       "<b>" + w.left + "%</b><span>" + note + "</span></div>" +
       '<div class="softrule"></div>';
@@ -242,13 +259,10 @@
     return '<div class="panel"><div class="phead">' +
       '<div style="display:flex;gap:16px;align-items:flex-start;justify-content:space-between">' +
       '<div class="pshot">' + shot + "</div>" +
-      '<div style="flex:none;text-align:right">' +
-      '<div style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--color-accent)">' +
+      '<div style="flex:none;display:flex;flex-direction:column;align-items:flex-end;gap:12px">' +
+      '<div style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--color-accent);text-align:right">' +
       esc([sel.origin, sel.type].filter(Boolean).join(" \u00b7 ")) + "</div>" +
-      '<div style="font-family:var(--font-heading);font-size:38px;line-height:1;color:var(--color-accent);margin-top:12px">' +
-      score(sel.score) + "</div>" +
-      '<div style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--color-neutral-500);margin-top:4px">of 10</div>' +
-      "</div></div>" +
+      "</div>" + scoreRing(sel) + "</div>" +
       "<h2>" + esc(sel.name) + "</h2>" +
       '<div style="font-size:12.5px;color:var(--color-neutral-400);margin-top:6px">' +
       esc([sel.age, sel.abv, sel.cask].filter(Boolean).join("  \u00b7  ")) + "</div></div>" +

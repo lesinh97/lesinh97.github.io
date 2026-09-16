@@ -32,6 +32,11 @@ tasting journal and a blog behind it. The whisky notes are written in Obsidian.
   dependency proxy is not an array, so `.filter` throws), and must not be named after the
   key it derives from (circular).
 - `left: null` means never recorded, which is not empty. Null draws no bar; 0 dims the row.
+- The score sits in `.sring` (motion.css): number in the middle, fill level as the arc, plus
+  the slow-turning ring the homepage mark carries. Offset is `339.292 * (1 - pct/100)`.
+- Never put `data-stagger` on a container that paints its own background. `.facts` did, and
+  while its cells were still invisible the grid's divider colour showed as a grey slab. It is
+  a direct child of `.sheet.rise` and already animates.
 - A bottle owned but not yet tasted has empty `score`/`tasted`. whisky.njk serialises the
   score as `null`, not `0`, or it reads as a score and drags the average; app.js shows a
   dash, groups undated bottles under "Not tasted yet", and guards `dShort`/`dLong` because
@@ -231,6 +236,10 @@ Every page moves the same way. The vocabulary is small and it is all in motion.c
 `minmax(Npx, 1fr)` in a grid track cannot shrink below N, so on a narrower phone it forces
 the whole page wider than the viewport. Every auto-fit grid here uses
 `minmax(min(Npx, 100%), 1fr)`. If a page starts scrolling sideways on mobile, look there first.
+
+That fixes overflow but not orphans: `auto-fit` on the four-cell `.facts` row drops to three
+tracks on a phone and leaves the fourth alone beside a bare strip of grid background. Both
+copies pin it to two columns below their breakpoint instead.
 
 Band geometry is width dependent and that is the trap, twice over. A full-width band skewed
 N degrees sweeps vertically by `width * tan(N)`. Over a 100vh homepage section, 6 degrees is a clean

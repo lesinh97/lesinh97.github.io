@@ -8,6 +8,11 @@ abv: "57.1%"
 cask: "1st fill oloroso butt"
 tasted: "2026-08-17"
 price: 4300000
+fills:
+  - bought: "2026-08-17"
+    price: 4300000
+    size: 700
+    left: 100
 score: 9.1
 photo: /assets/bottles/signatory-vintage-speyside-m-18-yo.webp
 fam:

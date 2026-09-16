@@ -8,6 +8,11 @@ abv: "57.1%"
 cask: "Oloroso sherry"
 tasted: "2026-06-02"
 price: 4450000
+fills:
+  - bought: "2026-06-02"
+    price: 4450000
+    size: 700
+    left: 100
 score: 8.7
 photo: /assets/bottles/sv-speyside-m-16-cigar-reserva.webp
 fam:

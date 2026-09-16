@@ -31,23 +31,36 @@ extraCss: ["/assets/bottle.css"]
         <h1>{{ name }}</h1>
         <div class="line">{{ age }}{% if abv %}  ·  {{ abv }}{% endif %}{% if cask %}  ·  {{ cask }}{% endif %}</div>
       </div>
-      {# A bottle can be on the shelf before it is opened. The dash matches the
-         one the ledger shows for the same state. #}
-      <div class="score">{% if scoreNow %}<b>{{ scoreNow | score1 }}</b><span>out of ten</span>
-        {% else %}<b>–</b><span>not scored yet</span>{% endif %}</div>
+      {# Score in the middle, how much is left as the arc around it. The dash
+         matches the one the ledger shows for a bottle not yet scored. #}
+      <div class="sr-wrap" data-reveal>
+        <div class="sring" style="--dash: {{ (339.292 * (1 - (left or 0) / 100)) | round(2) }}">
+          <svg viewBox="0 0 120 120" aria-hidden="true">
+            <circle class="sr-track" cx="60" cy="60" r="54"/>
+            <circle class="sr-arc" cx="60" cy="60" r="54"/>
+          </svg>
+          <div class="sr-mid">
+            <b>{% if scoreNow %}{{ scoreNow | score1 }}{% else %}–{% endif %}</b>
+            <span>{% if scoreNow %}of 10{% else %}unscored{% endif %}</span>
+          </div>
+        </div>
+        <div class="sr-note">
+          {%- if left != null %}{{ left }}% left{% else %}level not recorded{% endif -%}
+        </div>
+      </div>
     </div>
 
     {# The rest of the library. Only shown when there is more than the one shot
        already standing in the header. #}
     {% if photoList | length > 1 %}
-    <div class="gallery" data-reveal data-stagger="60">
+    <div class="gallery">
       {% for p in photoList %}
       <a class="gshot" href="{{ p }}"><img src="{{ p }}" alt="{{ name }}" loading="lazy" decoding="async"></a>
       {% endfor %}
     </div>
     {% endif %}
 
-    <div class="facts" data-reveal data-stagger="70">
+    <div class="facts">
       <div class="fact"><span>{% if tastingList | length > 1 %}First tasted{% else %}Tasted{% endif %}</span>
         <b>{{ (firstTasted | readableDate) or "Not yet" }}</b></div>
       <div class="fact"><span>Age</span><b>{{ age or "NAS" }}</b></div>
@@ -61,7 +74,7 @@ extraCss: ["/assets/bottle.css"]
       {# `left` is null when no fill has ever declared a level, which is not the
          same as an empty bottle, so the block stays off rather than showing 0. #}
       {% if left != null %}
-      <div class="lbl">In the bottle</div>
+      <div class="lbl">Aqua vitae level</div>
       <div class="fill" data-reveal>
         <span class="filltrack"><i style="width: {{ left }}%"></i></span>
         <b>{{ left }}%</b>
