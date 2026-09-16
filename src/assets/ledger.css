@@ -234,3 +234,16 @@
   /* .spark is hidden at this width, so its label goes with it. */
   .lh-sig { display: none; }
 }
+
+/* Panel header: photo, origin pill, score ring.
+
+   The pill is nowrap, so its column cannot shrink, and the three of them need
+   about 384px between them. A phone gives the panel roughly 288px, and the ring
+   was pushed off the card edge. Below 720 the pill drops to its own row and the
+   photo and ring share the first one, which they fit in comfortably. */
+.phtop { display: flex; gap: 16px; align-items: flex-start; justify-content: space-between;
+         flex-wrap: wrap; }
+.phmeta { flex: none; display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
+@media (max-width: 720px) {
+  .phmeta { order: 3; flex: 1 0 100%; align-items: flex-start; }
+}

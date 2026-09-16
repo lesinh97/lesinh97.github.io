@@ -282,9 +282,9 @@
       ? '<div class="note dim" style="margin-top:18px"><span>Behind it</span><p>' + esc(sel.story) + "</p></div>" : "";
     var tags = sel.tags.map(function (t) { return '<span class="tag tag-accent">' + esc(t) + "</span>"; }).join("");
     return '<div class="panel"><div class="phead">' +
-      '<div style="display:flex;gap:16px;align-items:flex-start;justify-content:space-between">' +
+      '<div class="phtop">' +
       '<div class="pshot">' + shot + "</div>" +
-      '<div style="flex:none;display:flex;flex-direction:column;align-items:flex-end;gap:12px">' +
+      '<div class="phmeta">' +
       '<span class="proppill">' + esc([sel.origin, sel.type].filter(Boolean).join(" \u00b7 ")) + "</span>" +
       "</div>" + scoreRing(sel) + "</div>" +
       "<h2>" + esc(sel.name) + "</h2>" +
