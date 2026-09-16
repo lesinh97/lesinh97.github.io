@@ -4,6 +4,7 @@
   "headline": "Data Plumber",
   "location": "Da Nang City, Vietnam",
   "summary": "I'm a data engineer who likes owning the whole path from raw data to something people actually trust and use. For the past few years I've been building a healthcare analytics platform on Azure, with Databricks, Delta Lake, and dbt at the core and Azure DevOps for CI/CD. Day to day that means designing incremental pipelines and writing models that are tested and documented. I work closely with PMs and tech leads to turn loose requirements into maintainable models. Open to Data Engineer / Analytics Engineer roles where the modern data stack and governance both matter.",
+  "arc": "I came in through systems rather than analytics. An internship in 2018, web work, two years as a system engineer in Kagoshima, then system performance at FPT, then data from late 2022.",
   "roles": [
     {
       "title": "Data Engineer",

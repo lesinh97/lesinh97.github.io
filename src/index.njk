@@ -63,6 +63,9 @@ permalink: /index.html
     <div class="px-inner shell">
       <h2 class="px-h" data-reveal>What I do<span class="hrule"></span></h2>
       <p class="px-lede worklede" data-reveal>{{ cv.summary }}</p>
+      {# `arc` is my sentence, not Shin's. Every fact in it is off the roles
+         list, but the voice is not his: rewrite it when you get a minute. #}
+      {% if cv.arc %}<p class="px-lede worklede workarc" data-reveal>{{ cv.arc }}</p>{% endif %}
 
       {% if cv.skills | hasAny("items") %}
       <div class="stack" data-reveal data-stagger="70">
@@ -155,6 +158,8 @@ permalink: /index.html
             the money.</p>
           <p>This site is deliberately small: flat markdown files, a static site generator,
             no database and no framework. If a thing can be a file, it is a file.</p>
+          <p>Most of the writing here is old: iptables rules, Linux memory management, an
+            Arduino attendance reader I built at university. Hardware and networks, not data.</p>
           <p>The whisky ledger is the part I actually maintain. Everything else here comes
             and goes.</p>
         </div>
