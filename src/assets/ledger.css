@@ -50,7 +50,11 @@
 .chip.on { background: color-mix(in srgb, var(--color-accent) 20%, transparent); color: var(--color-neutral-100);
            border-color: var(--color-accent); }
 .chip.plain { font-family: var(--font-body); text-transform: none; letter-spacing: 0; }
-.lhead { display: flex; gap: 12px; align-items: center; padding: 14px 4px 8px; font-size: 10px;
+/* The right padding matches .list's own 6px plus its scrollbar, which app.js
+   measures into --listsb. Without it every label sat that far right of the
+   column it names. */
+.lhead { display: flex; gap: 12px; align-items: center; font-size: 10px;
+         padding: 14px 4px 8px; padding-right: calc(4px + 6px + var(--listsb, 0px));
          letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-neutral-500); }
 .list { max-height: min(70vh, 760px); overflow-y: auto; padding-right: 6px; }
 /* Both scroll regions take their track and thumb from the neutral ramp. */

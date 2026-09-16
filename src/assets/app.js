@@ -545,6 +545,10 @@
   }
   function restoreScroll(was) {
     var shelf = document.querySelector(".shelf"), lst = document.querySelector(".list");
+    if (lst) {
+      document.documentElement.style.setProperty(
+        "--listsb", (lst.offsetWidth - lst.clientWidth) + "px");
+    }
     if (lst) lst.scrollTop = was.list;
     if (!shelf) return;
     shelf.scrollLeft = was.shelf;
@@ -586,7 +590,7 @@
       "</div></div>" +
       '<div class="cols"><div class="col">' + housesHtml() + shelfHtml(sel) + chipsHtml() +
       '<div class="lhead"><span style="width:30px;flex:none"></span><span style="flex:1">Bottle</span>' +
-      '<span class="lh-sig">Flavour</span><span class="lh-left">Left</span>' +
+      '<span class="lh-sig">Flavour</span><span class="lh-left">Level</span>' +
       '<span class="lh-score">Score</span><span class="lh-go"></span></div>' +
       '<div class="list">' + listHtml(rows, sel) + "</div>" +
       '<div class="foot"><span>' +

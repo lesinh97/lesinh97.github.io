@@ -52,6 +52,10 @@ tasting journal and a blog behind it. The whisky notes are written in Obsidian.
   a square one and the strip looked like a set of different zoom levels. Five files were
   padded to square against their own sampled corner colour, or transparent where the shot was
   cut out. Pad a new photo before adding it rather than trying to correct it in CSS.
+- `.lhead` sits outside `.list`, so it is wider than the rows by the list's 6px padding plus
+  its scrollbar, and every label used to sit that far right of the column it names. app.js
+  measures the scrollbar into `--listsb` on each render rather than trusting the 10px the
+  webkit rule asks for, since Firefox and an overlay scrollbar are different numbers.
 - `restoreScroll` measures the shelf with rects, not `offsetLeft`: `.shelf` is not positioned,
   so `offsetLeft` came from some ancestor and every tile click threw the strip somewhere
   arbitrary.
