@@ -134,7 +134,7 @@
         '<span class="tname">' + esc(w.name) + "</span></button>";
     }).join("");
     return '<div class="shelfhead"><span class="lbl">Bottle shots</span>' +
-      '<span class="shelfhint">Add a photo path to a note, tap one to open it</span></div>' +
+      "</div>" +
       '<div class="shelf">' + items + "</div>";
   }
 

@@ -6,6 +6,13 @@
    This is the ONE place the tokens are set; no page defines its own block. */
 
 :root {
+  /* Inter carries the interface. The big headings get a serif instead: Inter at
+     54px is clean but characterless, which is the "bare" look. Fraunces has an
+     optical-size axis, so it tightens as it grows, and SOFT/WONK are pinned to
+     0 to keep it refined rather than quirky. Swap the family here and every
+     display heading on the site follows. */
+  --font-display: "Fraunces", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+
   --shell-max: 1280px;
   --radius-md: 10px; --radius-lg: 16px;
 }
@@ -171,6 +178,15 @@ html { color-scheme: dark; }
 body { margin: 0; background: var(--color-bg); color: var(--color-text); font-family: var(--font-body);
        -webkit-font-smoothing: antialiased; }
 h1, h2, h3, h4 { color: var(--color-heading); font-weight: 500; }
+
+/* Every display heading. The page sheets load after this one, so each of them
+   names --font-display on its own heading rule; this is the shared setup. */
+.introline, .px-h, .pagehead h1, .sheet h1, .page .hero h1 {
+  font-optical-sizing: auto;
+  font-variation-settings: "SOFT" 0, "WONK" 0;
+  font-weight: 500;
+  text-wrap: balance;
+}
 a { color: var(--color-accent); }
 a:hover { color: var(--color-accent-strong); }
 

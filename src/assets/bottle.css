@@ -9,7 +9,7 @@
                             color-mix(in srgb, var(--color-accent) 26%, transparent) 0%, transparent 70%); }
 .head > * { position: relative; }
 .kick { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-accent); }
-.sheet h1 { font-size: 34px; font-weight: 500; line-height: 1.12; letter-spacing: -0.02em;
+.sheet h1 { font-family: var(--font-display); font-size: 36px; font-weight: 500; line-height: 1.1; letter-spacing: -0.012em;
             margin: 14px 0 0; text-wrap: balance; }
 .line { font-size: 13px; color: var(--color-neutral-400); margin-top: 10px; }
 .facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(120px, 100%), 1fr)); gap: 1px;
@@ -35,8 +35,9 @@
                text-transform: uppercase; color: var(--color-accent); }
 .note p { margin: 0; flex: 1; font-size: 14.5px; line-height: 1.6; text-wrap: pretty; }
 .tags { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 26px; }
-.shot { width: 148px; flex: none; border-radius: var(--radius-md); overflow: hidden;
-        background: var(--color-neutral-900); }
+/* Size only. Shape, ring and padding come from the shared rule in motion.css,
+   and this sheet loads after it, so anything set here wins and breaks the set. */
+.shot { width: 152px; flex: none; }
 
 @media (max-width: 640px) {
   .head { flex-direction: column; gap: 20px; padding: 24px; }
@@ -75,7 +76,7 @@
 .sitnow { font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--color-neutral-500); }
 
 .gallery { display: flex; flex-wrap: wrap; gap: 10px; padding: 0 32px 4px; }
-.gshot { display: block; width: 84px; border: 1px solid var(--color-divider); }
+.gshot { width: 84px; }
 
 .housetop { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px; margin-bottom: 10px; }
 .housetop b { font-family: var(--font-heading); font-weight: 500; font-size: 15px; }

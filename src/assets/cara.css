@@ -14,8 +14,8 @@
 /* ---------- intro ---------- */
 
 .hello { font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--color-accent); }
-.introline { font-family: var(--font-heading); font-weight: 500; margin: 18px 0 0;
-             font-size: clamp(38px, 7vw, 76px); line-height: 1.04; letter-spacing: -0.03em; }
+.introline { font-family: var(--font-display); font-weight: 500; margin: 18px 0 0;
+             font-size: clamp(38px, 7vw, 76px); line-height: 1.02; letter-spacing: -0.02em; }
 .introsub { max-width: 32ch; margin: 22px 0 0; font-size: clamp(16px, 2.1vw, 21px); line-height: 1.55;
             color: var(--color-neutral-200); text-wrap: pretty; }
 .introsub + .introsub { margin-top: 14px; }
@@ -47,8 +47,8 @@
 
 /* ---------- section headings ---------- */
 
-.px-h { font-family: var(--font-heading); font-weight: 500; margin: 0;
-        font-size: clamp(30px, 5vw, 54px); letter-spacing: -0.025em; }
+.px-h { font-family: var(--font-display); font-weight: 500; margin: 0;
+        font-size: clamp(30px, 5vw, 54px); letter-spacing: -0.015em; }
 /* Wider than the header version in motion.css: there is a whole section to
    balance here, not a title block. */
 .px-h .hrule { width: 200px; margin-left: 22px; }

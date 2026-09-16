@@ -40,9 +40,13 @@ tasting journal and a blog behind it. The whisky notes are written in Obsidian.
   one. Finished bottles are **not** greyed out: the bar and ring already say so.
 - Bar tracks use `--color-neutral-800`, never 900. In dark mode 900 *is* the surface colour,
   so a 900 track is invisible on a card.
-- Every bottle photo is a square box with `object-fit: contain`, set once in motion.css for
-  the strip, the panel, the note, the gallery and a brand list. Page sheets must not set a
-  height or a fit for these or they win, since they load after motion.css.
+- Every bottle photo is a **disc with a ring**, matching the score ring and the homepage
+  mark. Set once in motion.css for the strip, panel, note, gallery and brand list; page
+  sheets set width only. Give one a `border-radius`, height or `object-fit` there and it
+  wins, because page sheets load after motion.css, and that photo drops out of the set.
+- The image inside is padded 15% a side. The largest square inside a circle is about 71% of
+  the diameter, so without it a shot framed tight loses its cap and base to the crop. That
+  padding is what makes photos shot at different distances line up.
 - `restoreScroll` measures the shelf with rects, not `offsetLeft`: `.shelf` is not positioned,
   so `offsetLeft` came from some ancestor and every tile click threw the strip somewhere
   arbitrary.
@@ -114,6 +118,11 @@ they appear.
 - `src/assets/nocturne.css` is the generated design system and is natively dark. Take every
   colour, font, space and radius from its `--color-*` / `--font-*` / `--space-*` /
   `--radius-*` variables.
+- Two faces. Inter carries the interface; `--font-display` (Fraunces) carries the big
+  headings only, and its optical-size axis means it tightens as it grows. Both load from one
+  Google Fonts request in base.njk. Applying the display face is done in each page sheet,
+  not centrally, because page sheets load last and would otherwise win with
+  `var(--font-heading)`.
 - `src/assets/theme.css` retunes those tokens to the Cara palette and holds the shared shell:
   nav, footer, `.prose`, scroll chrome. **This is the only place the tokens are set.** It used
   to be a `html:root` block copy-pasted into two templates, and the copies had already drifted.
