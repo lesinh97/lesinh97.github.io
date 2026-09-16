@@ -187,7 +187,8 @@
    filled, the rest are open, which is the whole legend the reader needs. */
 .track { margin-top: 10px; }
 .stop { display: grid; grid-template-columns: var(--rail) 1fr; gap: 0 24px; }
-.stopwhen { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+/* Not uppercased: "Aug 2025 - Now" is a date, and shouting it makes it a label. */
+.stopwhen { font-size: 12.5px; letter-spacing: 0.02em; white-space: nowrap;
             color: var(--color-neutral-500); font-variant-numeric: tabular-nums;
             padding-top: 16px; }
 .stopwhat { position: relative; padding: 14px 0 22px 30px;
@@ -216,6 +217,14 @@
             color: var(--color-neutral-500); padding-top: 3px; }
 .credline { min-width: 0; font-size: 14px; line-height: 1.7;
             color: var(--color-neutral-300); text-wrap: pretty; }
+/* Certifications are a list, not a sentence with commas in it. */
+.credlist { margin: 0; padding: 0; list-style: none; min-width: 0; }
+.credlist li { position: relative; padding-left: 16px; font-size: 14px; line-height: 1.6;
+               margin-bottom: 7px; color: var(--color-neutral-300); text-wrap: pretty; }
+.credlist li:last-child { margin-bottom: 0; }
+.credlist li::before { content: ""; position: absolute; left: 0; top: 9px; width: 5px; height: 5px;
+                       border-radius: 50%; background: color-mix(in srgb, var(--color-accent) 60%, transparent); }
+.credby { color: var(--color-neutral-500); }
 
 @media (max-width: 720px) {
   /* The rail costs more than it gives once the column is this narrow, so the

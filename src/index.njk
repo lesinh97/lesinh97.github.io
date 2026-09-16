@@ -81,12 +81,12 @@ permalink: /index.html
       {% endif %}
 
       {% if cv.roles | hasAny("title,org") %}
-      <div class="lbl worklbl" data-reveal>Where</div>
+      <div class="lbl worklbl" data-reveal>Workplace</div>
       <div class="track" data-reveal data-stagger="60">
         {% for r in cv.roles %}{% if r.title or r.org %}
         <div class="stop">
           <span class="stopwhen">
-            {{- r.from }}{% if r.to %} to {{ r.to }}{% elif r.from %} to now{% endif -%}
+            {{- r.from | shortMonth }} - {{ (r.to | shortMonth) or "Now" -}}
           </span>
           <span class="stopwhat">
             <b>{{ r.title }}</b>
@@ -172,7 +172,7 @@ permalink: /index.html
         <div class="cred">
           <span class="credname">Studied</span>
           {% for e in cv.education %}{% if e.school %}
-          <span class="credline">{{ e.award }}, {{ e.school }}{% if e.from %} ({{ e.from }} to {{ e.to }}){% endif %}</span>
+          <span class="credline">{{ e.award }}, {{ e.school }}{% if e.from %} ({{ e.from }} - {{ e.to or "Now" }}){% endif %}</span>
           {% endif %}{% endfor %}
         </div>
         {% endif %}
@@ -202,11 +202,11 @@ permalink: /index.html
         {% if cv.certifications | hasAny("name") %}
         <div class="cred">
           <span class="credname">Certified</span>
-          <span class="credline">
-            {%- for c in cv.certifications %}{% if c.name %}
-              {{- c.name }}{% if not loop.last %}, {% endif %}
-            {%- endif %}{% endfor -%}
-          </span>
+          <ul class="credlist">
+            {% for c in cv.certifications %}{% if c.name %}
+            <li>{{ c.name }}{% if c.issuer %} <span class="credby">{{ c.issuer }}</span>{% endif %}</li>
+            {% endif %}{% endfor %}
+          </ul>
         </div>
         {% endif %}
       </div>

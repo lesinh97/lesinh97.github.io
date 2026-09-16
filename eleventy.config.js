@@ -44,6 +44,12 @@ module.exports = function (eleventyConfig) {
     );
   });
 
+  // "September 2021" -> "Sep 2021". The data keeps the full month because it is
+  // easier to read in the file; only the display shortens.
+  eleventyConfig.addFilter("shortMonth", (v) =>
+    String(v || "").replace(/^([A-Za-z]{3})[a-z]+/, "$1")
+  );
+
   // One decimal always, matching score() in app.js so 8 and 8.0 never both appear.
   eleventyConfig.addFilter("score1", (n) =>
     n == null || n === "" ? "" : (Math.round(n * 10) / 10).toFixed(1)
