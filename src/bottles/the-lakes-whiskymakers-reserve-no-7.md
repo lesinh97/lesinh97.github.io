@@ -1,5 +1,6 @@
 ---
 name: "The Lakes Whiskymaker's Reserve No. 7"
+brand: "the-lakes"
 origin: "England"
 type: "Single malt"
 age: "NAS"
@@ -22,9 +23,6 @@ nose: "Sandalwood and warm spice."
 palate: "Fat and rounded. Honey, grape, dark chocolate."
 finish: "Long and smooth."
 ---
-
 <!-- Draft review. Tasting notes below are compiled from published sources, not from a tasting of my own. Verify before publishing. Source: dangtauwhisky.com -->
-
-The Lakes Distillery opened in Cumbria in 2014, one of the new English malt producers. Its house style is blending led, built around sherry casks rather than an age statement.
 
 No. 7 draws on the same combination as its predecessor, oloroso and Pedro Ximenez sherry with red wine casks, again at 52 percent. Where No. 6 goes for dried fruit and coffee, this one leans woodier and more perfumed.

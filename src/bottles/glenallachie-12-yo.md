@@ -1,5 +1,6 @@
 ---
 name: "GlenAllachie 12 YO"
+brand: "glenallachie"
 origin: "Speyside"
 type: "Single malt"
 age: "12 yo"
@@ -22,9 +23,6 @@ nose: "Dark chocolate and molasses, heather honey underneath, warm cinnamon runn
 palate: "Sweet sherry and baking spice, butterscotch and mocha, honeyed malt holding it up."
 finish: "Long, smooth and rich."
 ---
-
 <!-- Draft review. Tasting notes below are compiled from published sources, not from a tasting of my own. Verify before publishing. Source: dangtauwhisky.com -->
-
-GlenAllachie was built in Speyside in 1967 and spent most of its life feeding blends. Billy Walker bought the distillery in 2017 and rebuilt its name on heavy sherry cask maturation and honest labelling.
 
 The 12 is the one that made the case. It is matured in oloroso and Pedro Ximenez sherry casks and bottled at 46 percent without chill filtering or colouring. For the money it is hard to argue with.

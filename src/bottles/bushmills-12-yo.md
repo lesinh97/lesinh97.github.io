@@ -1,5 +1,6 @@
 ---
 name: "Bushmills 12 YO"
+brand: "bushmills"
 origin: "Ireland"
 type: "Single malt"
 age: "12 yo"
@@ -22,9 +23,6 @@ nose: "Dark and jammy. Plum and damson, clove and peppercorn, mixed peel and gri
 palate: "Full bodied for 40 percent. Date loaf and sweet fig, chocolate orange, black tea and oak tannin over runny honey."
 finish: "Medium and nutty. Dried fruit, hazelnut, milk chocolate."
 ---
-
 <!-- Draft review. Tasting notes below are compiled from published sources, not from a tasting of my own. Verify before publishing. Source: bushmills.com and Master of Malt -->
-
-Bushmills sits in County Antrim and traces its licence to 1608. It is triple distilled Irish malt, which strips out the heavier notes and leaves a lighter, rounder spirit than most Scotch.
 
 This one spends at least eleven years in former sherry and bourbon casks, then the two are married and finished together for six to nine months in Marsala wine casks. The Marsala is what puts the dried fruit and the nut on top. At 40 percent it is an easy pour rather than a serious one, and the low strength is the only thing holding it back.

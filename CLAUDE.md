@@ -20,15 +20,22 @@ tasting journal and a blog behind it. The whisky notes are written in Obsidian.
   and set `navCurrent` to the nav URL that should read as current.
 - `src/bottles/*.md` is the whisky data. Front matter is the schema, body prose is the
   "Behind it" text. `src/bottles/bottles.json` sets the layout and permalink.
-- A bottle can be **owned but not yet tasted**: leave `score` and `tasted` empty. That state
-  is handled end to end, and the pieces have to stay in step. whisky.njk serialises the score
-  as `null` rather than `0`, because 0 reads as a score and poisons the average; app.js
-  renders null as a dash, leaves it out of the headline average, groups undated bottles under
-  "Not tasted yet", and guards `dShort` / `dLong`, since `new Date("")` is an Invalid Date
-  whose month is NaN and used to print "undefined N" straight into the row. The print card
-  uses a shorter date line for this case so the signed row stays inside its measured worst
-  case. bottle.njk shows "Not yet" and a dash. Fill both fields in after the first pour and
-  it becomes an ordinary note with no other edit.
+- A note is an **expression**. It belongs to a brand (`brand:` slug into `src/brands/*.md`),
+  is owned as one or more `fills` (bottles bought, each with `price`, `size`, `left` percent),
+  and is met in one or more `tastings` (each with `date`, `score`, notes). Extra `photos:`
+  make a gallery. All four are optional: `src/bottles/bottles.11tydata.js` synthesises them
+  from the old flat `price`/`tasted`/`score`/`nose`/`photo` fields, so old notes keep working
+  and you adopt the arrays a note at a time.
+- Read the computed keys, never the raw front matter: `tastingList`, `tastingsDesc`,
+  `fillList`, `photoList`, `scoreNow`, `spend`, `left`, `ml`, `bottleCount`. Two traps in
+  that file, both fatal: a computed key must not read another computed key (Eleventy's
+  dependency proxy is not an array, so `.filter` throws), and must not be named after the
+  key it derives from (circular).
+- `left: null` means never recorded, which is not empty. Null draws no bar; 0 dims the row.
+- A bottle owned but not yet tasted has empty `score`/`tasted`. whisky.njk serialises the
+  score as `null`, not `0`, or it reads as a score and drags the average; app.js shows a
+  dash, groups undated bottles under "Not tasted yet", and guards `dShort`/`dLong` because
+  `new Date("")` has a NaN month that used to print "undefined N" into the row.
 - `src/posts/*.md` is the blog. `src/posts/posts.11tydata.js` sets the layout and builds the
   permalink. `draft: true` in a post's front matter is the single switch that both keeps it
   out of the collection and stops a page being written; `DRAFTS=1 npm start` previews drafts

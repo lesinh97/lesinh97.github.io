@@ -1,5 +1,6 @@
 ---
 name: "The Lakes Chocolatier"
+brand: "the-lakes"
 origin: "England"
 type: "Single malt"
 age: "NAS"
@@ -7,6 +8,11 @@ abv: "51%"
 cask: "Sherry, bourbon & Port"
 tasted: ""
 price: 3600000
+fills:
+  - bought: "2026-09-16"
+    price: 3600000
+    size: 700
+    left: 100
 score:
 photo: /assets/bottles/the-lakes-chocolatier.webp
 fam:
@@ -22,7 +28,6 @@ nose: "Milk chocolate and butterscotch, cacao and rich dried fruit, brandy snap,
 palate: "Wood spice and soft sweet fruit, spiced hot chocolate, perfumed vanilla, dried fruit, a burst of pineapple."
 finish: "Dark chocolate and a long dusting of spice."
 ---
-
 <!-- Bought, not yet tasted. `score` and `tasted` are deliberately empty: the ledger
      renders an unscored bottle as a dash and groups undated ones under "Not tasted
      yet". Fill both in after the first pour and this becomes an ordinary note.
@@ -38,8 +43,6 @@ finish: "Dark chocolate and a long dusting of spice."
      notes look like; the box shot sits on a saturated multicoloured swirl that
      fights the navy palette everywhere it appears. Replace it with a photo of
      my own when I get one. -->
-
-The Lakes Distillery opened in Cumbria in 2014, one of the new English malt producers. Its house style is blending led, built around sherry casks and a whiskymaker's palate rather than an age statement.
 
 The Chocolatier is a limited edition drawn from European and American oak sherry casks alongside bourbon and Port, bottled at 51 percent, non chill filtered and at natural colour. The name is the whole brief: the range already leans confected, and this is the expression that commits to it. It took a gold medal and its category at the World Whisky Awards 2026.
 

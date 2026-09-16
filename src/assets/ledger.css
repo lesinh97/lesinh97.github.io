@@ -159,3 +159,20 @@
   .tile .shot { height: 90px; }
   .rsub { font-size: 11px; }
 }
+
+/* ---------- how much is left ---------- */
+
+/* Row cell. Fixed width so the score column stays aligned whether or not a
+   bottle has a level recorded. */
+.rfill { width: 42px; flex: none; height: 4px; border-radius: 3px; background: var(--color-neutral-900); overflow: hidden; }
+.rfill:empty { background: none; }
+.rfill i { display: block; height: 100%; border-radius: 3px; background: var(--color-accent); }
+.row.out { opacity: .5; }
+.row.out .rfill i { background: var(--color-neutral-700); }
+
+.pfill { display: flex; align-items: center; gap: 12px; margin-bottom: 4px; }
+.pfilltrack { flex: 1; height: 7px; border-radius: 4px; background: var(--color-neutral-900); overflow: hidden; }
+.pfilltrack i { display: block; height: 100%; border-radius: 4px;
+                background: linear-gradient(to right, var(--color-accent), var(--color-accent-strong)); }
+.pfill b { font-family: var(--font-heading); font-size: 15px; font-variant-numeric: tabular-nums; }
+.pfill span:last-child { font-size: 11px; color: var(--color-neutral-500); }

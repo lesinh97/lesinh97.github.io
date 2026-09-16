@@ -1,5 +1,6 @@
 ---
 name: "The Lakes Whiskymaker's Reserve No. 6"
+brand: "the-lakes"
 origin: "England"
 type: "Single malt"
 age: "NAS"
@@ -22,9 +23,6 @@ nose: "Rich and heady. Dried fruit as raisin, fig and date, warm cinnamon and cl
 palate: "Deep and layered. Dried fruit sweetness, the heat of the spice, a mild dark chocolate bitterness, light oak tannin at the edges."
 finish: "Long and smooth, warm with spice and oak."
 ---
-
 <!-- Draft review. Tasting notes below are compiled from published sources, not from a tasting of my own. Verify before publishing. Source: dangtauwhisky.com -->
-
-The Lakes Distillery opened in Cumbria in 2014, one of the new English malt producers. Its house style is blending led, built around sherry casks rather than an age statement.
 
 The Whiskymaker's Reserve series is the flagship, each release a different marriage of casks numbered in sequence rather than by age. No. 6 is built from oloroso and Pedro Ximenez sherry casks with red wine casks alongside, bottled at 52 percent without chill filtering or colouring.

@@ -1,5 +1,6 @@
 ---
 name: "SMWS 108.30 Pleasant Affair"
+brand: "smws"
 origin: "Speyside"
 type: "Single cask"
 age: "14 yo"
@@ -22,10 +23,7 @@ nose: "Fresh pear, lemon and honey, with the soft fragrance of white roses and w
 palate: "Creamy sweet mango lassi with a dash of cardamom and ginger."
 finish: "Subtle oak."
 ---
-
 <!-- Draft review. Tasting notes below are the producer's own published notes, not a tasting of my own. Verify before publishing. Source: smws.eu, cask 108.30 -->
-
-The Scotch Malt Whisky Society began in Leith in 1983. Every bottling is a single cask at cask strength, released under a number and a playful name rather than the distillery name, so you are meant to judge the liquid and not the label. The number before the dot is the distillery, the number after it is the cask.
 
 This is cask 108.30, distilled on 1 February 2007 and bottled at fourteen years from a first fill ex-bourbon barrel at 59.5 percent, an outturn of 215 bottles. A first fill barrel is the smallest common cask and the most active, which is where the honey and the soft oak come from. The orchard and tropical fruit is the distillery's own. It drinks hot neat, so water is not optional here.
 

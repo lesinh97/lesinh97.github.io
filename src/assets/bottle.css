@@ -53,3 +53,44 @@
   .head { flex-direction: column; gap: 20px; padding: 24px; }
   .body { padding: 24px; }
 }
+
+/* ---------- fills, tastings, gallery, house ---------- */
+
+.fill { display: flex; align-items: center; gap: 14px; margin: 12px 0 18px; }
+.filltrack { flex: 1; height: 8px; border-radius: 5px; background: var(--color-neutral-900); overflow: hidden; }
+.filltrack i { display: block; height: 100%; border-radius: 5px;
+               background: linear-gradient(to right, var(--color-accent), var(--color-accent-strong)); }
+.fill b { font-family: var(--font-heading); font-size: 17px; font-variant-numeric: tabular-nums; }
+.fillml { font-size: 12px; color: var(--color-neutral-500); }
+
+.fills { display: flex; flex-direction: column; gap: 2px; }
+.fillrow { display: flex; align-items: baseline; gap: 12px; padding: 8px 0;
+           border-top: 1px solid var(--color-divider); font-size: 13px; }
+.fillno { width: 18px; flex: none; font-family: var(--font-heading); color: var(--color-neutral-500); }
+.fillwhen { flex: 1; }
+.fillprice { font-variant-numeric: tabular-nums; color: var(--color-neutral-400); }
+.fillstate { width: 84px; flex: none; text-align: right; font-size: 11px;
+             letter-spacing: .08em; text-transform: uppercase; color: var(--color-neutral-500); }
+
+.sittings { display: flex; flex-direction: column; gap: 26px; }
+.sitting { padding-left: 16px; border-left: 2px solid var(--color-divider); }
+.sitting:first-child { border-left-color: var(--color-accent); }
+.sithead { display: flex; align-items: baseline; gap: 10px; margin-bottom: 10px; }
+.sithead b { font-family: var(--font-heading); font-weight: 500; font-size: 14px; }
+.sitscore { font-family: var(--font-heading); font-size: 14px; color: var(--color-accent);
+            font-variant-numeric: tabular-nums; }
+.sitnow { font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--color-neutral-500); }
+
+.gallery { display: flex; flex-wrap: wrap; gap: 10px; padding: 0 32px 4px; }
+.gshot { display: block; width: 84px; height: 84px; border-radius: var(--radius-sm); overflow: hidden;
+         background: var(--color-neutral-900); border: 1px solid var(--color-divider); }
+.gshot img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.housetop { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px; margin-bottom: 10px; }
+.housetop b { font-family: var(--font-heading); font-weight: 500; font-size: 15px; }
+.housetop span { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--color-neutral-500); }
+
+@media (max-width: 560px) {
+  .gallery { padding: 0 20px 4px; }
+  .fillstate { width: auto; }
+}

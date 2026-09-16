@@ -1,5 +1,6 @@
 ---
 name: "Bushmills Black Bush"
+brand: "bushmills"
 origin: "Ireland"
 type: "Blend"
 age: "NAS"
@@ -22,9 +23,6 @@ nose: "Sherried and easy. Sultana and toffee, Christmas cake, a little marzipan 
 palate: "Rich and fruity for a blend, and very smooth. Dried fruit and vanilla over light grain sweetness."
 finish: "Short to medium, sweet, no bite at all."
 ---
-
 <!-- Draft review. Tasting notes below are compiled from published sources, not from a tasting of my own. Verify before publishing. Source: bushmills.com -->
-
-Bushmills sits in County Antrim and traces its licence to 1608. It is triple distilled Irish malt, softer and lighter than most Scotch.
 
 Black Bush is the blend, but it carries an exceptionally high proportion of malt against a lighter grain whiskey, and it is matured in former oloroso sherry and bourbon casks. That is why it drinks closer to a young sherried single malt than to a standard blend. The grain keeps it light and the price keeps it on the shelf. Good value, not much depth.

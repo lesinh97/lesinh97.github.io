@@ -1,5 +1,6 @@
 ---
 name: "GlenAllachie 2015 Sinteis"
+brand: "glenallachie"
 origin: "Speyside"
 type: "Single malt"
 age: "9 yo"
@@ -22,10 +23,7 @@ nose: "Mocha, grilled honeycomb and sun-dried red berries, with cinnamon butter,
 palate: "Heather honey, citrus and warmed baking spices, then gingersnaps and poached orchard fruits."
 finish: "Mocha and vanilla buttercream."
 ---
-
 <!-- Draft review. Tasting notes below are the producer's own published notes, not a tasting of my own. Verify before publishing. Source: theglenallachie.com, Sinteis Series -->
-
-GlenAllachie was built in Speyside in 1967 and spent most of its life feeding blends. Billy Walker bought the distillery in 2017 and rebuilt its name on cask work done in the open.
 
 This is from the Sinteis Series, which takes its name from the Scottish Gaelic for synthesis. Two wood types are matured separately and then married: single malt from oloroso sherry casks, and spirit from rare Scottish virgin oak barrels. Bottled at 58.2 percent cask strength, natural colour, non chill filtered.
 

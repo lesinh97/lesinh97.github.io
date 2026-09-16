@@ -1,5 +1,6 @@
 ---
 name: "The Lakes Resfeber"
+brand: "the-lakes"
 origin: "England"
 type: "Single malt"
 age: "NAS"
@@ -22,9 +23,6 @@ nose: "Buttery and floral, with apple and a lift of spice."
 palate: "Butter and orchard apple, spice, honey, a frame of oak."
 finish: "Long and warm, on fruit and spice."
 ---
-
 <!-- Draft review. Tasting notes below are compiled from published sources, not from a tasting of my own. Verify before publishing. Source: dangtauwhisky.com -->
-
-The Lakes Distillery opened in Cumbria in 2014, one of the new English malt producers. Its house style is blending led, built around sherry casks rather than an age statement.
 
 Resfeber is a Swedish word for the restlessness before a journey, and the whisky is named for it. It comes from cream sherry casks and red wine barriques and is bottled at 46.6 percent, the lowest strength in the range here. Lighter and more buttery than the sherry bombs around it.

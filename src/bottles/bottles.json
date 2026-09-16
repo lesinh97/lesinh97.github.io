@@ -1,4 +1,0 @@
-{
-  "layout": "bottle.njk",
-  "permalink": "/bottles/{{ page.fileSlug }}/"
-}

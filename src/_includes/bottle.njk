@@ -13,10 +13,19 @@ extraCss: ["/assets/bottle.css"]
   {{ px.field(shapes.bottle) }}
 </div>
 
+{# The distillery this expression comes from. `brandBySlug` is a filter rather
+   than a loop because Nunjucks `set` inside a `for` does not survive the loop. #}
+{% set house = collections.brands | brandBySlug(brand) %}
+
+{# Everything below reads the normalised arrays from bottles.11tydata.js, never
+   the raw front matter, so a note written before fills and tastings existed
+   renders through exactly the same path as one written after. #}
 <div class="bwrap">
   <article class="sheet rise">
     <div class="head">
-      {% if photo %}<div class="shot"><img src="{{ photo }}" alt="{{ name }}" decoding="async"></div>{% endif %}
+      {% if photoList | length %}
+      <div class="shot"><img src="{{ photoList[0] }}" alt="{{ name }}" decoding="async"></div>
+      {% endif %}
       <div style="flex: 1; min-width: 0">
         <div class="kick">{{ origin }}{% if type %}  ·  {{ type }}{% endif %}</div>
         <h1>{{ name }}</h1>
@@ -24,18 +33,63 @@ extraCss: ["/assets/bottle.css"]
       </div>
       {# A bottle can be on the shelf before it is opened. The dash matches the
          one the ledger shows for the same state. #}
-      <div class="score">{% if score %}<b>{{ score }}</b><span>out of ten</span>
+      <div class="score">{% if scoreNow %}<b>{{ scoreNow | score1 }}</b><span>out of ten</span>
         {% else %}<b>–</b><span>not scored yet</span>{% endif %}</div>
     </div>
 
+    {# The rest of the library. Only shown when there is more than the one shot
+       already standing in the header. #}
+    {% if photoList | length > 1 %}
+    <div class="gallery" data-reveal data-stagger="60">
+      {% for p in photoList %}
+      <a class="gshot" href="{{ p }}"><img src="{{ p }}" alt="{{ name }}" loading="lazy" decoding="async"></a>
+      {% endfor %}
+    </div>
+    {% endif %}
+
     <div class="facts" data-reveal data-stagger="70">
-      <div class="fact"><span>Tasted</span><b>{{ (tasted | readableDate) or "Not yet" }}</b></div>
+      <div class="fact"><span>{% if tastingList | length > 1 %}First tasted{% else %}Tasted{% endif %}</span>
+        <b>{{ (firstTasted | readableDate) or "Not yet" }}</b></div>
       <div class="fact"><span>Age</span><b>{{ age or "NAS" }}</b></div>
       <div class="fact"><span>Strength</span><b>{{ abv or "Not listed" }}</b></div>
-      <div class="fact"><span>Cask</span><b>{{ cask or "Not listed" }}</b></div>
+      <div class="fact"><span>{% if bottleCount > 1 %}Paid, {{ bottleCount }} bottles{% else %}Paid{% endif %}</span>
+        <b>{{ spend | money }}</b></div>
     </div>
 
     <div class="body">
+      {# ---------- what is left ---------- #}
+      {# `left` is null when no fill has ever declared a level, which is not the
+         same as an empty bottle, so the block stays off rather than showing 0. #}
+      {% if left != null %}
+      <div class="lbl">In the bottle</div>
+      <div class="fill" data-reveal>
+        <span class="filltrack"><i style="width: {{ left }}%"></i></span>
+        <b>{{ left }}%</b>
+        {% if ml %}<span class="fillml">about {{ ml }} ml left</span>
+        {% elif left == 0 %}<span class="fillml">finished</span>{% endif %}
+      </div>
+      {% endif %}
+
+      {# One row per physical bottle, once there has been more than one. #}
+      {% if bottleCount > 1 %}
+      <div class="fills" data-reveal data-stagger="50">
+        {% for f in fillList %}
+        <div class="fillrow">
+          <span class="fillno">{{ loop.index }}</span>
+          <span class="fillwhen">{{ (f.bought | readableDate) or "Date unknown" }}</span>
+          <span class="fillprice">{{ f.price | money }}</span>
+          <span class="fillstate">
+            {%- if f.left > 0 %}{{ f.left }}% left
+            {%- elif f.left == 0 %}finished
+            {%- else %}unrecorded{% endif -%}
+          </span>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      {% if left != null or bottleCount > 1 %}<hr class="brule">{% endif %}
+
       {# Theme-aware ramp, shared with the sparkline in app.js. #}
       {% set ramp = ["var(--bar-0)", "var(--bar-1)", "var(--bar-2)", "var(--bar-3)", "var(--bar-4)", "var(--bar-5)"] %}
       {% set rows = [["Fruit & floral", fam.fruit], ["Sweet & creamy", fam.sweet], ["Spice & dried fruit", fam.spice],
@@ -54,14 +108,56 @@ extraCss: ["/assets/bottle.css"]
 
       <hr class="brule">
 
-      {% if nose %}<div class="note"><span>Nose</span><p>{{ nose }}</p></div>{% endif %}
-      {% if palate %}<div class="note"><span>Palate</span><p>{{ palate }}</p></div>{% endif %}
-      {% if finish %}<div class="note"><span>Finish</span><p>{{ finish }}</p></div>{% endif %}
+      {# ---------- tastings ---------- #}
+      {# A single sitting renders exactly as it always did, unlabelled and
+         undated: the facts row above already says when. Several render newest
+         first, each dated and scored, so the note shows how the view moved. #}
+      {% if tastingList | length > 1 %}
+      <div class="lbl" style="margin-bottom: 16px">Tastings</div>
+      <div class="sittings" data-reveal data-stagger="80">
+        {% for t in tastingsDesc %}
+        <div class="sitting">
+          <div class="sithead">
+            <b>{{ (t.date | readableDate) or "Undated" }}</b>
+            {% if t.score %}<span class="sitscore">{{ t.score | score1 }}</span>{% endif %}
+            {% if loop.first %}<span class="sitnow">latest</span>{% endif %}
+          </div>
+          {% if t.nose %}<div class="note"><span>Nose</span><p>{{ t.nose }}</p></div>{% endif %}
+          {% if t.palate %}<div class="note"><span>Palate</span><p>{{ t.palate }}</p></div>{% endif %}
+          {% if t.finish %}<div class="note"><span>Finish</span><p>{{ t.finish }}</p></div>{% endif %}
+          {% if t.note %}<div class="note"><span>On the day</span><p>{{ t.note }}</p></div>{% endif %}
+        </div>
+        {% endfor %}
+      </div>
+      {% elif tastingList | length %}
+        {% set t = tastingList[0] %}
+        {% if t.nose %}<div class="note"><span>Nose</span><p>{{ t.nose }}</p></div>{% endif %}
+        {% if t.palate %}<div class="note"><span>Palate</span><p>{{ t.palate }}</p></div>{% endif %}
+        {% if t.finish %}<div class="note"><span>Finish</span><p>{{ t.finish }}</p></div>{% endif %}
+        {% if t.note %}<div class="note"><span>On the day</span><p>{{ t.note }}</p></div>{% endif %}
+      {% endif %}
 
       {% if content | striptags | trim %}
       <hr class="brule">
       <div class="lbl" style="margin-bottom: 12px">Behind it</div>
       <div class="prose">{{ content | safe }}</div>
+      {% endif %}
+
+      {# ---------- the house ---------- #}
+      {# Written once per brand and pulled in here, which is why the note above
+         is only ever about this expression. #}
+      {% if house %}
+      <hr class="brule">
+      <div class="lbl" style="margin-bottom: 12px">The distillery</div>
+      <div class="house" data-reveal>
+        <div class="housetop">
+          <b>{{ house.data.name }}</b>
+          {# "The Lakes Distillery · Distillery" reads as a stutter. The kind is
+             dropped whenever the name already carries it. #}
+          <span>{% if house.data.kind not in house.data.name %}{{ house.data.kind }}  ·  {% endif %}{{ house.data.country }}{% if house.data.founded %}  ·  since {{ house.data.founded }}{% endif %}</span>
+        </div>
+        <div class="prose">{{ house.templateContent | safe }}</div>
+      </div>
       {% endif %}
 
       {% if flavours %}

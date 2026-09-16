@@ -14,6 +14,33 @@ module.exports = function (eleventyConfig) {
     api.getFilteredByGlob("src/bottles/*.md")
   );
 
+  /* Distillery and bottler histories, one file each, referenced from a note by
+     its `brand:` slug. They never become pages of their own (brands.json sets
+     `permalink: false`), they exist so the same paragraph about Cumbria in 2014
+     is not written into five Lakes notes and then edited in only one of them. */
+  eleventyConfig.addCollection("brands", (api) =>
+    api.getFilteredByGlob("src/brands/*.md")
+  );
+
+  /* Dong, grouped with dots and a non-breaking space before the sign. Kept
+     byte-identical to `money()` in app.js: the same amount is rendered by the
+     template on a note page and by the script in the ledger panel, and two
+     spellings of it side by side would look like a bug. */
+  eleventyConfig.addFilter("money", (n) =>
+    !n ? "" : String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " ₫"
+  );
+
+  // One decimal always, matching score() in app.js so 8 and 8.0 never both appear.
+  eleventyConfig.addFilter("score1", (n) =>
+    n == null || n === "" ? "" : (Math.round(n * 10) / 10).toFixed(1)
+  );
+
+  /* Nunjucks `set` inside a `for` does not survive the loop, so looking a brand
+     up by slug in the template is a filter rather than a search. */
+  eleventyConfig.addFilter("brandBySlug", (brands, slug) =>
+    slug ? (brands || []).find((b) => b.page.fileSlug === slug) : undefined
+  );
+
   // Same reason posts use `topics` rather than `tags`. Newest first.
   // `draft: true` in the front matter keeps a post out of the build. Run
   // DRAFTS=1 npm start to see them locally without publishing them.

@@ -18,7 +18,7 @@
   var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   var BAR = ["var(--bar-0)", "var(--bar-1)", "var(--bar-2)", "var(--bar-3)", "var(--bar-4)", "var(--bar-5)"];
   var PBAR = ["var(--pbar-0)", "var(--pbar-1)", "var(--pbar-2)", "var(--pbar-3)", "var(--pbar-4)", "var(--pbar-5)"];
-  var SORTS = [["recent", "Most recent"], ["score", "Highest score"], ["price", "Most spent"]];
+  var SORTS = [["recent", "Most recent"], ["score", "Highest score"], ["spend", "Most spent"], ["left", "Most left"]];
   /* Card ink. These are print colours, not screen tokens: the light set has
      to hold up as real pigment on white paper, so the navy is a deep one. */
   var INK = {
@@ -42,9 +42,16 @@
     return b;
   });
 
+  /* /whisky/#the-lakes-resfeber opens on that bottle. Without it a link you
+     send always lands on whatever you tasted last. */
+  function fromHash() {
+    var id = decodeURIComponent(String(location.hash || "").replace(/^#/, ""));
+    return list.some(function (w) { return w.id === id; }) ? id : null;
+  }
+
   var S = {
-    selId: list.length ? sortBy(list.slice(), "recent")[0].id : null,
-    query: "", origin: "All", sort: "recent",
+    selId: fromHash() || (list.length ? sortBy(list.slice(), "recent")[0].id : null),
+    query: "", origin: "All", sort: "recent", openOnly: false,
     shape: "card", ink: "light", showPrint: false,
     picked: list.map(function (b) { return b.id; })
   };
@@ -95,13 +102,14 @@
   }
   function sortBy(rows, mode) {
     return rows.sort(function (a, b) {
-      return mode === "score" ? b.score - a.score : mode === "price" ? b.price - a.price : String(b.date).localeCompare(String(a.date));
+      return mode === "score" ? b.score - a.score : mode === "spend" ? b.spend - a.spend : mode === "left" ? (b.left || 0) - (a.left || 0) : String(b.date).localeCompare(String(a.date));
     });
   }
   function filtered() {
     var q = S.query.trim().toLowerCase();
     var rows = list.filter(function (w) {
       if (S.origin !== "All" && w.origin !== S.origin) return false;
+      if (S.openOnly && !(w.left > 0)) return false;
       if (!q) return true;
       return (w.name + " " + w.origin + " " + w.tags.join(" ") + " " + w.nose + " " + w.palate).toLowerCase().indexOf(q) > -1;
     });
@@ -137,22 +145,44 @@
       return '<button class="chip' + (o === S.origin ? " on" : "") + '" data-act="origin" data-v="' + esc(o) + '">' + esc(o) + "</button>";
     }).join("");
     var label = (SORTS.filter(function (x) { return x[0] === S.sort; })[0] || SORTS[0])[1];
-    return '<div class="chiprow">' + chips +
+    var open = list.filter(function (w) { return w.left > 0; }).length;
+    var openChip = open
+      ? '<button class="chip' + (S.openOnly ? " on" : "") + '" data-act="openOnly">Open now ' + open + "</button>"
+      : "";
+    return '<div class="chiprow">' + chips + openChip +
       '<button class="chip" data-act="sort" style="margin-left:auto;display:inline-flex;align-items:center;gap:6px">' +
       '<i class="ph ph-arrows-down-up"></i>' + label + "</button></div>";
   }
 
+  /* null left means never recorded, which is not empty: draw nothing. */
+  function fillCell(w) {
+    if (w.left == null) return '<span class="rfill"></span>';
+    return '<span class="rfill" title="' + w.left + '% left"><i style="width:' + w.left + '%"></i></span>';
+  }
+
+  function fillBar(w) {
+    if (w.left == null) return "";
+    var note = w.left === 0 ? "finished" : w.ml ? "about " + w.ml + " ml left" : "left";
+    return '<div class="lbl" style="margin-bottom:10px">In the bottle</div>' +
+      '<div class="pfill"><span class="pfilltrack"><i style="width:' + w.left + '%"></i></span>' +
+      "<b>" + w.left + "%</b><span>" + note + "</span></div>" +
+      '<div class="softrule"></div>';
+  }
+
   function rowHtml(w, sel) {
     var on = sel && w.id === sel.id;
-    var sub = [dShort(w.date), w.origin, w.age, money(w.price)].filter(Boolean).join("  \u00b7  ");
+    var sub = [dShort(w.date), w.origin, w.age, money(w.spend)].filter(Boolean).join("  \u00b7  ");
     var bars = FAMS.map(function (f, i) {
       return '<i style="height:' + (3 + (w.fam[f[0]] || 0) * 3.8) + "px;background:" + BAR[w.fam[f[0]] || 0] + '"></i>';
     }).join("");
-    return '<div class="row' + (on ? " on" : "") + '" data-act="pick" data-id="' + esc(w.id) + '">' +
+    // An empty bottle stays listed but steps back from the ones you can pour.
+    return '<div class="row' + (on ? " on" : "") + (w.left === 0 ? " out" : "") +
+      '" data-act="pick" data-id="' + esc(w.id) + '">' +
       '<span class="init">' + esc(initials(w.name)) + "</span>" +
       '<span style="flex:1;min-width:0"><span class="rname">' + esc(w.name) + "</span>" +
       '<span class="rsub">' + esc(sub) + "</span></span>" +
       '<span class="spark">' + bars + "</span>" +
+      fillCell(w) +
       '<span class="rscore">' + score(w.score) + "</span>" +
       // data-act="noop" so the delegated handler bows out and the link navigates,
       // leaving the rest of the row selecting the bottle in the panel as before.
@@ -190,8 +220,10 @@
     if (!sel) return "";
     var shot = sel.photo ? '<img src="' + esc(sel.photo) + '" alt="' + esc(sel.name) + '" decoding="async">' : '<i class="ph ph-wine"></i>';
     var facts = [
-      ["Tasted", dLong(sel.date)], ["Strength", sel.abv || "\u2013"],
-      ["Age", sel.age || "NAS"], ["Paid", money(sel.price)]
+      [sel.tastings > 1 ? "First tasted" : "Tasted", dLong(sel.date)],
+      ["Strength", sel.abv || "\u2013"],
+      ["Age", sel.age || "NAS"],
+      [sel.bottles > 1 ? "Paid, " + sel.bottles + " bottles" : "Paid", money(sel.spend)]
     ].map(function (f) {
       return '<div class="fact"><span>' + esc(f[0]) + "</span><b>" + esc(f[1]) + "</b></div>";
     }).join("");
@@ -221,7 +253,8 @@
       '<div style="font-size:12.5px;color:var(--color-neutral-400);margin-top:6px">' +
       esc([sel.age, sel.abv, sel.cask].filter(Boolean).join("  \u00b7  ")) + "</div></div>" +
       '<div class="facts">' + facts + "</div>" +
-      '<div class="pbody"><div class="lbl" style="margin-bottom:14px">Flavour signature</div>' +
+      '<div class="pbody">' + fillBar(sel) +
+      '<div class="lbl" style="margin-bottom:14px">Flavour signature</div>' +
       '<div style="display:flex;flex-direction:column;gap:11px">' + bars + "</div>" +
       '<div class="softrule"></div>' +
       '<div style="display:flex;flex-direction:column;gap:16px">' + notes + "</div>" + story +
@@ -500,7 +533,7 @@
     var counts = {};
     list.forEach(function (w) { counts[w.origin] = (counts[w.origin] || 0) + 1; });
     var top = Object.keys(counts).sort(function (a, b) { return counts[b] - counts[a]; })[0] || "\u2013";
-    var spend = rows.reduce(function (t, w) { return t + (w.price || 0); }, 0);
+    var spend = rows.reduce(function (t, w) { return t + (w.spend || 0); }, 0);
 
     document.getElementById("body").innerHTML =
       '<div class="hero"><div style="flex:1 1 320px;min-width:0"><h1>Aqua Vitae</h1>' +
@@ -529,7 +562,12 @@
     if (!el) return;
     var a = el.getAttribute("data-act"), v = el.getAttribute("data-v"), id = el.getAttribute("data-id");
     if (a === "noop") return;
-    if (a === "pick") S.selId = id;
+    if (a === "pick") {
+      S.selId = id;
+      // replaceState, not a hash assignment: no jump, no history entry per click.
+      if (window.history && history.replaceState) history.replaceState(null, "", "#" + id);
+    }
+    else if (a === "openOnly") S.openOnly = !S.openOnly;
     else if (a === "origin") S.origin = v;
     else if (a === "sort") {
       var i = SORTS.map(function (x) { return x[0]; }).indexOf(S.sort);
@@ -545,6 +583,11 @@
     } else if (a === "doPrint") { S.showPrint = false; render(); setTimeout(function () { window.print(); }, 60); return; }
     else if (a === "printSel") { S.picked = [selected().id]; render(); setTimeout(function () { window.print(); }, 60); return; }
     render();
+  });
+
+  window.addEventListener("hashchange", function () {
+    var id = fromHash();
+    if (id && id !== S.selId) { S.selId = id; render(); }
   });
 
   document.getElementById("q").addEventListener("input", function (e) {

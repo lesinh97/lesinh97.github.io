@@ -1,5 +1,6 @@
 ---
 name: "The Lakes Nostalgia"
+brand: "the-lakes"
 origin: "England"
 type: "Single malt"
 age: "NAS"
@@ -22,9 +23,6 @@ nose: "Pear and baking spice, butterscotch, cherry blossom, vanilla and milk cho
 palate: "Dried fruit as raisin and fig, then orchard fruit, plum and pear. Vanilla, white chocolate, butterscotch, baking spice, orange oil."
 finish: "Lingering oak, dark chocolate and cherry candy."
 ---
-
 <!-- Draft review. Tasting notes below are compiled from published sources, not from a tasting of my own. Verify before publishing. Source: dangtauwhisky.com -->
-
-The Lakes Distillery opened in Cumbria in 2014, one of the new English malt producers. Its house style is blending led, built around sherry casks and a whiskymaker's palate rather than an age statement.
 
 Nostalgia is one of the Whiskymaker's Editions, drawn from sherry and bourbon casks and bottled at 49 percent. It is the sweetest and most confected thing in the range, and the strength is what keeps it from collapsing into syrup.
