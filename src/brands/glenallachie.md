@@ -1,5 +1,6 @@
 ---
 name: "GlenAllachie"
+abbr: "GA"
 country: "Scotland"
 kind: "Distillery"
 founded: 1967

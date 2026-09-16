@@ -362,12 +362,12 @@
   overflow: hidden; border-radius: 50%; background: var(--color-neutral-900);
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-accent) 24%, transparent);
 }
-/* The padding is the whole trick. The largest square that fits inside a circle
-   has sides of d/sqrt(2), about 71% of the diameter, so an un-padded square
-   photo loses its corners and a bottle shot that fills its frame loses the cap
-   and the base. 15% a side keeps every shot whole whatever its framing, which
-   is what makes a set of photos taken at different distances line up. */
+/* `cover`, not `contain`. These packshots have a light backdrop baked into the
+   file, so containing one inside a disc drew its rectangle in the middle of the
+   circle, which looked broken. Filling the disc pushes that backdrop out to the
+   rim where the circle clips it and it reads as the disc's own colour. The
+   shots are square with the bottle centred, so filling a square box crops
+   nothing. */
 .tile .shot img, .pshot img, .shot img, .gshot img, .bshot img {
-  width: 100%; height: 100%; object-fit: contain; display: block;
-  padding: 15%; box-sizing: border-box;
+  width: 100%; height: 100%; object-fit: cover; display: block;
 }

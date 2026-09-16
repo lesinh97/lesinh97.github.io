@@ -1,5 +1,6 @@
 ---
 name: "Château Garreau"
+abbr: "CG"
 country: "France"
 kind: "Armagnac house"
 # why: |

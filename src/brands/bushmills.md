@@ -1,5 +1,6 @@
 ---
 name: "Bushmills"
+abbr: "BM"
 country: "Northern Ireland"
 kind: "Distillery"
 founded: 1608

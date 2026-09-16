@@ -35,6 +35,8 @@
   }
 
   var raw = JSON.parse(document.getElementById("bottle-data").textContent || "[]");
+  var brandEl = document.getElementById("brand-data");
+  var brands = brandEl ? JSON.parse(brandEl.textContent || "[]") : [];
   var list = raw.map(function (b) {
     b.id = (b.path || b.name).replace(/^.*\//, "").replace(/\.md$/, "");
     b.fam = b.fam || {};
@@ -120,6 +122,26 @@
   }
 
   /* ---------- index column ---------- */
+
+  /* The houses, as monograms in the same disc the bottle shots use. They are
+     set in the display face rather than in a fetched logo: seven distillery
+     logos are seven different colour schemes, and on a navy page they would
+     fight each other and the palette. */
+  function housesHtml() {
+    if (!brands.length) return "";
+    var counts = {};
+    list.forEach(function (w) { if (w.brand) counts[w.brand] = (counts[w.brand] || 0) + 1; });
+    var items = brands.map(function (b) {
+      var n = counts[b.name] || 0;
+      var ab = b.abbr || initials(b.name);
+      return '<a class="house-t" href="' + esc(b.url) + '" title="' + esc(b.name) +
+        (n ? " · " + n + (n === 1 ? " bottle" : " bottles") : "") + '">' +
+        '<span class="house-d"><b' + (ab.length > 2 ? ' class="long"' : "") + ">" + esc(ab) + "</b></span>" +
+        '<span class="house-n">' + esc(b.name) + "</span></a>";
+    }).join("");
+    return '<div class="shelfhead"><span class="lbl">Houses</span></div>' +
+      '<div class="houses">' + items + "</div>";
+  }
 
   function shelfHtml(sel) {
     var items = sortBy(list.slice(), "recent").map(function (w) {
@@ -557,13 +579,14 @@
 
     document.getElementById("body").innerHTML =
       '<div class="hero"><div style="flex:1 1 320px;min-width:0"><h1>Aqua Vitae</h1>' +
-      "<p>Pick one to read its note.</p></div>" +
+      "<p>Latin for the water of life, the old name for distilled spirit. " +
+      "Gaelic turned it into uisge beatha, and that became whisky.</p></div>" +
       '<div class="stats">' +
       '<div><div class="stat-n">' + list.length + '</div><div class="stat-l">Bottles logged</div></div>' +
       '<div><div class="stat-n" style="color:var(--color-accent)">' + score(avg) + '</div><div class="stat-l">Average score</div></div>' +
       '<div><div class="stat-n">' + esc(top) + '</div><div class="stat-l">Favourite origin</div></div>' +
       "</div></div>" +
-      '<div class="cols"><div class="col">' + shelfHtml(sel) + chipsHtml() +
+      '<div class="cols"><div class="col">' + housesHtml() + shelfHtml(sel) + chipsHtml() +
       '<div class="lhead"><span style="width:30px;flex:none"></span><span style="flex:1">Bottle</span>' +
       '<span style="width:72px;flex:none">Signature</span><span style="width:36px;flex:none;text-align:right">Score</span></div>' +
       '<div class="list">' + listHtml(rows, sel) + "</div>" +

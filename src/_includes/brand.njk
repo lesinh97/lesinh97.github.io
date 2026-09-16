@@ -12,6 +12,7 @@ extraCss: ["/assets/brand.css"]
   {{ px.band(2) }}
   {{ px.field(shapes.bottle) }}
   <div class="shell rise">
+    <span class="bmono"><b>{{ abbr or (name | first) }}</b></span>
     <div class="kicker">{{ kind }}</div>
     <h1>{{ name }}<span class="hrule"></span></h1>
     <p>{{ country }}{% if founded %}, distilling since {{ founded }}{% endif %}.

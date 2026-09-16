@@ -9,8 +9,8 @@
          transition: transform .3s cubic-bezier(.2, .7, .2, 1), box-shadow .3s ease, border-color .3s ease; }
 .bcard:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg);
                border-color: transparent; color: var(--color-text); }
-.bcard b { font-family: var(--font-heading); font-weight: 500; font-size: 19px;
-           letter-spacing: -0.01em; margin-top: 4px; }
+.bcard b { font-family: var(--font-display); font-weight: 500; font-size: 21px;
+           letter-spacing: -0.008em; margin-top: 4px; }
 .bcmeta { font-size: 12px; color: var(--color-neutral-400); }
 .bcount { margin-top: 6px; font-size: 12.5px; color: var(--color-neutral-300); }
 .bcard .go { display: inline-flex; align-items: center; gap: 7px; margin-top: 14px; font-size: 11px;
@@ -19,14 +19,19 @@
 
 /* Left aligned under the header, not centred on itself: the page keeps the
    asymmetric column the rest of the site uses. */
-.bwrap2 { max-width: 760px; padding-bottom: 40px; }
-.bsec { margin: 40px 0 0; }
+.bwrap2 { max-width: 760px; padding-bottom: 56px; }
+/* Sections separated by the same fading rule the prose uses, so the page reads
+   as one column rather than as stacked blocks. */
+.bsec { margin: 46px 0 0; padding-top: 46px; border-top: 1px solid transparent;
+        border-image: linear-gradient(to right, var(--color-divider), transparent) 1; }
+.bsec:first-child { margin-top: 34px; padding-top: 0; border: 0; }
+.bsec .prose { font-size: 16px; line-height: 1.8; }
 .bsec .lbl { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
              color: var(--color-neutral-500); margin-bottom: 12px; }
 
 .bstats { display: flex; flex-wrap: wrap; gap: 38px; }
-.bstats b { display: block; font-family: var(--font-heading); font-size: 26px; line-height: 1;
-            font-variant-numeric: tabular-nums; }
+.bstats b { display: block; font-family: var(--font-display); font-weight: 500; font-size: 30px;
+            line-height: 1; font-variant-numeric: tabular-nums; }
 .bstats span { display: block; margin-top: 6px; font-size: 10px; letter-spacing: 0.12em;
                text-transform: uppercase; color: var(--color-neutral-500); }
 
@@ -38,7 +43,8 @@
               border-color: var(--color-divider); transform: translateX(4px); color: var(--color-text); }
 .bshot { width: 54px; flex: none; color: var(--color-neutral-600); }
 .bmain { flex: 1; min-width: 0; }
-.bmain b { display: block; font-family: var(--font-heading); font-weight: 500; font-size: 15.5px; }
+.bmain b { display: block; font-family: var(--font-display); font-weight: 500; font-size: 17px;
+           letter-spacing: -0.008em; }
 .bmeta { display: block; margin-top: 3px; font-size: 12px; color: var(--color-neutral-500); }
 .bfill { display: block; width: 92px; height: 4px; margin-top: 8px; border-radius: 3px;
          background: var(--color-neutral-800); overflow: hidden; }
@@ -50,3 +56,14 @@
   .bstats { gap: 24px; }
   .brow { padding: 12px 8px; gap: 12px; }
 }
+
+/* The house monogram, same disc as the strip on the ledger. */
+.bmono { display: grid; place-items: center; width: 64px; height: 64px; border-radius: 50%;
+         margin-bottom: 18px; background: color-mix(in srgb, var(--color-surface) 70%, transparent);
+         box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-accent) 30%, transparent); }
+.bmono b { font-family: var(--font-display); font-weight: 500; font-size: 20px;
+           letter-spacing: .02em; color: var(--color-accent); }
+
+/* A brand card carries its monogram too, so the index and the page agree. */
+.bcard { position: relative; }
+.bscore { font-family: var(--font-display); }

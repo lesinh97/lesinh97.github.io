@@ -36,6 +36,18 @@ permalink: /whisky/index.html
   <div id="modal"></div>
 </div>
 
+{# The houses, for the strip above the bottle shots. Brands left the nav; this
+   is where they are reached from now. #}
+<script id="brand-data" type="application/json">
+[{% for b in collections.brands %}{
+"slug": {{ b.page.fileSlug | dump | safe }},
+"url": {{ b.url | dump | safe }},
+"name": {{ b.data.name | dump | safe }},
+"abbr": {{ (b.data.abbr or "") | dump | safe }},
+"kind": {{ (b.data.kind or "") | dump | safe }}
+}{% if not loop.last %},{% endif %}{% endfor %}]
+</script>
+
 {# Add a field to the bottle notes and you must add it to this loop too. #}
 <script id="bottle-data" type="application/json">
 [{% for b in collections.bottles %}{

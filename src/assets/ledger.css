@@ -177,3 +177,34 @@
 .rtimes { margin-left: 8px; font-family: var(--font-heading); font-size: 10px; letter-spacing: .06em;
           padding: 2px 6px; border-radius: 999px; vertical-align: 2px;
           color: var(--color-accent); background: color-mix(in srgb, var(--color-accent) 16%, transparent); }
+
+/* ---------- houses ---------- */
+
+/* Monograms in the same disc as the bottle shots, so the two strips read as one
+   idea. This is how brands are reached now that they are off the nav. */
+/* Sized so all seven sit on one row in the column rather than dropping a lone
+   orphan onto a second. */
+.houses { display: flex; flex-wrap: wrap; gap: 10px; margin: 9px 0 22px; }
+.house-t { display: flex; flex-direction: column; align-items: center; gap: 7px; width: 68px;
+           text-decoration: none; color: var(--color-neutral-400); }
+.house-d { width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center;
+           background: var(--color-neutral-900);
+           box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-accent) 24%, transparent);
+           transition: box-shadow .25s ease, transform .25s cubic-bezier(.2, .7, .2, 1); }
+.house-d b { font-family: var(--font-display); font-weight: 500; font-size: 16px;
+             letter-spacing: .01em; color: var(--color-accent); }
+/* A four-letter monogram needs to step down or it touches the ring. */
+.house-d b.long { font-size: 12px; letter-spacing: 0; }
+.house-t:hover .house-d { box-shadow: inset 0 0 0 2px var(--color-accent); transform: translateY(-3px); }
+.house-t:hover { color: var(--color-text); }
+/* Two lines, clamped: "Scotch Malt Whisky Society" ran to three and made its
+   tile taller than the rest of the row. */
+.house-n { font-size: 10px; line-height: 1.3; text-align: center; height: 26px; overflow: hidden;
+           display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+@media (prefers-reduced-motion: reduce) { .house-t:hover .house-d { transform: none; } }
+@media (max-width: 560px) {
+  .houses { gap: 10px; }
+  .house-t { width: 62px; }
+  .house-d { width: 48px; height: 48px; }
+  .house-d b { font-size: 15px; }
+}

@@ -10,7 +10,7 @@ tasting journal and a blog behind it. The whisky notes are written in Obsidian.
 | `/` | `src/index.njk` | The Cara one-pager: intro, the things, about, contact |
 | `/whisky/` | `src/whisky.njk` | The ledger. Search, filter, detail panel, printable cards |
 | `/bottles/<slug>/` | `src/bottles/*.md` via `src/_includes/bottle.njk` | One bottle note |
-| `/brands/` | `src/brands.njk` | The houses, with what I own of each |
+| `/brands/` | `src/brands.njk` | The houses, with what I own of each. Reached from the Houses strip on `/whisky/`, not the nav |
 | `/brands/<slug>/` | `src/brands/*.md` via `src/_includes/brand.njk` | One house |
 | `/blog/` | `src/blog.njk` | Post index |
 | `/blog/<slug>/` | `src/posts/*.md` via `src/_includes/post.njk` | One post |
@@ -44,9 +44,9 @@ tasting journal and a blog behind it. The whisky notes are written in Obsidian.
   mark. Set once in motion.css for the strip, panel, note, gallery and brand list; page
   sheets set width only. Give one a `border-radius`, height or `object-fit` there and it
   wins, because page sheets load after motion.css, and that photo drops out of the set.
-- The image inside is padded 15% a side. The largest square inside a circle is about 71% of
-  the diameter, so without it a shot framed tight loses its cap and base to the crop. That
-  padding is what makes photos shot at different distances line up.
+- The image inside uses `cover`, never `contain`. These packshots have a light backdrop baked
+  into the file, and containing one drew its rectangle in the middle of the circle. Filling
+  pushes that backdrop out to the rim where the disc clips it.
 - `restoreScroll` measures the shelf with rects, not `offsetLeft`: `.shelf` is not positioned,
   so `offsetLeft` came from some ancestor and every tile click threw the strip somewhere
   arbitrary.

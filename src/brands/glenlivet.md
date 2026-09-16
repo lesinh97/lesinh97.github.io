@@ -1,5 +1,6 @@
 ---
 name: "The Glenlivet"
+abbr: "GL"
 country: "Scotland"
 kind: "Distillery"
 founded: 1824

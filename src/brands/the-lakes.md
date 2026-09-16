@@ -1,5 +1,6 @@
 ---
 name: "The Lakes Distillery"
+abbr: "TL"
 country: "England"
 kind: "Distillery"
 founded: 2014

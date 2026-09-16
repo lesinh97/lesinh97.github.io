@@ -1,5 +1,6 @@
 ---
 name: "Scotch Malt Whisky Society"
+abbr: "SMWS"
 country: "Scotland"
 kind: "Bottling society"
 founded: 1983

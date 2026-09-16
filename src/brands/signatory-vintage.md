@@ -1,5 +1,6 @@
 ---
 name: "Signatory Vintage"
+abbr: "SV"
 country: "Scotland"
 kind: "Independent bottler"
 founded: 1988
