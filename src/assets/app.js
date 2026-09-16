@@ -139,7 +139,7 @@
         '<span class="house-d"><b' + (ab.length > 2 ? ' class="long"' : "") + ">" + esc(ab) + "</b></span>" +
         '<span class="house-n">' + esc(b.name) + "</span></a>";
     }).join("");
-    return '<div class="shelfhead"><span class="lbl">Houses</span></div>' +
+    return '<div class="shelfhead"><span class="lbl">Distilleries &amp; bottlers</span></div>' +
       '<div class="houses">' + items + "</div>";
   }
 
@@ -150,12 +150,14 @@
         ? '<img src="' + esc(w.photo) + '" alt="' + esc(w.name) + '" loading="lazy" decoding="async">'
         : '<i class="ph ph-wine"></i>';
       // The whole tile is the button: the photo is the obvious thing to aim at.
+      // title as well as the label: the label is clamped to three lines, and a
+      // couple of these names run longer than that.
       return '<button class="tile' + (on ? " on" : "") + '" data-act="pick" data-id="' + esc(w.id) +
-        '"' + (on ? ' aria-current="true"' : "") + '>' +
+        '" title="' + esc(w.name) + '"' + (on ? ' aria-current="true"' : "") + ">" +
         '<span class="shot">' + shot + "</span>" +
         '<span class="tname">' + esc(w.name) + "</span></button>";
     }).join("");
-    return '<div class="shelfhead"><span class="lbl">Bottle shots</span>' +
+    return '<div class="shelfhead"><span class="lbl">Bottles</span>' +
       "</div>" +
       '<div class="shelf">' + items + "</div>";
   }
