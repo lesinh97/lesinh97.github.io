@@ -161,47 +161,70 @@
 
 /* ---------- what I do ---------- */
 
-.worklede { max-width: 62ch; }
-.worklbl { margin: 42px 0 16px; font-size: 10px; letter-spacing: 0.14em;
+/* One rail width for the stack, the timeline and the credentials under About,
+   so the three read as one column of labelled rows rather than three lists that
+   happen to sit above each other. Grid, not flex: the label column then lines
+   up exactly whatever the label says. */
+.px-inner { --rail: 156px; }
+
+.worklede { max-width: 60ch; font-size: 16.5px; line-height: 1.75;
+            color: var(--color-neutral-200); }
+.worklbl { margin: 52px 0 6px; font-size: 10px; letter-spacing: 0.16em;
            text-transform: uppercase; color: var(--color-neutral-500); }
 
-.stack { display: flex; flex-direction: column; gap: 16px; margin-top: 38px; }
-.stackgroup { display: flex; gap: 24px; align-items: baseline; }
-.stackname { width: 112px; flex: none; font-size: 11px; letter-spacing: 0.1em;
-             text-transform: uppercase; color: var(--color-neutral-500); }
+.stack { margin-top: 44px; }
+.stackgroup { display: grid; grid-template-columns: var(--rail) 1fr; gap: 0 24px;
+              align-items: start; padding: 15px 0; border-top: 1px solid transparent;
+              border-image: linear-gradient(to right, var(--color-divider), transparent) 1; }
+.stackgroup:first-child { border-image: none; border-top: 0; }
+.stackname { font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
+             color: var(--color-neutral-500); padding-top: 5px; }
 .stacktags { display: flex; flex-wrap: wrap; gap: 7px; }
 
-/* The timeline. A rail on the left with the dates, the role beside it, which is
-   the shape a career is read in. */
-.track { display: flex; flex-direction: column; gap: 2px; }
-.stop { display: flex; gap: 24px; align-items: baseline; padding: 12px 0;
-        border-top: 1px solid transparent;
-        border-image: linear-gradient(to right, var(--color-divider), transparent) 1; }
-.stop:first-child { border: 0; }
-.stopwhen { width: 200px; flex: none; font-size: 11.5px; letter-spacing: 0.05em;
-            text-transform: uppercase; color: var(--color-neutral-500);
-            font-variant-numeric: tabular-nums; }
-.stopwhat { flex: 1; min-width: 0; }
+/* A rail of dates, a hairline, and a marker per role. The current one is
+   filled, the rest are open, which is the whole legend the reader needs. */
+.track { margin-top: 10px; }
+.stop { display: grid; grid-template-columns: var(--rail) 1fr; gap: 0 24px; }
+.stopwhen { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+            color: var(--color-neutral-500); font-variant-numeric: tabular-nums;
+            padding-top: 16px; }
+.stopwhat { position: relative; padding: 14px 0 22px 30px;
+            border-left: 1px solid var(--color-divider); }
+.stop:last-child .stopwhat { border-left-color: transparent; }
+.stopwhat::before { content: ""; position: absolute; left: -5px; top: 19px;
+                    width: 9px; height: 9px; border-radius: 50%;
+                    background: var(--color-bg);
+                    box-shadow: 0 0 0 1px var(--color-accent); }
+.stop:first-child .stopwhat::before { background: var(--color-accent); }
 .stopwhat b { display: block; font-family: var(--font-display); font-weight: 500;
               font-size: 17px; letter-spacing: -0.008em; color: var(--color-heading); }
 /* One employer is written in Japanese; Noto Sans JP is already loaded for the
    print-card signature, so name it rather than taking whatever the system has. */
-.stoporg { display: block; margin-top: 3px; font-size: 13px; color: var(--color-neutral-400);
+.stoporg { display: block; margin-top: 4px; font-size: 13px; color: var(--color-neutral-400);
            font-family: var(--font-body), "Noto Sans JP", sans-serif; }
 
 /* ---------- the paperwork, under About ---------- */
 
-.creds { display: flex; flex-direction: column; gap: 14px; margin-top: 40px; max-width: 72ch; }
-.cred { display: flex; gap: 24px; align-items: baseline; }
-.credname { width: 96px; flex: none; font-size: 10px; letter-spacing: 0.14em;
-            text-transform: uppercase; color: var(--color-neutral-500); }
-.credline { flex: 1; min-width: 0; font-size: 13.5px; line-height: 1.7;
+.creds { margin-top: 44px; max-width: 78ch; }
+.cred { display: grid; grid-template-columns: var(--rail) 1fr; gap: 0 24px;
+        align-items: start; padding: 13px 0; border-top: 1px solid transparent;
+        border-image: linear-gradient(to right, var(--color-divider), transparent) 1; }
+.cred:first-child { border-image: none; border-top: 0; }
+.credname { font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
+            color: var(--color-neutral-500); padding-top: 3px; }
+.credline { min-width: 0; font-size: 14px; line-height: 1.7;
             color: var(--color-neutral-300); text-wrap: pretty; }
 
 @media (max-width: 720px) {
-  /* The rails cost more than they give once the column is this narrow. */
-  .stackgroup, .stop, .cred { flex-direction: column; gap: 6px; }
-  .stackname, .stopwhen, .credname { width: auto; }
+  /* The rail costs more than it gives once the column is this narrow, so the
+     label sits above its row instead of beside it. */
+  .px-inner { --rail: 1fr; }
+  .stackgroup, .cred { grid-template-columns: 1fr; gap: 8px; }
+  .stop { grid-template-columns: 1fr; gap: 0; }
+  .stopwhen { padding: 14px 0 0 30px; }
+  .stopwhat { padding-top: 4px; }
+  .stopwhat::before { top: 8px; }
+  .stackname, .credname { padding-top: 0; }
 }
 
 .rolerow { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 20px; }
