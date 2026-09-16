@@ -84,12 +84,14 @@ permalink: /index.html
       <div class="lbl worklbl" data-reveal>Workplace</div>
       <div class="track" data-reveal data-stagger="60">
         {% for r in cv.roles %}{% if r.title or r.org %}
-        <div class="stop">
+        {# No end date means this is the job he is in now. Driven off the data
+           rather than off :first-child, so reordering the list cannot lie. #}
+        <div class="stop{% if not r.to %} on{% endif %}">
           <span class="stopwhen">
             {{- r.from | shortMonth }} - {{ (r.to | shortMonth) or "Now" -}}
           </span>
           <span class="stopwhat">
-            <b>{{ r.title }}</b>
+            <b>{{ r.title }}{% if not r.to %}<span class="stopnow">Current</span>{% endif %}</b>
             <span class="stoporg">{{ r.org }}{% if r.location %} · {{ r.location }}{% endif %}</span>
           </span>
         </div>
