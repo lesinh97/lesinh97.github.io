@@ -22,6 +22,10 @@
       "url": "/"
     },
     {
+      "label": "CV",
+      "url": "/cv/"
+    },
+    {
       "label": "Whisky",
       "url": "/whisky/"
     },

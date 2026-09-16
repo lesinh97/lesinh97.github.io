@@ -10,6 +10,7 @@ tasting journal and a blog behind it. The whisky notes are written in Obsidian.
 | `/` | `src/index.njk` | The Cara one-pager: intro, the things, about, contact |
 | `/whisky/` | `src/whisky.njk` | The ledger. Search, filter, detail panel, printable cards |
 | `/bottles/<slug>/` | `src/bottles/*.md` via `src/_includes/bottle.njk` | One bottle note |
+| `/cv/` | `src/cv.njk` + `src/_data/cv.json` | The online CV. Every section is guarded by `hasAny`, so an empty list renders nothing rather than a heading over a gap. Has its own print stylesheet |
 | `/brands/` | `src/brands.njk` | The houses, with what I own of each. Reached from the Houses strip on `/whisky/`, not the nav |
 | `/brands/<slug>/` | `src/brands/*.md` via `src/_includes/brand.njk` | One house |
 | `/blog/` | `src/blog.njk` | Post index |
@@ -22,6 +23,9 @@ tasting journal and a blog behind it. The whisky notes are written in Obsidian.
   and set `navCurrent` to the nav URL that should read as current.
 - `src/bottles/*.md` is the whisky data. Front matter is the schema, body prose is the
   "Behind it" text. `src/bottles/bottles.json` sets the layout and permalink.
+- `hasAny(list, "a,b")` exists because Nunjucks `set` inside a `for` does not survive the
+  loop, so the usual "loop once to see whether there is anything" pattern silently reports
+  nothing every time. Reach for it, not for a flag variable.
 - A brand's body is its history and is pulled into every bottle note of that brand under
   "The distillery". The personal take goes in a `why:` block scalar instead, which only the
   brand page shows. Each brand file carries a commented-out `why:` showing the shape.

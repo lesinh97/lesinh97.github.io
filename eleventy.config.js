@@ -30,6 +30,20 @@ module.exports = function (eleventyConfig) {
     !n ? "" : String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " ₫"
   );
 
+  /* True when any entry in a list has something in any of the named keys. A
+     filter because Nunjucks `set` inside a `for` does not survive the loop, so
+     the usual "loop once to see if there is anything" pattern silently reports
+     nothing every time. */
+  eleventyConfig.addFilter("hasAny", (list, keys) => {
+    const want = String(keys || "").split(",").map((k) => k.trim()).filter(Boolean);
+    return (list || []).some((item) =>
+      want.some((k) => {
+        const v = item && item[k];
+        return Array.isArray(v) ? v.length > 0 : v != null && v !== "";
+      })
+    );
+  });
+
   // One decimal always, matching score() in app.js so 8 and 8.0 never both appear.
   eleventyConfig.addFilter("score1", (n) =>
     n == null || n === "" ? "" : (Math.round(n * 10) / 10).toFixed(1)

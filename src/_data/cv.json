@@ -1,0 +1,41 @@
+{
+  "_README": "The CV at /cv/. Every section below renders only when it has content, so the page is never half-built: fill a list and its section appears. Nothing here is invented; the empty fields are waiting for Shin.",
+
+  "headline": "",
+  "location": "",
+  "available": "",
+
+  "summary": "I work on software. Linux, networks and the hardware underneath them are where I am most at home, and I write about them when something is worth writing down.",
+
+  "roles": [
+    {
+      "title": "",
+      "org": "",
+      "url": "",
+      "from": "",
+      "to": "",
+      "location": "",
+      "points": []
+    }
+  ],
+
+  "education": [
+    { "school": "", "award": "", "from": "", "to": "" }
+  ],
+
+  "skills": [
+    { "group": "", "items": [] }
+  ],
+
+  "certifications": [
+    { "name": "", "issuer": "", "year": "" }
+  ],
+
+  "languages": [
+    { "name": "", "level": "" }
+  ],
+
+  "links": [
+    { "label": "LinkedIn", "url": "https://www.linkedin.com/in/sinhledinh/" }
+  ]
+}

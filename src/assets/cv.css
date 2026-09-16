@@ -1,0 +1,73 @@
+/* The CV at /cv/. A two-column list: dates in a narrow rail on the left, the
+   entry beside it, which is the shape a CV is read in. */
+
+.cvmark { display: grid; place-items: center; width: 60px; height: 60px; border-radius: 50%;
+          margin-bottom: 18px; background: color-mix(in srgb, var(--color-surface) 70%, transparent);
+          box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-accent) 30%, transparent); }
+.cvmark img { width: 30px; height: auto; }
+
+.cvlinks { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px; margin-top: 20px;
+           font-size: 13px; }
+.cvlinks a { color: var(--color-text); text-decoration: none;
+             box-shadow: inset 0 -1px 0 0 color-mix(in srgb, var(--color-accent) 55%, transparent); }
+.cvlinks a:hover { color: var(--color-accent); }
+.cvwhere { color: var(--color-neutral-500); }
+
+.cvwrap { max-width: 800px; padding-bottom: 56px; }
+/* Same fading rule the brand page uses, so the two read as one family. */
+.cvsec { margin: 44px 0 0; padding-top: 44px; border-top: 1px solid transparent;
+         border-image: linear-gradient(to right, var(--color-divider), transparent) 1; }
+.cvsec:first-child { margin-top: 34px; padding-top: 0; border: 0; }
+.cvsec .lbl { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+              color: var(--color-neutral-500); margin-bottom: 20px; }
+
+.cvlist { display: flex; flex-direction: column; gap: 26px; }
+.cvrole { display: flex; gap: 26px; align-items: baseline; }
+.cvwhen { width: 132px; flex: none; font-size: 11.5px; letter-spacing: 0.06em;
+          text-transform: uppercase; color: var(--color-neutral-500);
+          font-variant-numeric: tabular-nums; }
+.cvbody { flex: 1; min-width: 0; }
+.cvbody > b { display: block; font-family: var(--font-display); font-weight: 500; font-size: 18px;
+              letter-spacing: -0.008em; color: var(--color-heading); }
+.cvbody > b a { color: inherit; text-decoration: none;
+                box-shadow: inset 0 -1px 0 0 color-mix(in srgb, var(--color-accent) 50%, transparent); }
+.cvbody > b a:hover { color: var(--color-accent); }
+.cvorg { margin-top: 5px; font-size: 13.5px; line-height: 1.6; color: var(--color-neutral-400); }
+.cvorg a { color: var(--color-accent); text-decoration: none; }
+.cvbody ul { margin: 12px 0 0; padding-left: 18px; font-size: 14px; line-height: 1.7;
+             color: var(--color-neutral-300); }
+.cvbody li { margin-bottom: 6px; text-wrap: pretty; }
+
+.cvskills { display: flex; flex-direction: column; gap: 18px; }
+.cvgroup { display: flex; gap: 26px; align-items: baseline; }
+.cvgname { width: 132px; flex: none; font-size: 11.5px; letter-spacing: 0.06em;
+           text-transform: uppercase; color: var(--color-neutral-500); }
+.cvtags { display: flex; flex-wrap: wrap; gap: 7px; }
+
+@media (max-width: 640px) {
+  /* The date rail costs more than it gives once the column is this narrow. */
+  .cvrole, .cvgroup { flex-direction: column; gap: 6px; }
+  .cvwhen, .cvgname { width: auto; }
+  .cvsec { margin-top: 34px; padding-top: 34px; }
+}
+
+@media print {
+  /* A CV is meant to be printed, so it prints as itself: no decoration, no
+     dark ground, and nothing held back waiting for a scroll reveal. */
+  @page { margin: 14mm; }
+  html { color-scheme: light !important; background: #fff !important; }
+  body { background: #fff !important; color: #111 !important; }
+  .px-divider, .px-layer, .pxback, .px-glow, .hrule, .cvmark { display: none !important; }
+  .pagehead { padding: 0 0 6mm !important; }
+  .shell { max-width: none !important; padding: 0 !important; }
+  .cvwrap { max-width: none; padding-bottom: 0; }
+  .cvsec { margin: 7mm 0 0; padding-top: 7mm; break-inside: auto; }
+  .cvrole { break-inside: avoid; }
+  .pagehead h1 { font-size: 24pt !important; }
+  .cvbody > b { font-size: 12pt; }
+  .cvorg, .cvbody ul { color: #333 !important; }
+  .cvwhen, .cvgname, .cvsec .lbl { color: #666 !important; }
+  .cvlinks a { box-shadow: none !important; color: #111 !important; }
+  [data-reveal] { opacity: 1 !important; translate: none !important; }
+  .rise > * { animation: none !important; }
+}
