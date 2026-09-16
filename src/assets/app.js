@@ -69,8 +69,20 @@
     if (!n) return "";
     return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ".") + "\u00a0\u20ab";
   }
-  function dShort(iso) { var d = new Date(iso); return MONTHS[d.getMonth()] + " " + String(d.getFullYear()).slice(2); }
-  function dLong(iso) { var d = new Date(iso); return d.getDate() + " " + MONTHS[d.getMonth()] + " " + d.getFullYear(); }
+  /* Both guard the empty date a bottle carries while it is owned but not yet
+     opened. `new Date("")` is an Invalid Date, and reading a month off one
+     gives NaN, which these used to print straight into the row as
+     "undefined N". */
+  function dShort(iso) {
+    var d = new Date(iso);
+    if (!iso || isNaN(d)) return "Not tasted";
+    return MONTHS[d.getMonth()] + " " + String(d.getFullYear()).slice(2);
+  }
+  function dLong(iso) {
+    var d = new Date(iso);
+    if (!iso || isNaN(d)) return "Not tasted yet";
+    return d.getDate() + " " + MONTHS[d.getMonth()] + " " + d.getFullYear();
+  }
   function score(v) { return v == null || v === "" ? "\u2013" : (Math.round(v * 10) / 10).toFixed(1); }
   function initials(n) {
     return n.replace(/[^A-Za-z ]/g, " ").trim().split(/\s+/).slice(0, 2).map(function (x) { return x[0]; }).join("").toUpperCase();
@@ -158,7 +170,9 @@
       groups = [{ label: S.sort === "score" ? "Ranked by score" : "Ranked by spend", items: rows }];
     } else {
       rows.forEach(function (w) {
-        var y = String(w.date).slice(0, 4);
+        // An undated bottle is one that is owned but not yet opened, so it
+        // gets a group of its own rather than an empty year heading.
+        var y = String(w.date).slice(0, 4) || "Not tasted yet";
         if (!groups.length || groups[groups.length - 1].label !== y) groups.push({ label: y, items: [] });
         groups[groups.length - 1].items.push(w);
       });
@@ -231,7 +245,11 @@
       kicker: [w.origin, w.type].filter(Boolean).join("  \u00b7  "),
       line: [w.age, w.abv, w.cask].filter(Boolean).join("  \u00b7  "),
       stack: [[w.age, w.abv].filter(Boolean).join("  \u00b7  "), w.cask].filter(Boolean).join("\n"),
-      dateLine: "Tasted " + dLong(w.date),
+      /* "Tasted Not tasted yet" would be both redundant and the longest date
+         line on the card. This is 14 characters against the 18 of "Tasted
+         15 Nov 2025", so the signed row stays narrower than its existing worst
+         case and needs no re-measuring. */
+      dateLine: w.date ? "Tasted " + dLong(w.date) : "Not tasted yet",
       sig: SIG,
       // The card prints `keynote` and nothing else. The note's markdown body
       // is prose for the page, not a caption: truncating it mid-sentence read
@@ -472,7 +490,13 @@
 
   function render() {
     var rows = filtered(), sel = selected(), was = scrollState();
-    var avg = list.length ? list.reduce(function (t, w) { return t + (w.score || 0); }, 0) / list.length : 0;
+    /* Averaged over the bottles that have actually been scored. A bottle on the
+       shelf but not yet tasted carries no score, and counting it as a zero over
+       the full list dragged the headline average down by most of a point. */
+    var scored = list.filter(function (w) { return w.score != null && w.score !== ""; });
+    var avg = scored.length
+      ? scored.reduce(function (t, w) { return t + w.score; }, 0) / scored.length
+      : 0;
     var counts = {};
     list.forEach(function (w) { counts[w.origin] = (counts[w.origin] || 0) + 1; });
     var top = Object.keys(counts).sort(function (a, b) { return counts[b] - counts[a]; })[0] || "\u2013";

@@ -49,7 +49,9 @@ permalink: /whisky/index.html
 "cask": {{ (b.data.cask or "") | dump | safe }},
 "date": {{ (b.data.tasted or "") | dump | safe }},
 "price": {{ (b.data.price or 0) | dump | safe }},
-"score": {{ (b.data.score or 0) | dump | safe }},
+{# Null, not 0, when a bottle is owned but not yet tasted: app.js renders a
+   dash for null and leaves it out of the average, and 0 would read as a score. #}
+"score": {{ (b.data.score or null) | dump | safe }},
 "photo": {{ (b.data.photo or "") | dump | safe }},
 "fam": {{ (b.data.fam or {}) | dump | safe }},
 "tags": {{ (b.data.flavours or []) | dump | safe }},

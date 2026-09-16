@@ -22,11 +22,14 @@ extraCss: ["/assets/bottle.css"]
         <h1>{{ name }}</h1>
         <div class="line">{{ age }}{% if abv %}  ·  {{ abv }}{% endif %}{% if cask %}  ·  {{ cask }}{% endif %}</div>
       </div>
-      <div class="score"><b>{{ score }}</b><span>out of ten</span></div>
+      {# A bottle can be on the shelf before it is opened. The dash matches the
+         one the ledger shows for the same state. #}
+      <div class="score">{% if score %}<b>{{ score }}</b><span>out of ten</span>
+        {% else %}<b>–</b><span>not scored yet</span>{% endif %}</div>
     </div>
 
     <div class="facts" data-reveal data-stagger="70">
-      <div class="fact"><span>Tasted</span><b>{{ tasted | readableDate }}</b></div>
+      <div class="fact"><span>Tasted</span><b>{{ (tasted | readableDate) or "Not yet" }}</b></div>
       <div class="fact"><span>Age</span><b>{{ age or "NAS" }}</b></div>
       <div class="fact"><span>Strength</span><b>{{ abv or "Not listed" }}</b></div>
       <div class="fact"><span>Cask</span><b>{{ cask or "Not listed" }}</b></div>

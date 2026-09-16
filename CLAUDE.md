@@ -20,6 +20,15 @@ tasting journal and a blog behind it. The whisky notes are written in Obsidian.
   and set `navCurrent` to the nav URL that should read as current.
 - `src/bottles/*.md` is the whisky data. Front matter is the schema, body prose is the
   "Behind it" text. `src/bottles/bottles.json` sets the layout and permalink.
+- A bottle can be **owned but not yet tasted**: leave `score` and `tasted` empty. That state
+  is handled end to end, and the pieces have to stay in step. whisky.njk serialises the score
+  as `null` rather than `0`, because 0 reads as a score and poisons the average; app.js
+  renders null as a dash, leaves it out of the headline average, groups undated bottles under
+  "Not tasted yet", and guards `dShort` / `dLong`, since `new Date("")` is an Invalid Date
+  whose month is NaN and used to print "undefined N" straight into the row. The print card
+  uses a shorter date line for this case so the signed row stays inside its measured worst
+  case. bottle.njk shows "Not yet" and a dash. Fill both fields in after the first pour and
+  it becomes an ordinary note with no other edit.
 - `src/posts/*.md` is the blog. `src/posts/posts.11tydata.js` sets the layout and builds the
   permalink. `draft: true` in a post's front matter is the single switch that both keeps it
   out of the collection and stops a page being written; `DRAFTS=1 npm start` previews drafts
