@@ -26,6 +26,10 @@
       "url": "/whisky/"
     },
     {
+      "label": "Brands",
+      "url": "/brands/"
+    },
+    {
       "label": "Blog",
       "url": "/blog/"
     }

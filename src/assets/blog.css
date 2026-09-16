@@ -29,10 +29,6 @@
 .post { max-width: 720px; margin: 0 auto; padding: 0 28px 24px; }
 .post .meta { display: flex; flex-wrap: wrap; gap: 12px; font-size: 11px; letter-spacing: 0.12em;
               text-transform: uppercase; color: var(--color-neutral-500); }
-.backlink { display: inline-flex; align-items: center; gap: 8px; margin: 34px 0 0; font-size: 12px;
-            letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none;
-            color: var(--color-neutral-400); }
-.backlink:hover { color: var(--color-accent); }
 .posttags { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 34px; }
 
 /* ---------- post imagery ---------- */

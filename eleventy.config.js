@@ -35,6 +35,32 @@ module.exports = function (eleventyConfig) {
     n == null || n === "" ? "" : (Math.round(n * 10) / 10).toFixed(1)
   );
 
+  // The bottles of one brand, newest first, for its page.
+  eleventyConfig.addFilter("bottlesOfBrand", (bottles, slug) =>
+    (bottles || [])
+      .filter((b) => b.data.brand === slug)
+      .sort((a, b) => String(b.data.firstTasted || "").localeCompare(String(a.data.firstTasted || "")))
+  );
+
+  /* Totals for a brand page. A filter rather than a loop because Nunjucks
+     `set` inside a `for` does not survive the loop. */
+  eleventyConfig.addFilter("brandStats", (bottles) => {
+    const list = bottles || [];
+    const scored = list.filter((b) => b.data.scoreNow != null && b.data.scoreNow !== "");
+    return {
+      count: list.length,
+      spend: list.reduce((t, b) => t + (Number(b.data.spend) || 0), 0),
+      avg: scored.length
+        ? scored.reduce((t, b) => t + Number(b.data.scoreNow), 0) / scored.length
+        : null
+    };
+  });
+
+  // YAML block scalars come through as one string; render them as paragraphs.
+  eleventyConfig.addFilter("paras", (text) =>
+    String(text || "").split(/\n\s*\n/).map((t) => t.trim()).filter(Boolean)
+  );
+
   /* Nunjucks `set` inside a `for` does not survive the loop, so looking a brand
      up by slug in the template is a filter rather than a search. */
   eleventyConfig.addFilter("brandBySlug", (brands, slug) =>

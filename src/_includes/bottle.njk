@@ -164,12 +164,13 @@ extraCss: ["/assets/bottle.css"]
       <div class="lbl" style="margin-bottom: 12px">The distillery</div>
       <div class="house" data-reveal>
         <div class="housetop">
-          <b>{{ house.data.name }}</b>
+          <b><a href="{{ house.url }}">{{ house.data.name }}</a></b>
           {# "The Lakes Distillery · Distillery" reads as a stutter. The kind is
              dropped whenever the name already carries it. #}
           <span>{% if house.data.kind not in house.data.name %}{{ house.data.kind }}  ·  {% endif %}{{ house.data.country }}{% if house.data.founded %}  ·  since {{ house.data.founded }}{% endif %}</span>
         </div>
         <div class="prose">{{ house.templateContent | safe }}</div>
+        <a class="housemore" href="{{ house.url }}">More on {{ house.data.name }} <i class="ph ph-arrow-right"></i></a>
       </div>
       {% endif %}
 

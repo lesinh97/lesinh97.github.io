@@ -1,3 +1,4 @@
 {
-  "permalink": false
+  "layout": "brand.njk",
+  "permalink": "/brands/{{ page.fileSlug }}/"
 }

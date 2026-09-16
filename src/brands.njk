@@ -1,0 +1,38 @@
+---
+layout: base.njk
+navCurrent: /brands/
+pageTitle: Brands
+pageDescription: The distilleries and bottlers behind the shelf.
+extraCss: ["/assets/brand.css"]
+permalink: /brands/index.html
+---
+{% import "field.njk" as px %}
+
+<header class="pagehead">
+  {{ px.band(2) }}
+  {{ px.field(shapes.ledger) }}
+  <div class="shell rise">
+    <div class="kicker">Houses</div>
+    <h1>Brands<span class="hrule"></span></h1>
+    <p>The distilleries and bottlers behind the shelf, and why I keep going back.</p>
+  </div>
+</header>
+
+<div class="shell">
+  <div class="bgrid" data-reveal data-stagger="80">
+    {% for b in collections.brands %}
+    {% set mine = collections.bottles | bottlesOfBrand(b.page.fileSlug) %}
+    {% set stats = mine | brandStats %}
+    <a class="bcard" href="{{ b.url }}" data-sheen>
+      <span class="kicker">{{ b.data.kind }}</span>
+      <b>{{ b.data.name }}</b>
+      <span class="bcmeta">{{ b.data.country }}{% if b.data.founded %}  ·  since {{ b.data.founded }}{% endif %}</span>
+      <span class="bcount">
+        {{- stats.count }} {% if stats.count == 1 %}bottle{% else %}bottles{% endif %}
+        {%- if stats.avg %}  ·  {{ stats.avg | score1 }} avg{% endif -%}
+      </span>
+      <span class="go">Read it <i class="ph ph-arrow-right"></i></span>
+    </a>
+    {% endfor %}
+  </div>
+</div>

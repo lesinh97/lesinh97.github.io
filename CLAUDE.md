@@ -10,6 +10,8 @@ tasting journal and a blog behind it. The whisky notes are written in Obsidian.
 | `/` | `src/index.njk` | The Cara one-pager: intro, the things, about, contact |
 | `/whisky/` | `src/whisky.njk` | The ledger. Search, filter, detail panel, printable cards |
 | `/bottles/<slug>/` | `src/bottles/*.md` via `src/_includes/bottle.njk` | One bottle note |
+| `/brands/` | `src/brands.njk` | The houses, with what I own of each |
+| `/brands/<slug>/` | `src/brands/*.md` via `src/_includes/brand.njk` | One house |
 | `/blog/` | `src/blog.njk` | Post index |
 | `/blog/<slug>/` | `src/posts/*.md` via `src/_includes/post.njk` | One post |
 
@@ -20,6 +22,9 @@ tasting journal and a blog behind it. The whisky notes are written in Obsidian.
   and set `navCurrent` to the nav URL that should read as current.
 - `src/bottles/*.md` is the whisky data. Front matter is the schema, body prose is the
   "Behind it" text. `src/bottles/bottles.json` sets the layout and permalink.
+- A brand's body is its history and is pulled into every bottle note of that brand under
+  "The distillery". The personal take goes in a `why:` block scalar instead, which only the
+  brand page shows. Each brand file carries a commented-out `why:` showing the shape.
 - A note is an **expression**. It belongs to a brand (`brand:` slug into `src/brands/*.md`),
   is owned as one or more `fills` (bottles bought, each with `price`, `size`, `left` percent),
   and is met in one or more `tastings` (each with `date`, `score`, notes). Extra `photos:`

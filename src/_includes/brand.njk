@@ -1,0 +1,72 @@
+---
+layout: base.njk
+navCurrent: /brands/
+extraCss: ["/assets/brand.css"]
+---
+{% import "field.njk" as px %}
+
+{% set mine = collections.bottles | bottlesOfBrand(page.fileSlug) %}
+{% set stats = mine | brandStats %}
+
+<header class="pagehead">
+  {{ px.band(2) }}
+  {{ px.field(shapes.bottle) }}
+  <div class="shell rise">
+    <div class="kicker">{{ kind }}</div>
+    <h1>{{ name }}<span class="hrule"></span></h1>
+    <p>{{ country }}{% if founded %}, distilling since {{ founded }}{% endif %}.
+      {% if mine | length %}{{ mine | length }} on the shelf here.{% endif %}</p>
+  </div>
+</header>
+
+<div class="shell"><div class="bwrap2">
+
+  {# Written by me, about why this house is worth the money. Absent until the
+     `why` block in the brand's front matter is filled in. #}
+  {% if why %}
+  <section class="bsec" data-reveal>
+    <div class="lbl">Why I buy it</div>
+    <div class="prose">{% for p in why | paras %}<p>{{ p }}</p>{% endfor %}</div>
+  </section>
+  {% endif %}
+
+  {# The same paragraph every bottle note shows under "The distillery". #}
+  <section class="bsec" data-reveal>
+    <div class="lbl">The house</div>
+    <div class="prose">{{ content | safe }}</div>
+  </section>
+
+  {% if mine | length %}
+  <section class="bsec" data-reveal>
+    <div class="lbl">On the shelf</div>
+    <div class="bstats">
+      <div><b>{{ stats.count }}</b><span>{% if stats.count == 1 %}bottle{% else %}bottles{% endif %}</span></div>
+      <div><b>{{ stats.spend | money }}</b><span>spent here</span></div>
+      {% if stats.avg %}<div><b>{{ stats.avg | score1 }}</b><span>average score</span></div>{% endif %}
+    </div>
+  </section>
+
+  <div class="blist" data-reveal data-stagger="70">
+    {% for b in mine %}
+    <a class="brow" href="{{ b.url }}" data-sheen>
+      {% if b.data.photoList | length %}
+      <span class="bshot"><img src="{{ b.data.photoList[0] }}" alt="" loading="lazy" decoding="async"></span>
+      {% else %}<span class="bshot"><i class="ph ph-wine"></i></span>{% endif %}
+      <span class="bmain">
+        <b>{{ b.data.name }}</b>
+        <span class="bmeta">
+          {{- b.data.age or "NAS" }}{% if b.data.abv %} · {{ b.data.abv }}{% endif %}
+          {%- if b.data.cask %} · {{ b.data.cask }}{% endif -%}
+        </span>
+        {% if b.data.left != null %}
+        <span class="bfill" title="{{ b.data.left }}% left"><i style="width: {{ b.data.left }}%"></i></span>
+        {% endif %}
+      </span>
+      <span class="bscore">{% if b.data.scoreNow %}{{ b.data.scoreNow | score1 }}{% else %}–{% endif %}</span>
+    </a>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <a class="backlink" href="/brands/"><i class="ph ph-arrow-left"></i>All brands</a>
+</div></div>
