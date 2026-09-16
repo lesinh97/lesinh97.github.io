@@ -71,7 +71,6 @@
    section is never a still image. */
 .px-divider > span.wide { top: 6%; height: 64%; opacity: var(--band-wash);
                           background-size: 220% 100%;
-                          animation: px-slide 26s ease-in-out infinite alternate;
                           /* The crisp bands are meant to cut. This one passes
                              behind body copy, so it fades out at both ends
                              instead, the same way .rule does. A hard edge under
@@ -79,18 +78,18 @@
                           -webkit-mask-image: linear-gradient(to bottom, transparent, #000 24%, #000 76%, transparent);
                           mask-image: linear-gradient(to bottom, transparent, #000 24%, #000 76%, transparent); }
 .px-divider > span.faint { opacity: var(--band-faint); }
-@keyframes px-slide { from { background-position: 0% 50%; } to { background-position: 100% 50%; } }
 
 /* A soft pool of accent, breathing slowly. It is the one wash on the site
    rather than a band, so it is only ever used where there is no body copy for
    it to grey out. */
 .px-glow { position: absolute; z-index: 0; left: -10%; top: 4%; width: 70%; height: 74%;
-           pointer-events: none; border-radius: 50%; filter: blur(22px);
+           pointer-events: none; border-radius: 50%;
            background: radial-gradient(closest-side,
                        color-mix(in srgb, var(--color-accent) 16%, transparent), transparent);
            animation: px-breathe 13s ease-in-out infinite alternate; }
-@keyframes px-breathe { from { opacity: .55; transform: scale(.92); }
-                        to   { opacity: 1;   transform: scale(1.08); } }
+/* Opacity only. It used to scale as well, and scaling a blurred box makes the
+   compositor redraw it every frame. */
+@keyframes px-breathe { from { opacity: .5; } to { opacity: 1; } }
 
 /* ---------- the drifting field ---------- */
 
@@ -100,7 +99,7 @@
 /* A parallax layer. parallax.js writes --py from the scroll and --tilt-* from
    the pointer; --pull is how far this layer leans toward the cursor, which is
    what separates near groups from far ones when the mouse moves. */
-.px-layer { position: absolute; inset: 0; z-index: 1; pointer-events: none; will-change: transform;
+.px-layer { position: absolute; inset: 0; z-index: 1; pointer-events: none;
             transform: translate3d(calc(var(--tilt-x, 0) * var(--pull, 0px)),
                                    calc(var(--py, 0px) + var(--tilt-y, 0) * var(--pull, 0px)), 0);
             opacity: 0; animation: px-fade 1.1s ease var(--lag, 0ms) forwards; }
@@ -110,6 +109,7 @@
    already desynchronised on the first frame, and --amp for how far it swims.
    src/_data/shapes.js picks all three from a fixed seed. */
 .shape { position: absolute; display: block; color: var(--shape-ink); opacity: var(--o, .4);
+         will-change: transform;
          animation: px-float var(--dur, 8s) ease-in-out var(--delay, 0s) infinite alternate; }
 @keyframes px-float {
   from { transform: translate3d(0, calc(var(--amp, 14px) * -1), 0); }

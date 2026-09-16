@@ -256,6 +256,16 @@ Every page moves the same way. The vocabulary is small and it is all in motion.c
   goes to mud rather than receding. Colour is also allowed at any depth, including the
   largest shapes, because in Cara the coloured ones are the biggest on screen; keeping it to
   the small near layer made it read as specks.
+- **Animate transform and opacity only.** The skewed bands used to drift their gradient with
+  `background-position`, which cannot be composited, so the five largest elements on the page
+  repainted every frame for ever. That re-rasterises the diagonal edge on every scroll tick
+  and the stripes visibly rattle. Same reason `.px-glow` no longer scales a blurred box.
+- `will-change` goes on the thing that actually animates. It was on `.px-layer`, a
+  section-sized box, while the shapes inside it animated: the layer was promoted and then
+  dirtied every frame, so it re-rastered continuously. It is on `.shape` now.
+- parallax.js skips any `[data-speed]` element more than a screen away, and skips writing a
+  value it already wrote. On the homepage that is about thirty custom-property writes a frame
+  down to a dozen, and each write costs a style recalc of that subtree.
 - Delays in the generated field are **negative**. A positive delay leaves the whole field
   sitting still and then moving off together; a negative one starts each shape part way
   through its own float.

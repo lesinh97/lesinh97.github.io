@@ -37,6 +37,10 @@
       return {
         el: el,
         speed: parseFloat(el.getAttribute("data-speed")) || 0,
+        // Half the block's height, so paint() can tell whether it is anywhere
+        // near the viewport before doing any work for it.
+        half: r.height / 2,
+        last: null,
         // Section centre in document space, so an element sits neutral when
         // its section is centred in the viewport and drifts either side of
         // that. A negative speed simply drifts the other way.
@@ -47,10 +51,20 @@
 
   function paint() {
     ticking = false;
-    var mid = window.pageYOffset + window.innerHeight / 2;
+    var vh = window.innerHeight;
+    var mid = window.pageYOffset + vh / 2;
     for (var i = 0; i < items.length; i++) {
       var it = items[i];
-      it.el.style.setProperty("--py", ((mid - it.mid) * it.speed).toFixed(2) + "px");
+      var gap = mid - it.mid;
+      // A section a full screen away cannot show its drift, and writing a
+      // custom property costs a style recalc of that subtree either way. On
+      // the homepage this is about thirty writes a frame down to the few that
+      // are actually on screen.
+      if (Math.abs(gap) > vh + it.half) continue;
+      var v = (gap * it.speed).toFixed(2);
+      if (v === it.last) continue;
+      it.last = v;
+      it.el.style.setProperty("--py", v + "px");
     }
   }
 
