@@ -2,9 +2,8 @@
   "_README": "The professional profile, taken from the LinkedIn PDF export. There is no /cv/ page: this feeds the homepage, the hero role and location, the What I do section, and the Studied / Awarded / Speaks / Certified rows under About. Every block renders only when it has content. `points` is empty on every role because the export carries no bullets: add two or three per role and they appear. The Axon and FPT dates overlap on purpose, those roles ran concurrently.",
   "name": "Sinh Le Dinh",
   "headline": "Data Plumber",
-  "tagline": "I would rather ship one well-tested model than three clever ones.",
   "location": "Da Nang City, Vietnam",
-  "summary": "I am a data engineer who likes owning the whole path from raw data to something people actually trust and use. For the past few years I have been building a healthcare analytics platform on Azure, with Databricks, Delta Lake and dbt at the core and Azure DevOps for CI/CD. Day to day that means designing incremental pipelines and writing models that are tested and documented. I work closely with PMs and tech leads to turn loose requirements into maintainable models. Open to Data Engineer and Analytics Engineer roles where the modern data stack and governance both matter.",
+  "summary": "I'm a data engineer who likes owning the whole path from raw data to something people actually trust and use. For the past few years I've been building a healthcare analytics platform on Azure, with Databricks, Delta Lake, and dbt at the core and Azure DevOps for CI/CD. Day to day that means designing incremental pipelines and writing models that are tested and documented. I work closely with PMs and tech leads to turn loose requirements into maintainable models. Open to Data Engineer / Analytics Engineer roles where the modern data stack and governance both matter.",
   "roles": [
     {
       "title": "Data Engineer",

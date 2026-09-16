@@ -44,6 +44,6 @@ finish: "Dark chocolate and a long dusting of spice."
      fights the navy palette everywhere it appears. Replace it with a photo of
      my own when I get one. -->
 
-The Chocolatier is a limited edition drawn from European and American oak sherry casks alongside bourbon and Port, bottled at 51 percent, non chill filtered and at natural colour. The name is the whole brief: the range already leans confected, and this is the expression that commits to it. It took a gold medal and its category at the World Whisky Awards 2026.
+The Chocolatier is a limited edition from European and American oak sherry casks, with bourbon and Port alongside. Bottled at 51 percent, non chill filtered, natural colour. The range already leans sweet and this one leans hardest of all. It won gold and its category at the World Whisky Awards 2026.
 
-Bought at 3,600,000 dong, which puts it just above Resfeber and the Whiskymaker's Reserves on this shelf. Whether the Port casks earn that is the thing to find out.
+At 3,600,000 dong it cost a little more than Resfeber and the Whiskymaker's Reserves.
