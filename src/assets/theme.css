@@ -1,26 +1,24 @@
 /* Site theme: Nocturne retuned to a navy palette. Structure and layout follow
-   the old Gatsby Cara site, but the hues do not: its warm orange accent and
-   multicoloured shapes tinted the whole page, so everything here stays in one
-   cool family. Two colour modes, dark first.
+   the old Gatsby Cara site. Everything structural stays cool; the drifting
+   shapes are the one place a hue is allowed, and those hues are muted, which
+   is what the old site got wrong rather than the hues themselves.
+   Two colour modes, dark first.
    This is the ONE place the tokens are set; no page defines its own block. */
 
 :root {
-  /* Shape palette. Cool only: the warm icon colours the old site used are
-     what put an orange cast over everything. Variation here is temperature
-     and depth, not hue. */
-  --ic-mist: #cbd9ea;
-  --ic-ice: #a8cdf2;
-  --ic-steel: #7fb2e5;
-  --ic-azure: #4a90d9;
-  --ic-sapphire: #2b6cb0;
-  --ic-slate: #7086a4;
-  --ic-deep: #1e3a5f;
-
   --shell-max: 1280px;
   --radius-md: 10px; --radius-lg: 16px;
 }
 
-/* The four section gradients are set per mode, below, and that is the point.
+/* The shape inks are set per mode as well, for the same reason as the gradients
+   below: a #cbd9ea outline is a soft highlight on the dark ground and very
+   nearly nothing on paper-white. Most of the field is cool, because the site is
+   navy and stays navy. A minority carry a hue, and those hues are deliberately
+   muted. The old Gatsby site ran fully saturated ones and they put an orange
+   cast over the whole page; the fix for that is saturation, not abstinence.
+   Colour only lands on the nearer, crisper layers: see shapes.js for why.
+
+   The four section gradients are set per mode, below, and that is the point.
    They used to live up here as one dark navy set that light mode dimmed with
    an opacity multiplier, which cannot work: a dark band faded to 70% over a
    near-white ground is still a dark band, so every diagonal edge on the page
@@ -48,6 +46,11 @@
   --color-neutral-700: #43587a; --color-neutral-800: #253349; --color-neutral-900: #162033;
 
   --shape-ink: #cbd9ea;
+  /* Shape inks. Cool first, then five muted hues. */
+  --ic-mist: #cbd9ea; --ic-ice: #a8cdf2; --ic-steel: #7fb2e5;
+  --ic-azure: #4a90d9; --ic-sapphire: #2b6cb0; --ic-slate: #7086a4; --ic-deep: #1e3a5f;
+  --ic-clay: #c08a5e; --ic-rust: #b8705f; --ic-plum: #9b7fb8;
+  --ic-moss: #6fa88a; --ic-rose: #c08fa0;
   --shadow-sm: 0 0 0 1px rgba(221, 229, 242, 0.10);
   --shadow-md: 0 0 0 1px rgba(221, 229, 242, 0.10), 0 8px 24px rgba(0, 0, 0, 0.50);
   --shadow-lg: 0 0 0 1px rgba(221, 229, 242, 0.13), 0 18px 48px rgba(0, 0, 0, 0.62);
@@ -89,6 +92,12 @@
   --color-neutral-700: #c2cfe0; --color-neutral-800: #dae3ef; --color-neutral-900: #eaf0f8;
 
   --shape-ink: #3a4a63;
+  /* The cool ramp steps down so an outline still reads on paper-white, and the
+  hues step down with it: the same colour that glows on navy goes chalky here. */
+  --ic-mist: #93a5bf; --ic-ice: #7fa3cc; --ic-steel: #5b87c0;
+  --ic-azure: #3a72b5; --ic-sapphire: #2b5f9e; --ic-slate: #5a6d8a; --ic-deep: #1e3a5f;
+  --ic-clay: #b4794a; --ic-rust: #a85a48; --ic-plum: #8360a6;
+  --ic-moss: #4e8c6c; --ic-rose: #b2758a;
   --shadow-sm: 0 1px 2px rgba(15, 22, 38, 0.08), 0 0 0 1px rgba(15, 22, 38, 0.06);
   --shadow-md: 0 2px 6px rgba(15, 22, 38, 0.10), 0 1px 2px rgba(15, 22, 38, 0.06);
   --shadow-lg: 0 10px 30px rgba(15, 22, 38, 0.14), 0 2px 6px rgba(15, 22, 38, 0.08);
@@ -127,6 +136,12 @@
     --color-neutral-700: #c2cfe0; --color-neutral-800: #dae3ef; --color-neutral-900: #eaf0f8;
 
     --shape-ink: #3a4a63;
+    /* The cool ramp steps down so an outline still reads on paper-white, and the
+    hues step down with it: the same colour that glows on navy goes chalky here. */
+    --ic-mist: #93a5bf; --ic-ice: #7fa3cc; --ic-steel: #5b87c0;
+    --ic-azure: #3a72b5; --ic-sapphire: #2b5f9e; --ic-slate: #5a6d8a; --ic-deep: #1e3a5f;
+    --ic-clay: #b4794a; --ic-rust: #a85a48; --ic-plum: #8360a6;
+    --ic-moss: #4e8c6c; --ic-rose: #b2758a;
     --shadow-sm: 0 1px 2px rgba(15, 22, 38, 0.08), 0 0 0 1px rgba(15, 22, 38, 0.06);
     --shadow-md: 0 2px 6px rgba(15, 22, 38, 0.10), 0 1px 2px rgba(15, 22, 38, 0.06);
     --shadow-lg: 0 10px 30px rgba(15, 22, 38, 0.14), 0 2px 6px rgba(15, 22, 38, 0.08);
