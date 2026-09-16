@@ -43,8 +43,12 @@ const SYMS = [
   { id: "chevrons", fill: false, spin: false, pulse: false }
 ];
 
-// Cool only, straight off the --ic-* ramp in theme.css. No warm hue anywhere.
-const INKS = ["mist", "ice", "steel", "azure", "sapphire", "slate"];
+/* Straight off the --ic-* ramp in theme.css, which sets both of these per
+   colour mode. The split is the whole point: the field stays navy, and a
+   minority of shapes carry a muted hue. Run every shape through HUED and you
+   get the old Gatsby site back, which read as an orange cast over the page. */
+const COOL = ["mist", "ice", "steel", "azure", "sapphire", "slate"];
+const HUED = ["clay", "rust", "plum", "moss", "rose"];
 
 /* Depth 0 is furthest back. Size climbs as opacity falls, so the far shapes
    read as atmosphere and the near ones as detail. Float amplitude rises with
@@ -96,9 +100,20 @@ function build(seed, count, opts) {
     const sym = pick(SYMS);
     const zone = pick(zones);
     const size = Math.round(span(d.size) * scale);
+    /* Depth decides how much a shape fades into the ground, which is right for
+       a navy outline and wrong for a colour: faded, a hue goes to mud rather
+       than receding. So a hued shape takes its opacity from its own band and
+       ignores its depth, and only its size still comes from the layer. */
+    const oDepth = span(d.o, 3);
+    const oHue = span([0.3, 0.5], 3);
     // Solid shapes carry far more weight than outlines at the same opacity,
     // so the big far ones stay line art and the small near ones may fill.
     const mode = sym.fill && depth > 0 && r() < 0.45 ? "fill" : "line";
+    /* A hue can land at any depth, including the large far shapes: in Cara the
+       coloured ones are among the biggest on screen, and keeping colour to the
+       small near layer made it read as specks rather than as accents. */
+    const hued = r() < 0.28;
+    const ink = hued ? pick(HUED) : pick(COOL);
     // Spin and pulse both drive the transform of the same <svg>, so a shape
     // gets at most one of them.
     const spin = sym.spin && r() < 0.5;
@@ -106,12 +121,14 @@ function build(seed, count, opts) {
     groups[depth].items.push({
       sym: sym.id,
       mode: mode,
-      ink: pick(INKS),
+      ink: ink,
       edge: zone.edge,
       x: span(zone.x, 1),
       y: span(zone.y, 1),
       size: size,
-      o: span(d.o, 3),
+      // Both are drawn either way, so the seed advances the same number of
+      // steps whichever branch a shape takes and the field stays stable.
+      o: hued ? oHue : oDepth,
       amp: Math.round(span(d.amp) * scale),
       dur: span(d.dur, 2),
       // Negative, so every shape starts part way through its float rather

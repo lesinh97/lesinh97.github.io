@@ -89,10 +89,11 @@ they appear.
 
 ## Colour modes
 
-Two modes, dark first. Navy throughout. The old Gatsby site's warm accent and multicoloured
-shapes are deliberately **not** carried over: they put an orange cast over the whole page. `src/assets/theme-toggle.js` owns the switch; an inline
-script in `base.njk` sets `data-theme` before first paint so light-mode visitors get no dark
-flash. With no stored choice the page follows `prefers-color-scheme`.
+Two modes, dark first. Navy throughout, and navy is still the identity: the accent, the
+bands, the cards and roughly two thirds of the drifting shapes are all in the cool family.
+`src/assets/theme-toggle.js` owns the switch; an inline script in `base.njk` sets
+`data-theme` before first paint so light-mode visitors get no dark flash. With no stored
+choice the page follows `prefers-color-scheme`.
 
 | | dark | light |
 | --- | --- | --- |
@@ -145,10 +146,17 @@ giscus on the blog posts only, backed by GitHub Discussions in the site repo. No
   `.hb` / `.hs` in a page header; only `.wide` and `.hb` may pass behind copy, and both are
   masked so they fade rather than cut. Section skew is 6deg, header skew 3.5deg; see
   Responsive for why the two differ.
-- Everything stays in one cool family. The shapes use `--ic-mist` through `--ic-deep`, which
-  vary by depth and temperature rather than hue, and the four section gradients are all navy.
-  No warm hue anywhere: the check suite fails the build if any painted colour has blue as its
-  weakest channel.
+- The ground stays in one cool family: the four section gradients are all navy, in both
+  modes, and so is everything structural. The drifting shapes are the one exception and the
+  only place a hue is allowed. `--ic-mist` through `--ic-deep` are the cool inks and carry
+  about two thirds of the field; `--ic-clay`, `--ic-rust`, `--ic-plum`, `--ic-moss` and
+  `--ic-rose` are the muted hues that carry the rest.
+- Those hues are **muted on purpose**. The old Gatsby site ran fully saturated ones and they
+  put an orange cast over the whole page; the fix for that is saturation, not abstinence.
+  Raise them and you get the cast back. Nothing enforces this: an earlier version of this
+  file claimed a check suite failed the build on any colour with blue as its weakest channel,
+  and there is no such suite. `npm run build` is the only script. It is a rule you keep by
+  reading, or by writing the check that was promised here.
 - One interactive accent, `--color-accent`, as a line, a small fill, or a tonal tint.
 - Buttons are outlined, not filled. Left-aligned, asymmetric layout.
 - Rules fade to transparent at their ends. See `.rule` / `.softrule` in theme.css, and the
@@ -178,6 +186,11 @@ Every page moves the same way. The vocabulary is small and it is all in motion.c
   that are about to be thrown away.
 - A shape floats on the element and spins or pulses on the `<svg>` inside it, so the two
   never fight over `transform`. shapes.js gives a shape one of spin or pulse, never both.
+- A hued shape takes its opacity from its own band, not from its depth. Depth fades a shape
+  into the ground, which is right for a navy outline and wrong for a colour: faded, a hue
+  goes to mud rather than receding. Colour is also allowed at any depth, including the
+  largest shapes, because in Cara the coloured ones are the biggest on screen; keeping it to
+  the small near layer made it read as specks.
 - Delays in the generated field are **negative**. A positive delay leaves the whole field
   sitting still and then moving off together; a negative one starts each shape part way
   through its own float.
