@@ -10,7 +10,6 @@ tasting journal and a blog behind it. The whisky notes are written in Obsidian.
 | `/` | `src/index.njk` | The Cara one-pager: intro, the things, about, contact |
 | `/whisky/` | `src/whisky.njk` | The ledger. Search, filter, detail panel, printable cards |
 | `/bottles/<slug>/` | `src/bottles/*.md` via `src/_includes/bottle.njk` | One bottle note |
-| `/cv/` | `src/cv.njk` + `src/_data/cv.json` | The online CV. Every section is guarded by `hasAny`, so an empty list renders nothing rather than a heading over a gap. Has its own print stylesheet |
 | `/brands/` | `src/brands.njk` | The houses, with what I own of each. Reached from the Houses strip on `/whisky/`, not the nav |
 | `/brands/<slug>/` | `src/brands/*.md` via `src/_includes/brand.njk` | One house |
 | `/blog/` | `src/blog.njk` | Post index |
@@ -18,6 +17,11 @@ tasting journal and a blog behind it. The whisky notes are written in Obsidian.
 
 ## Shape
 
+- `src/_data/cv.json` is the professional profile, taken from the LinkedIn export. It feeds
+  the homepage: the role and location in the hero, the whole "What I do" section, and the
+  Studied / Speaks / Certified rows under About. There is no separate CV page, on purpose:
+  the point is that someone landing on the homepage meets the engineer and the person at
+  once. Correct a date there and every use of it follows.
 - `src/_includes/base.njk` is the shell every page runs through: head, nav, footer. Pages
   choose their stylesheets and scripts with the `extraCss` / `extraJs` front matter arrays,
   and set `navCurrent` to the nav URL that should read as current.

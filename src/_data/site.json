@@ -22,10 +22,6 @@
       "url": "/"
     },
     {
-      "label": "CV",
-      "url": "/cv/"
-    },
-    {
       "label": "Whisky",
       "url": "/whisky/"
     },
@@ -38,6 +34,10 @@
     {
       "label": "GitHub",
       "url": "https://github.com/lesinh97"
+    },
+    {
+      "label": "LinkedIn",
+      "url": "https://www.linkedin.com/in/sinhledinh/"
     },
     {
       "label": "Email",

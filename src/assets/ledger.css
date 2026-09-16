@@ -234,9 +234,3 @@
   /* .spark is hidden at this width, so its label goes with it. */
   .lh-sig { display: none; }
 }
-
-/* Origin and type, as a pill rather than loose small caps. */
-.proppill { display: inline-block; padding: 4px 10px; border-radius: 999px;
-            font-size: 9.5px; letter-spacing: .14em; text-transform: uppercase;
-            color: var(--color-accent); white-space: nowrap;
-            background: color-mix(in srgb, var(--color-accent) 14%, transparent); }

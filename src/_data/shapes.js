@@ -156,6 +156,7 @@ module.exports = {
   things: build(74113, 13),
   about: build(918244, 13),
   contact: build(551907, 13),
+  work: build(410238, 13),
 
   // The header band on every other page. Same vocabulary, same clocks, a
   // quieter version of the same idea: the inner pages have something to read,

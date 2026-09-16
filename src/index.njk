@@ -26,18 +26,73 @@ permalink: /index.html
       <div class="hero rise">
         <div class="hello">{{ site.title }}</div>
         <h1 class="introline">Hi, I am Sinh,</h1>
+        {# Both names for the job: the one he calls it, and the one a recruiter
+           is searching for. #}
+        <div class="rolerow">
+          <span class="proppill">{{ cv.headline }}</span>
+          <span class="rolewhere">{{ cv.location }}</span>
+        </div>
         <p class="introsub">
-          Call me Shin. Welcome to my personal blog. Enjoy!
+          Call me Shin. I am a data engineer, and I would rather ship one
+          well-tested model than three clever ones.
         </p>
         <p class="introsub">
           I keep a <a href="/whisky/">whisky tasting journal</a> and write the
           odd <a href="/blog/">post</a>.
         </p>
-        <a class="scrollcue" href="#things">
+        <a class="scrollcue" href="#work">
           <span class="cueline"></span>
-          <span>Have a look <i class="ph ph-arrow-down"></i></span>
+          <span>What I do <i class="ph ph-arrow-down"></i></span>
         </a>
       </div>
+    </div>
+  </section>
+
+  {# ---------- work ---------- #}
+  {# The professional half of the page. Everything here comes out of
+     src/_data/cv.json, which was filled from the LinkedIn export, so there is
+     one place to correct a date and no second copy to drift. #}
+  <section class="px-page" id="work">
+    <div class="px-divider g3">
+      <span class="wide" data-speed="0.05"></span>
+      <span class="b1" data-speed="0.12"></span>
+      <span class="b3" data-speed="-0.08"></span>
+    </div>
+    {{ px.field(shapes.work) }}
+
+    <div class="px-inner shell">
+      <h2 class="px-h" data-reveal>What I do<span class="hrule"></span></h2>
+      <p class="px-lede worklede" data-reveal>{{ cv.summary }}</p>
+
+      {% if cv.skills | hasAny("items") %}
+      <div class="stack" data-reveal data-stagger="70">
+        {% for g in cv.skills %}{% if g.items | length %}
+        <div class="stackgroup">
+          <span class="stackname">{{ g.group }}</span>
+          <div class="stacktags">
+            {% for i in g.items %}<span class="tag tag-accent">{{ i }}</span>{% endfor %}
+          </div>
+        </div>
+        {% endif %}{% endfor %}
+      </div>
+      {% endif %}
+
+      {% if cv.roles | hasAny("title,org") %}
+      <div class="lbl worklbl" data-reveal>Where</div>
+      <div class="track" data-reveal data-stagger="60">
+        {% for r in cv.roles %}{% if r.title or r.org %}
+        <div class="stop">
+          <span class="stopwhen">
+            {{- r.from }}{% if r.to %} to {{ r.to }}{% elif r.from %} to now{% endif -%}
+          </span>
+          <span class="stopwhat">
+            <b>{{ r.title }}</b>
+            <span class="stoporg">{{ r.org }}{% if r.location %} · {{ r.location }}{% endif %}</span>
+          </span>
+        </div>
+        {% endif %}{% endfor %}
+      </div>
+      {% endif %}
     </div>
   </section>
 
@@ -103,6 +158,41 @@ permalink: /index.html
           <p>The whisky ledger is the part I actually maintain. Everything else here comes
             and goes.</p>
         </div>
+      </div>
+
+      {# The rest of the paperwork, small and out of the way: a recruiter who
+         wants it can find it, and nobody else has to read past it. #}
+      <div class="creds" data-reveal data-stagger="60">
+        {% if cv.education | hasAny("school") %}
+        <div class="cred">
+          <span class="credname">Studied</span>
+          {% for e in cv.education %}{% if e.school %}
+          <span class="credline">{{ e.award }}, {{ e.school }}{% if e.from %} ({{ e.from }} to {{ e.to }}){% endif %}</span>
+          {% endif %}{% endfor %}
+        </div>
+        {% endif %}
+
+        {% if cv.languages | hasAny("name") %}
+        <div class="cred">
+          <span class="credname">Speaks</span>
+          <span class="credline">
+            {%- for l in cv.languages %}{% if l.name %}
+              {{- l.name }}{% if l.level %} ({{ l.level | lower }}){% endif %}{% if not loop.last %}, {% endif %}
+            {%- endif %}{% endfor -%}
+          </span>
+        </div>
+        {% endif %}
+
+        {% if cv.certifications | hasAny("name") %}
+        <div class="cred">
+          <span class="credname">Certified</span>
+          <span class="credline">
+            {%- for c in cv.certifications %}{% if c.name %}
+              {{- c.name }}{% if not loop.last %}, {% endif %}
+            {%- endif %}{% endfor -%}
+          </span>
+        </div>
+        {% endif %}
       </div>
     </div>
   </section>
