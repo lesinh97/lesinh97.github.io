@@ -1,12 +1,9 @@
 {
-  "_README": "The CV at /cv/, taken from the LinkedIn PDF export. Every section renders only when it has content, so the page is never half-built. `points` is empty on every role because the export carries no bullets: add two or three per role and they appear.",
-
+  "_README": "The professional profile, taken from the LinkedIn PDF export. There is no /cv/ page: this feeds the homepage, the hero role and location, the What I do section, and the Studied / Awarded / Speaks / Certified rows under About. Every block renders only when it has content. `points` is empty on every role because the export carries no bullets: add two or three per role and they appear. The Axon and FPT dates overlap on purpose, those roles ran concurrently.",
   "name": "Sinh Le Dinh",
   "headline": "Data Plumber",
   "location": "Da Nang City, Vietnam",
-
   "summary": "I am a data engineer who likes owning the whole path from raw data to something people actually trust and use. For the past few years I have been building a healthcare analytics platform on Azure, with Databricks, Delta Lake and dbt at the core and Azure DevOps for CI/CD. Day to day that means designing incremental pipelines and writing models that are tested and documented. I work closely with PMs and tech leads to turn loose requirements into maintainable models. I would rather ship one well-tested model than three clever ones. Open to Data Engineer and Analytics Engineer roles where the modern data stack and governance both matter.",
-
   "roles": [
     {
       "title": "Data Engineer",
@@ -65,7 +62,6 @@
       "points": []
     }
   ],
-
   "education": [
     {
       "school": "Danang University of Science and Technology",
@@ -74,30 +70,100 @@
       "to": "2020"
     }
   ],
-
+  "honours": [
+    {
+      "name": "Scholarship, four consecutive terms",
+      "issuer": "Danang University of Science and Technology",
+      "year": ""
+    }
+  ],
   "skills": [
-    { "group": "Platform", "items": ["Databricks", "Delta Lake", "dbt", "Azure Data Factory", "Azure DevOps", "BigQuery"] },
-    { "group": "Modelling", "items": ["Data Vault 2.0", "Kimball modelling", "Data architecture"] },
-    { "group": "Languages", "items": ["SQL", "Python"] },
-    { "group": "Reporting", "items": ["Power BI"] },
-    { "group": "Practice", "items": ["Data quality and monitoring", "Data engineering", "CI/CD"] }
+    {
+      "group": "Platform",
+      "items": [
+        "Databricks",
+        "Delta Lake",
+        "dbt",
+        "Azure Data Factory",
+        "Azure DevOps",
+        "BigQuery"
+      ]
+    },
+    {
+      "group": "Modelling",
+      "items": [
+        "Data Vault 2.0",
+        "Kimball modelling",
+        "Data architecture"
+      ]
+    },
+    {
+      "group": "Languages",
+      "items": [
+        "SQL",
+        "Python"
+      ]
+    },
+    {
+      "group": "Reporting",
+      "items": [
+        "Power BI"
+      ]
+    },
+    {
+      "group": "Practice",
+      "items": [
+        "Data quality and monitoring",
+        "Data engineering",
+        "CI/CD"
+      ]
+    }
   ],
-
   "certifications": [
-    { "name": "Fundamental IT Engineer", "issuer": "", "year": "" },
-    { "name": "Data Engineering with Microsoft Azure", "issuer": "", "year": "" },
-    { "name": "Programming for Data Science with Python", "issuer": "", "year": "" },
-    { "name": "Cloud Modernization: Cloud Data Quality & Data Governance", "issuer": "", "year": "" },
-    { "name": "JLPT N3", "issuer": "", "year": "" }
+    {
+      "name": "Fundamental IT Engineer",
+      "issuer": "",
+      "year": ""
+    },
+    {
+      "name": "Data Engineering with Microsoft Azure",
+      "issuer": "",
+      "year": ""
+    },
+    {
+      "name": "Programming for Data Science with Python",
+      "issuer": "",
+      "year": ""
+    },
+    {
+      "name": "Cloud Modernization: Cloud Data Quality & Data Governance",
+      "issuer": "",
+      "year": ""
+    },
+    {
+      "name": "JLPT N3",
+      "issuer": "",
+      "year": ""
+    }
   ],
-
   "languages": [
-    { "name": "Vietnamese", "level": "" },
-    { "name": "English", "level": "Professional working" },
-    { "name": "Japanese", "level": "Limited working" }
+    {
+      "name": "Vietnamese",
+      "level": ""
+    },
+    {
+      "name": "English",
+      "level": "Professional working"
+    },
+    {
+      "name": "Japanese",
+      "level": "Limited working"
+    }
   ],
-
   "links": [
-    { "label": "LinkedIn", "url": "https://www.linkedin.com/in/sinhledinh/" }
+    {
+      "label": "LinkedIn",
+      "url": "https://www.linkedin.com/in/sinhledinh/"
+    }
   ]
 }

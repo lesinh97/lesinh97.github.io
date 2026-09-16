@@ -172,6 +172,17 @@ permalink: /index.html
         </div>
         {% endif %}
 
+        {% if cv.honours | hasAny("name") %}
+        <div class="cred">
+          <span class="credname">Awarded</span>
+          <span class="credline">
+            {%- for h in cv.honours %}{% if h.name %}
+              {{- h.name }}{% if h.issuer %}, {{ h.issuer }}{% endif %}{% if not loop.last %}; {% endif %}
+            {%- endif %}{% endfor -%}
+          </span>
+        </div>
+        {% endif %}
+
         {% if cv.languages | hasAny("name") %}
         <div class="cred">
           <span class="credname">Speaks</span>
