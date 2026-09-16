@@ -8,6 +8,7 @@ cask: "Sherry, bourbon & Port"
 tasted: ""
 price: 3600000
 score:
+photo: /assets/bottles/the-lakes-chocolatier.webp
 fam:
   fruit: 4
   sweet: 5
@@ -31,9 +32,12 @@ finish: "Dark chocolate and a long dusting of spice."
      describe the bottle as sold rather than as drunk. Source:
      lakesdistillery.com/products/chocolatier
 
-     No photo yet. Drop one in src/assets/bottles/the-lakes-chocolatier.webp and
-     add `photo: /assets/bottles/the-lakes-chocolatier.webp` above; until then the
-     ledger shows the placeholder glass. -->
+     The photo is the distillery's own packshot, taken from their CDN at 760px
+     and served as webp. Chosen over the presentation-box and award-badge shots
+     because it is a bottle on plain grey, which is what the other thirteen
+     notes look like; the box shot sits on a saturated multicoloured swirl that
+     fights the navy palette everywhere it appears. Replace it with a photo of
+     my own when I get one. -->
 
 The Lakes Distillery opened in Cumbria in 2014, one of the new English malt producers. Its house style is blending led, built around sherry casks and a whiskymaker's palate rather than an age statement.
 
