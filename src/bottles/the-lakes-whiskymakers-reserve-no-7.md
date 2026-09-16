@@ -8,6 +8,11 @@ abv: "52%"
 cask: "Oloroso, PX & red wine"
 tasted: "2025-08-29"
 price: 3000000
+fills:
+  - bought: "2025-08-29"
+    price: 3000000
+    size: 700
+    left: 0
 score: 8.6
 photo: /assets/bottles/the-lakes-whiskymakers-reserve-no-7.webp
 fam:

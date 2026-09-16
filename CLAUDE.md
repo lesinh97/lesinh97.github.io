@@ -39,6 +39,10 @@ tasting journal and a blog behind it. The whisky notes are written in Obsidian.
 - `left: null` means never recorded, which is not empty. Null draws no bar; 0 dims the row.
 - The score sits in `.sring` (motion.css): number in the middle, fill level as the arc, plus
   the slow-turning ring the homepage mark carries. Offset is `339.292 * (1 - pct/100)`.
+  It is `overflow: hidden` on purpose: the turning ring is a square box, and rotating one
+  sweeps its corners about 21% wider than the element. That counts as layout overflow and it
+  widened the panel header until the card ran off a phone screen. A circle is the same shape
+  at every angle, so clipping to the box costs nothing visible.
 - Never put `data-stagger` on a container that paints its own background. `.facts` did, and
   while its cells were still invisible the grid's divider colour showed as a grey slab. It is
   a direct child of `.sheet.rise` and already animates.

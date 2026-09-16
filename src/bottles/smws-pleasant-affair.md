@@ -8,6 +8,11 @@ abv: "59.5%"
 cask: "1st fill ex-bourbon barrel"
 tasted: "2025-10-23"
 price: 2750000
+fills:
+  - bought: "2025-10-23"
+    price: 2750000
+    size: 700
+    left: 0
 score: 8.4
 photo: /assets/bottles/smws-pleasant-affair.webp
 fam:

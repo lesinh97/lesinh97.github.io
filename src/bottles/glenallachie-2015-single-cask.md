@@ -8,6 +8,11 @@ abv: "58.2%"
 cask: "Scottish virgin oak & oloroso"
 tasted: "2026-03-03"
 price: 2042500
+fills:
+  - bought: "2026-03-03"
+    price: 2042500
+    size: 700
+    left: 0
 score: 8.9
 photo: /assets/bottles/glenallachie-2015-single-cask.webp
 fam:

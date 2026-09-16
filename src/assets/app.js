@@ -173,7 +173,8 @@
       '<circle class="sr-arc" cx="60" cy="60" r="54"/></svg>' +
       '<div class="sr-mid"><b>' + score(w.score) + "</b><span>" +
       (w.score == null ? "unscored" : "of 10") + "</span></div></div>" +
-      '<div class="sr-note">' + (w.left == null ? "level not recorded" : w.left + "% left") +
+      '<div class="sr-note">' +
+      (w.left == null ? "level not recorded" : w.left === 0 ? "finished" : w.left + "% left") +
       "</div></div>";
   }
 

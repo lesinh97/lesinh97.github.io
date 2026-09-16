@@ -8,6 +8,11 @@ abv: "40%"
 cask: "Sherry, bourbon, Marsala finish"
 tasted: "2025-04-10"
 price: 1050000
+fills:
+  - bought: "2025-04-10"
+    price: 1050000
+    size: 700
+    left: 0
 score: 7.9
 photo: /assets/bottles/bushmills-12-yo.webp
 fam:

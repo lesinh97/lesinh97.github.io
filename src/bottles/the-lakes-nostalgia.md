@@ -8,6 +8,11 @@ abv: "49%"
 cask: "Sherry & bourbon"
 tasted: "2025-11-15"
 price: 3150000
+fills:
+  - bought: "2025-11-15"
+    price: 3150000
+    size: 700
+    left: 0
 score: 8.5
 photo: /assets/bottles/the-lakes-nostalgia.webp
 fam:

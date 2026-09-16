@@ -8,6 +8,11 @@ abv: "46%"
 cask: "Oloroso & PX"
 tasted: "2025-05-08"
 price: 1341000
+fills:
+  - bought: "2025-05-08"
+    price: 1341000
+    size: 700
+    left: 0
 score: 8.3
 photo: /assets/bottles/glenallachie-12-yo.webp
 fam:

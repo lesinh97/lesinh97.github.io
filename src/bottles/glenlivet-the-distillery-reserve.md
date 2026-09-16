@@ -8,6 +8,11 @@ abv: "40%"
 cask: "1st fill American & traditional oak"
 tasted: "2025-10-01"
 price: 995000
+fills:
+  - bought: "2025-10-01"
+    price: 995000
+    size: 700
+    left: 0
 score: 7.2
 photo: /assets/bottles/glenlivet-the-distillery-reserve.webp
 fam:

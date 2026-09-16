@@ -8,6 +8,11 @@ abv: "49.7%"
 cask: "French oak"
 tasted: "2025-09-19"
 price: 4600000
+fills:
+  - bought: "2025-09-19"
+    price: 4600000
+    size: 700
+    left: 0
 score: 8.6
 photo: /assets/bottles/armagnac-23-yo.webp
 fam:

@@ -45,7 +45,7 @@ extraCss: ["/assets/bottle.css"]
           </div>
         </div>
         <div class="sr-note">
-          {%- if left != null %}{{ left }}% left{% else %}level not recorded{% endif -%}
+          {%- if left == null %}level not recorded{% elif left == 0 %}finished{% else %}{{ left }}% left{% endif -%}
         </div>
       </div>
     </div>

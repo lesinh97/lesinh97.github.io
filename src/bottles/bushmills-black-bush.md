@@ -8,6 +8,11 @@ abv: "40%"
 cask: "Oloroso & bourbon"
 tasted: "2025-03-19"
 price: 890000
+fills:
+  - bought: "2025-03-19"
+    price: 890000
+    size: 700
+    left: 0
 score: 7.5
 photo: /assets/bottles/bushmills-black-bush.webp
 fam:

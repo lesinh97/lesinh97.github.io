@@ -8,6 +8,11 @@ abv: "46.6%"
 cask: "Cream sherry & red wine"
 tasted: "2025-02-10"
 price: 3300000
+fills:
+  - bought: "2025-02-10"
+    price: 3300000
+    size: 700
+    left: 0
 score: 8.2
 photo: /assets/bottles/the-lakes-resfeber.webp
 fam:
