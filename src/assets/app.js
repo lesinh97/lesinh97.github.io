@@ -283,8 +283,7 @@
       '<div style="display:flex;gap:16px;align-items:flex-start;justify-content:space-between">' +
       '<div class="pshot">' + shot + "</div>" +
       '<div style="flex:none;display:flex;flex-direction:column;align-items:flex-end;gap:12px">' +
-      '<div style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--color-accent);text-align:right">' +
-      esc([sel.origin, sel.type].filter(Boolean).join(" \u00b7 ")) + "</div>" +
+      '<span class="proppill">' + esc([sel.origin, sel.type].filter(Boolean).join(" \u00b7 ")) + "</span>" +
       "</div>" + scoreRing(sel) + "</div>" +
       "<h2>" + esc(sel.name) + "</h2>" +
       '<div style="font-size:12.5px;color:var(--color-neutral-400);margin-top:6px">' +
@@ -416,7 +415,7 @@
   }
 
   function shelfCard(d) {
-    return '<div style="width:95mm;height:62mm;overflow:hidden;break-inside:avoid;position:relative;display:flex;' +
+    return '<div style="width:95mm;min-height:62mm;break-inside:avoid;position:relative;display:flex;' +
       "flex-direction:column;justify-content:space-between;padding:4.6mm 5.4mm 0 7mm;background:" + d.c.bg +
       ";border:.3mm solid " + d.c.cut + ";color:" + d.c.fg +
       ';font-family:var(--font-body)">' +
@@ -446,7 +445,7 @@
           "</span></div>";
       }).join("") + "</div>" +
 
-      wordsHtml(d, 180, "5pt", "1.5mm") +
+      wordsHtml(d, 260, "5pt", "1.5mm") +
 
       '<div style="position:relative;flex:none;display:flex;justify-content:space-between;align-items:baseline;gap:3mm;' +
       "margin:1.5mm -5.4mm 0 -7mm;padding:1.7mm 5.4mm 1.5mm 7mm;background:" + d.c.soft +
@@ -460,7 +459,7 @@
   }
 
   function hangTag(d) {
-    return '<div style="width:46mm;height:102mm;overflow:hidden;break-inside:avoid;position:relative;display:flex;' +
+    return '<div style="width:46mm;min-height:102mm;break-inside:avoid;position:relative;display:flex;' +
       "flex-direction:column;align-items:center;justify-content:space-between;padding:9.4mm 4.8mm 0;background:" + d.c.bg +
       ";border:.3mm solid " + d.c.cut + ";color:" + d.c.fg + ';font-family:var(--font-body);text-align:center">' +
       '<span style="position:absolute;inset:0;background:' + wash(d, "110% 32%") + '"></span>' +
@@ -485,7 +484,7 @@
       '<span style="position:relative;flex:none;display:flex;flex-direction:column;gap:.9mm;width:34mm;margin-top:1.3mm">' +
       barsHtml(d, "8.5mm", "3.5pt") + "</span>" +
 
-      wordsHtml(d, 180, "4pt", "1.3mm") +
+      wordsHtml(d, 260, "4pt", "1.3mm") +
 
       '<span style="position:relative;flex:none;align-self:stretch;margin:1.5mm -4.8mm 0;padding:2mm 4mm 1.9mm;background:' +
       d.c.soft + ";border-top:.25mm solid " + d.c.rule + '">' +
@@ -494,13 +493,10 @@
 
   function sheetHtml() {
     var draw = S.shape === "tag2" ? hangTag : shelfCard;
-    var cols = S.shape === "tag2" ? "repeat(auto-fill, 46mm)" : "repeat(auto-fill, 95mm)";
     var el = document.getElementById("sheet");
-    el.style.gridTemplateColumns = cols;
     // A 4mm alley between cards leaves room for scissors on both cuts.
-    el.style.gap = "4mm";
-    el.style.justifyContent = "start";
-    el.style.alignContent = "start";
+    el.style.columnWidth = S.shape === "tag2" ? "46mm" : "95mm";
+    el.style.columnGap = "4mm";
     el.innerHTML = list.filter(function (w) { return S.picked.indexOf(w.id) > -1; })
       .map(function (w) { return draw(cardData(w)); }).join("");
   }
@@ -579,7 +575,7 @@
 
     document.getElementById("body").innerHTML =
       '<div class="hero"><div style="flex:1 1 320px;min-width:0"><h1>Aqua Vitae</h1>' +
-      "<p>Latin for the water of life, the old name for distilled spirit. " +
+      "<p>It's the water of life, the old name for distilled spirit. " +
       "Gaelic turned it into uisge beatha, and that became whisky.</p></div>" +
       '<div class="stats">' +
       '<div><div class="stat-n">' + list.length + '</div><div class="stat-l">Bottles logged</div></div>' +
@@ -588,7 +584,8 @@
       "</div></div>" +
       '<div class="cols"><div class="col">' + housesHtml() + shelfHtml(sel) + chipsHtml() +
       '<div class="lhead"><span style="width:30px;flex:none"></span><span style="flex:1">Bottle</span>' +
-      '<span style="width:72px;flex:none">Signature</span><span style="width:36px;flex:none;text-align:right">Score</span></div>' +
+      '<span class="lh-sig">Flavour</span><span class="lh-left">Left</span>' +
+      '<span class="lh-score">Score</span><span class="lh-go"></span></div>' +
       '<div class="list">' + listHtml(rows, sel) + "</div>" +
       '<div class="foot"><span>' +
       (rows.length === list.length ? list.length + " bottles in the ledger" : "Showing " + rows.length + " of " + list.length) +

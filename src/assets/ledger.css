@@ -124,10 +124,14 @@
   @page { margin: 8mm; }
   html, body { background: #fff !important; }
   .screen { display: none !important; }
-  .sheet { display: grid !important; }
+  /* Columns rather than a grid: see sheetHtml in app.js. Each card keeps its
+     own height and the flow fills the page instead of leaving a band of paper
+     where a grid row would not fit. */
+  .sheet { display: block !important; }
+  #sheet > div { margin: 0 0 4mm; -webkit-column-break-inside: avoid; break-inside: avoid; }
   .page { background: none !important; padding: 0 !important; min-height: 0 !important; }
   /* Cards pack from the top left rather than floating in the middle. */
-  #sheet { justify-content: start !important; align-content: start !important; }
+
   * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
 
@@ -208,3 +212,21 @@
   .house-d { width: 48px; height: 48px; }
   .house-d b { font-size: 15px; }
 }
+
+/* The list header mirrors the row exactly. It used to stop at Score, so once a
+   fill column and the open-note arrow joined the row every label sat one cell
+   to the left of what it named. */
+.lh-sig { width: 72px; flex: none; }
+.lh-left { width: 42px; flex: none; }
+.lh-score { width: 36px; flex: none; text-align: right; }
+.lh-go { width: 26px; flex: none; }
+@media (max-width: 640px) {
+  /* .spark is hidden at this width, so its label goes with it. */
+  .lh-sig { display: none; }
+}
+
+/* Origin and type, as a pill rather than loose small caps. */
+.proppill { display: inline-block; padding: 4px 10px; border-radius: 999px;
+            font-size: 9.5px; letter-spacing: .14em; text-transform: uppercase;
+            color: var(--color-accent); white-space: nowrap;
+            background: color-mix(in srgb, var(--color-accent) 14%, transparent); }

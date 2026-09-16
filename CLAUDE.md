@@ -47,6 +47,11 @@ tasting journal and a blog behind it. The whisky notes are written in Obsidian.
 - The image inside uses `cover`, never `contain`. These packshots have a light backdrop baked
   into the file, and containing one drew its rectangle in the middle of the circle. Filling
   pushes that backdrop out to the rim where the disc clips it.
+- **Every file in `src/assets/bottles/` must be square.** `cover` scales a non-square source
+  until the short side fills the box, so a tall narrow crop came out hugely magnified next to
+  a square one and the strip looked like a set of different zoom levels. Five files were
+  padded to square against their own sampled corner colour, or transparent where the shot was
+  cut out. Pad a new photo before adding it rather than trying to correct it in CSS.
 - `restoreScroll` measures the shelf with rects, not `offsetLeft`: `.shelf` is not positioned,
   so `offsetLeft` came from some ancestor and every tile click threw the strip somewhere
   arbitrary.
@@ -303,10 +308,17 @@ token, so it does **not** follow the colour mode and is the one place raw hexes 
 A note's `keynote` is the only prose that prints. The markdown body is **not** a fallback:
 truncating it mid-sentence read as broken, so a bottle with no keynote simply shows no line.
 
-`clamp()` caps the keynote at **180 characters** on every shape. That number was measured,
-not guessed: with a keynote on all thirteen bottles, 187 characters still fits every shape
-and 196 overflows the shelf card, the tightest of the three for text because its name and
-score share a row. Change the clamp and you must re-measure.
+Cards have a `min-height`, not a height, and no longer hide their overflow: a long note
+makes the card a few millimetres taller instead of being cut off mid-word. `clamp()` caps the
+keynote at **260 characters**, which is headroom rather than a fitting constraint now that
+height is free. The old 180 was measured against a fixed 62mm card; that constraint is gone,
+but keep some cap or one long note makes a card that towers over its neighbours.
+
+The sheet is a **column** layout, not a grid. A grid row is atomic across a page break, so a
+row that would not fit pushed a band of empty paper the height of a whole card onto the sheet,
+and every card in a row was padded out to the tallest one. Columns let each card keep its own
+height and flow on. Measured over all fourteen: shelf cards 62 to 67mm and hang tags 102 to
+104mm, nothing clipped, two pages instead of three.
 
 The date row is `signedRow()`: tasted date left, the katakana signature right.
 
